@@ -1,0 +1,30 @@
+{
+  "name": "Raku::Alternative::Documentation",
+  "description": "Use Cro and Raku::Pod::Render. Different search system. Global and local TOCs and Glossaries. Documents local installation.",
+  "version": "0.1",
+  "perl": "6.*",
+  "authors": [
+    "Richard Hainsworth"
+  ],
+  "auth": "github:finanalyst",
+  "depends": [
+    "Raku::Pod::Render",
+    "Pod::From::Cache"
+  ],
+  "build-depends": [],
+  "test-depends": [
+    "Test::META"
+  ],
+  "provides": {
+    "update-site": "bin/raku-doc.raku"
+  },
+  "resources": [],
+  "support": {
+    "bugtracker": "https://github.com/finanalyst/raku-alternative-documentation/issues",
+    "email": "richard@hainsworth.wales",
+    "source": "https://github.com/finanalyst/raku-alternative-documentation.git"
+  },
+  "license": "Artistic-2.0",
+  "source-url": "git://github.com/finanalyst/raku-alternative-documentation.git",
+  "source-type": "git"
+}

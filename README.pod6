@@ -1,0 +1,149 @@
+=begin pod
+
+=TITLE Alternative Documentation System
+
+=SUBTITLE Creates Collections of POD6 sources, such as a web-site powered by Cro, or a epub of the sources.
+
+=DESCRIPTION Collects POD6 sources existing in a cache (eg., created by ZEF), or in a github repo (such as the
+Raku Documentation), or physically as a collection of POD6 for a bespoke website, outputting files in a
+format suitable for a running with Cro, or in an epub.
+
+=AUTHOR Richard Hainsworth, aka finanalyst
+
+=LICENSE Artist 2.0
+
+=head1 Distribution Structure
+
+This distribution contains several utilities that are primarily GUI-based, but can be used in a terminal.
+The distribution is designed to be installed using B<zef>.
+
+The utilities require a specific file structure to operate on. A default C<Documentation_System> directory is 
+created by the B<zef> installation. The directory can be relocated and renamed. A C<Documentation_System> directory
+should contain
+=item Links to the C<raku-doc> and C<raku-doc-test> programs
+=item configuration files for each collection, and
+=item the directory structure for each collection.
+
+The utilities are designed to operate on a C<Documentation_System> directory, which is defined by the existence in it
+of at least one C<xxx.collection.cfg> file, where xxx can be chosen by the developer. Three proforma C<collection> files, normally
+installed by B<zef>. L<A description|#Collection configuration> of the configuration.
+
+=head1 Installation
+
+    zef install Raku::Alternative::Documentation
+
+Installation by C<zef> will create C<.raku-documentation> directory in the
+user's home directory. This directory can be renamed and relocated. Assuming the default name is kept, the next action
+should be
+
+    cd ~/.raku-documentation
+    ./raku-doc-config
+
+C<raku-doc-confi> will test whether the dependencies for each of the proforma collections have been installed. Since
+it takes a considerable amount of time for the main Raku documentation to be compiled and cached I<ab initio>,
+the C<Raku> collection is disabled by default, and must be enabled using C<raku-doc>.
+
+Alternatively, one of the proforma collections B<Example> should run 'out of the box'. It will cache the Pod6 sources
+and generate HTML files with minimal css and no highlighting.
+
+    cd ~/.raku-documentation
+    ./raku-doc
+
+Depending on the browser, the main 'landing page' can be viewed by viewing '~/.raku-documentation/Example/html/index.html'
+
+Following the links will depend on the browser and user set up. It should be remembered that this is B<NOT> the way
+html files are usually served.
+
+If C<Cro> has been installed together then after running C<raku-doc>, the browser can be pointed at C<localhost:5888>.
+
+C<zef> also installs C<raku-doc> and some other utilities. Since the C<raku-doc> (and the other utilities) must be run inside
+a C<Documentation_System> directory, symlinks are
+also placed in the default directory. An alternative would be to have C<raku-doc> in the program PATH, but it would need to
+be run inside a C<Documentation_System> directory. Another
+alternative is to supply the argument C<--documentation=<path/to/documentation_system_directory> to C<raku-doc>.
+
+The following utilities are installed:
+=item C<raku-doc-config>  [C<--collection=<path/to/collection>]
+This will test the configuration files and determine which actions can be run.
+
+=item C<raku-doc> [C<--collection=<path/to/collection>]
+This will execute the default collections B<actions> (as set in the configuration file). When distributed, the
+default action will be B<configure>, which allows the other actions to be set. See L<Raku-doc actions|#Raku-doc actions>
+for more information.
+
+=item C<raku-doc-test> Testing needs to be turned on inside the configuration file.
+This will run a series of tests on the collection. The targets to be tested, and the test suite run on them, can be
+set in the <Collection.config> file. The main tests are for the validity of links defined in the Pod6 source. Testing
+is initially turned off. Turning the testing on will indicate to C<Raku-doc> that various page components of each
+document source should be saved after compilation. Not saving the page components will force C<Raku-doc-test> to
+re-parse each document.
+
+The Cro Application files and the appropriate directories are created by the zef installation, but Cro
+and a variety of C<NET> software need to be installed in order to run the Cro App. These are detailed
+in L<Install CRO and foreign dependents|#Install CRO>.
+
+
+=head2 Install CRO
+
+Use zef to install C<Cro>.
+
+In order to set up the files needed to interact with Cro, the webpack software is needed. This will also collect
+css data and images.
+
+The following steps are needed
+=item TODO
+
+=head1 A Collection
+
+=item a C<Collection.config> file - which defines the directory as a Collection.
+
+=item a C<doc> directory (may be omitted) - which contains the POD6 sources for the Documentation
+
+=item a C<target> directory (default name is HTML) into which the collection is rendered.
+
+=item2 Each B<action> may have an associated sub-directories
+
+=head1 Raku-doc actions
+
+The normal workflow with a collection of documents is that changes are made to the document, and then the dependent
+output files need to be renewed. Then the collection needs to be viewed, or the collection needs to be zipped together
+and transferred elsewhere, eg, another server where the collection will be viewed.
+
+The following B<X<action>>s are defined:
+=item B<X<update>>
+The Pod sources in the Collection are checked to see if they have been changed since the last time they were cached
+
+=item B<X<run-cro>>
+The Cro App is run, allowing the collection to be viewed with a browser pointing at C<localhost:5888>. If B<cro-run> is
+executed against multiple targets (see below), then the port number is incremented. (It can also be specified in the
+configuration file).
+
+=item B<X<epub>>
+This action generates an electronic book in C<epub> format of the Collection.
+
+=item B<X<transfer>>
+This action will collect and compress the files and the webpack files and transfer them to a remote server. 'rsync' is
+used for the transfer. The configuration for the transfer action is the same as for rsync.
+
+=head1 Collection configuration
+
+Each B<action> can be executed against a B<X<target>>. Targets provided at installation are:
+
+=item X<B<local>|Local module documentation> which is all the pod cached in the default C<$*REPO> established by C<zef>. This should provide information
+on all locally installed C<Raku> modules. Making these I<HTML> files available requires C<Cro> to be set up, or for the
+I<action> X<B<epub>|Compile collection to a book> to be executed, and then an I<epub> reader needs to be pointed at the resultant output.
+=item2 The B<Local> target accesses a cache generated by C<zef> but it could be any cache.
+
+=item X<B<Raku>|Raku standard documentation>. This target will retrieve the Raku Documentation repo and compile into a cache any file that has changed.
+Since the documentation is large, the first time the collection is cached will take a considerable length of time
+(10-15 minutes).
+=item2 This target is defined against a remote source, namely a githut repo. C<git> is used to acquire a local copy of
+the repo.
+=item2 Since it is not known whether C<git> is locally installed, this target is not automatically enabled.
+=item2 Once the local copy has been obtained, it needs to be compiled and cached. WARNING: This takes time.
+
+=item X<B<Custom>|Make your own collection>
+This target is intended as placeholder to show how the developer may create a web-site/book with her own Pod6 sources.
+=item2 The collection given here are a few local files. However, by using the Raku configuration example, the sources can be
+placed in a repo, and the repo sources are converted.
+
