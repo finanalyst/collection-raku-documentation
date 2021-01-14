@@ -1,4 +1,4 @@
 .precomp/
 .idea/
-arc/
-/raku-alternative-doc.iml
+app/html/
+raku-alt-documentation.iml

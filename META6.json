@@ -9,22 +9,29 @@
   "auth": "github:finanalyst",
   "depends": [
     "Raku::Pod::Render",
-    "Pod::From::Cache"
+    "Pod::From::Cache",
+    "File::Temp",
+    "Terminal::Spinners",
+    "Pretty::Dump"
   ],
   "build-depends": [],
   "test-depends": [
     "Test::META"
   ],
   "provides": {
-    "update-site": "bin/raku-doc.raku"
+    "Collection": "lib/Collection.pm6",
+    "Collection::Exceptions": "lib/Collection/Exceptions.pm6",
+    "Raku-Doc": "bin/Raku-Doc"
   },
-  "resources": [],
+  "resources": [
+    "config.raku"
+  ],
   "support": {
-    "bugtracker": "https://github.com/finanalyst/raku-alternative-documentation/issues",
+    "bugtracker": "https://github.com/finanalyst/raku-alt-documentation/issues",
     "email": "richard@hainsworth.wales",
-    "source": "https://github.com/finanalyst/raku-alternative-documentation.git"
+    "source": "https://github.com/finanalyst/raku-alt-documentation.git"
   },
   "license": "Artistic-2.0",
-  "source-url": "git://github.com/finanalyst/raku-alternative-documentation.git",
+  "source-url": "git://github.com/finanalyst/raku-alt-documentation.git",
   "source-type": "git"
 }

@@ -2,148 +2,222 @@
 
 =TITLE Alternative Documentation System
 
-=SUBTITLE Creates Collections of POD6 sources, such as a web-site powered by Cro, or a epub of the sources.
+=SUBTITLE Creates a Collection of POD6 sources, default starts a local web-site powered by Cro.
 
-=DESCRIPTION Collects POD6 sources existing in a cache (eg., created by ZEF), or in a github repo (such as the
-Raku Documentation), or physically as a collection of POD6 for a bespoke website, outputting files in a
-format suitable for a running with Cro, or in an epub.
+=DESCRIPTION Collects POD6 sources existing in github repo for the
+Documentation, creates output
+suitable for a running with Cro, or for an epub or pdf. The module depends on C<Raku::Pod::Render>.
 
 =AUTHOR Richard Hainsworth, aka finanalyst
 
 =LICENSE Artist 2.0
 
-=head1 Distribution Structure
-
-This distribution contains several utilities that are primarily GUI-based, but can be used in a terminal.
-The distribution is designed to be installed using B<zef>.
-
-The utilities require a specific file structure to operate on. A default C<Documentation_System> directory is 
-created by the B<zef> installation. The directory can be relocated and renamed. A C<Documentation_System> directory
-should contain
-=item Links to the C<raku-doc> and C<raku-doc-test> programs
-=item configuration files for each collection, and
-=item the directory structure for each collection.
-
-The utilities are designed to operate on a C<Documentation_System> directory, which is defined by the existence in it
-of at least one C<xxx.collection.cfg> file, where xxx can be chosen by the developer. Three proforma C<collection> files, normally
-installed by B<zef>. L<A description|#Collection configuration> of the configuration.
+This Module provides a local website available via a browser at localhost:3000 of the Raku documentation.
+The Module uses Collection and Raku::Pod::Render to link all the Pod6 files together. The Cro app and HTML
+output files are created using the Website mode, but other modes can be created.
 
 =head1 Installation
 
-    zef install Raku::Alternative::Documentation
+    zef install Raku-Alternative-Distribution
 
-Installation by C<zef> will create C<.raku-documentation> directory in the
-user's home directory. This directory can be renamed and relocated. Assuming the default name is kept, the next action
-should be
+This installs the C<Cro> and C<Raku::Pod::Render> dependencies and the C<Raku-Docs> executable.
 
-    cd ~/.raku-documentation
-    ./raku-doc-config
+=head1 Raku-Doc
 
-C<raku-doc-confi> will test whether the dependencies for each of the proforma collections have been installed. Since
-it takes a considerable amount of time for the main Raku documentation to be compiled and cached I<ab initio>,
-the C<Raku> collection is disabled by default, and must be enabled using C<raku-doc>.
+The following are for Linux based distributions. Raku-Doc depends on C<git> and C<unrar>, which typically are
+installed on Linux distributions, to get and unpack other files.
 
-Alternatively, one of the proforma collections B<Example> should run 'out of the box'. It will cache the Pod6 sources
-and generate HTML files with minimal css and no highlighting.
+Under Linux, in a terminal, the following will lead to the installation of a local copy of Raku docs and start a
+Cro app that will make the HTML documentation available in a browser at C<localhost:3000>
 
-    cd ~/.raku-documentation
-    ./raku-doc
+    mkdir ~/Raku-Alternative-Documentation
+    cd Raku-Alternative-Documentation
+    Raku-Doc
 
-Depending on the browser, the main 'landing page' can be viewed by viewing '~/.raku-documentation/Example/html/index.html'
+Calling C<Raku-Doc> without any other options implies the mode B<Website> with default options, see below.
 
-Following the links will depend on the browser and user set up. It should be remembered that this is B<NOT> the way
-html files are usually served.
+In order to have more control, the process can be run in stages. For example
 
-If C<Cro> has been installed together then after running C<raku-doc>, the browser can be pointed at C<localhost:5888>.
+    Raku-Doc Init
 
-C<zef> also installs C<raku-doc> and some other utilities. Since the C<raku-doc> (and the other utilities) must be run inside
-a C<Documentation_System> directory, symlinks are
-also placed in the default directory. An alternative would be to have C<raku-doc> in the program PATH, but it would need to
-be run inside a C<Documentation_System> directory. Another
-alternative is to supply the argument C<--documentation=<path/to/documentation_system_directory> to C<raku-doc>.
+will run the Init stage only, see below L<for more detail|Init>.
 
-The following utilities are installed:
-=item C<raku-doc-config>  [C<--collection=<path/to/collection>]
-This will test the configuration files and determine which actions can be run.
+After the Init stage, options can be set within the C<config.raku> file, which is a valid B<Raku> program that evaluates to a Hash, or the
+B<Website> config files.
 
-=item C<raku-doc> [C<--collection=<path/to/collection>]
-This will execute the default collections B<actions> (as set in the configuration file). When distributed, the
-default action will be B<configure>, which allows the other actions to be set. See L<Raku-doc actions|#Raku-doc actions>
-for more information.
+The next stage is Refresh, which implies Init. Calling without commands implies Refresh.
 
-=item C<raku-doc-test> Testing needs to be turned on inside the configuration file.
-This will run a series of tests on the collection. The targets to be tested, and the test suite run on them, can be
-set in the <Collection.config> file. The main tests are for the validity of links defined in the Pod6 source. Testing
-is initially turned off. Turning the testing on will indicate to C<Raku-doc> that various page components of each
-document source should be saved after compilation. Not saving the page components will force C<Raku-doc-test> to
-re-parse each document.
+If C<Raku-Doc> is called with a string other than 'Init', 'Refresh', or 'Website', then the string is interpreted as another B<Mode>,
+with its own sub-directory and configuration for the collection. For example,
 
-The Cro Application files and the appropriate directories are created by the zef installation, but Cro
-and a variety of C<NET> software need to be installed in order to run the Cro App. These are detailed
-in L<Install CRO and foreign dependents|#Install CRO>.
+    Raku-Doc Book
 
+would create the collection output defined by the B<Configuration> in the directory C<Book/config/>. This design
+is to allow for the creation of different Collection outputs to be defined for the same content files.
 
-=head2 Install CRO
+=head2 Init
 
-Use zef to install C<Cro>.
+Init must be run from inside the root directory of the collection, which must be empty. A non-empty directory
+indicates an error, so C<Raku-Doc Init> will fail in any directory with contents. The directory can be placed anywhere.
 
-In order to set up the files needed to interact with Cro, the webpack software is needed. This will also collect
-css data and images.
+After B<Init>, Raku-Doc has created a C<config.raku> file in the distribution
+root directory, cloned a sub-directory C<raku-docs> from the documantation repository, and unpacked a sub-directory 'Website'
+with is own configuration files in C<Website/config/>, templates in C<Website/templates/>, and B<Raku::Render::Pod> pluging
+in C<Website/plugins>.
 
-The following steps are needed
-=item TODO
+Initialisation only happens once. Updates to the Collection are handled in other steps.
 
-=head1 A Collection
+=head2 Refresh with option C<--no-status>
 
-=item a C<Collection.config> file - which defines the directory as a Collection.
+This step only changes the cache status of the Collection. After initialisation, updates to the content files can be
+pulled from an external source, and the cache is refreshed.
 
-=item a C<doc> directory (may be omitted) - which contains the POD6 sources for the Documentation
+The step may take some considerable time the first time C<Raku-Docs> is run, so a progress bar is shown.
 
-=item a C<target> directory (default name is HTML) into which the collection is rendered.
+If no progress bar is needed, specify C<--no-status>.
 
-=item2 Each B<action> may have an associated sub-directories
+The C<no-status> option can be specified on the command line or in the Collection's config file. The run-time option
+takes preference.
+Three state possibilities exist for the source files:
+=item some source files have changed, and the cache needs to be updated only for changed files, with changes passed for rendering.
+This is the B<default> activity.
 
-=head1 Raku-doc actions
+=item the whole cache needs to be renewed (rare synchronisation issues). For this activity C<--recompile> should be set.
+=item no changes should be allowed to the source files collection. To enforce this, C<--no-refresh> should be set.
 
-The normal workflow with a collection of documents is that changes are made to the document, and then the dependent
-output files need to be renewed. Then the collection needs to be viewed, or the collection needs to be zipped together
-and transferred elsewhere, eg, another server where the collection will be viewed.
+A mode call can be run with options C<--no-refresh> or C<--recompile>, which are specified in the mode's configuration.
 
-The following B<X<action>>s are defined:
-=item B<X<update>>
-The Pod sources in the Collection are checked to see if they have been changed since the last time they were cached
+A mode call will update the source files, and if they are changed, then the output files, which for Website are HTML files,
+will be updated too.
 
-=item B<X<run-cro>>
-The Cro App is run, allowing the collection to be viewed with a browser pointing at C<localhost:5888>. If B<cro-run> is
-executed against multiple targets (see below), then the port number is incremented. (It can also be specified in the
-configuration file).
+=head2 Implicit mode, Website or Explicit mode
 
-=item B<X<epub>>
-This action generates an electronic book in C<epub> format of the Collection.
+When C<Raku-Doc> is run without a command, the implicit mode is B<Website>. Any string other than Init or Refresh is a mode, see below.
 
-=item B<X<transfer>>
-This action will collect and compress the files and the webpack files and transfer them to a remote server. 'rsync' is
-used for the transfer. The configuration for the transfer action is the same as for rsync.
+During this stage, the output files are generated and control is transferred to a callable, such as a Cro app.
 
-=head1 Collection configuration
+As is the case with the source files, the output files may have three states
+=item Some output files need to be regenerated to mirror changes in the source files, the B<default> action.
+=item All of the output files need to be regenerated due to template or plugin changes, set C<--full-render> for this action.
+=itemm None of the output files should be regeneraed, set C<--no-rerender>
 
-Each B<action> can be executed against a B<X<target>>. Targets provided at installation are:
+The Cro app is started and makes the documentation available at C<localhost:3000>
 
-=item X<B<local>|Local module documentation> which is all the pod cached in the default C<$*REPO> established by C<zef>. This should provide information
-on all locally installed C<Raku> modules. Making these I<HTML> files available requires C<Cro> to be set up, or for the
-I<action> X<B<epub>|Compile collection to a book> to be executed, and then an I<epub> reader needs to be pointed at the resultant output.
-=item2 The B<Local> target accesses a cache generated by C<zef> but it could be any cache.
+=head1 Distribution Structure
 
-=item X<B<Raku>|Raku standard documentation>. This target will retrieve the Raku Documentation repo and compile into a cache any file that has changed.
-Since the documentation is large, the first time the collection is cached will take a considerable length of time
-(10-15 minutes).
-=item2 This target is defined against a remote source, namely a githut repo. C<git> is used to acquire a local copy of
-the repo.
-=item2 Since it is not known whether C<git> is locally installed, this target is not automatically enabled.
-=item2 Once the local copy has been obtained, it needs to be compiled and cached. WARNING: This takes time.
+A distribution contains content files, which may be updated on a regular basis, a cache,
+templates, and one or more modes.
 
-=item X<B<Custom>|Make your own collection>
-This target is intended as placeholder to show how the developer may create a web-site/book with her own Pod6 sources.
-=item2 The collection given here are a few local files. However, by using the Raku configuration example, the sources can be
-placed in a repo, and the repo sources are converted.
+=head2 Content
 
+The content of the distribution is contained in B<POD6> files. In addition to the source files, there are
+Collection content files which express things like the Table of Contents for the whole collection.
+
+Collection content are held separately to the source content, so that each mode may have different pages.
+
+This allows for active search pages for a Website, not needed for an epub, or publisher data for an output
+formation that will be printed.
+
+=head2 Cache
+
+The B<cache> is a Precomp structure into which the content files are pre-preprocessed.
+
+=head2 Mode
+
+The B<Mode> is the collection of templates and configuration for some output.
+
+The default Mode is B<Website>. This is over-ridden by the string argument following C<Raku-Doc>, so long as it is not
+B<Init> or B<Refresh>.
+
+The string must refer to an immediate directory of the root of the collection,
+so it is compared to C</ ^ \W+ (\w+) '/'? .* $ /> and
+only the inner C<\w> chars are used.
+
+The templates, configuration, output files, and other assets used by a Mode are associated with the Mode, and should
+reside beneath the Mode sub-directory.
+
+Plugins that are used to enhance the C<PodRender> object should also reside beneath the Mode sub-directory.
+
+=head2 Templates
+
+The B<templates>, which may be any format (currently RakuClosure or Mustache) accepted by
+C<Raku::Pod::Render>, define how the following are expressed in the output:
+=item the elements of the content files, eg. paragraphs, headers
+=item the files as entities, eg, whether as single files, or chapters of a book
+=item the collective components of content files, viz, Table of Contents, footnotes, Glossary, Meta data
+=item All the templates may be in one file, or distributed between files.
+=item2 If there are no templates in the directory, the default files in C<Raku::Pod::Render> are used.
+=item2 If there are multiple files in the directory, they will all be evaluated in alphanumeric order.
+Note that existing keys will be over-written if they exist in later templates.
+
+=head Configuration
+
+A default B<Configuration> comes with the distribution and is located at C<$?CWD/Website/config/01-config.raku>,
+because Website is created at initialisation.
+
+The following rules apply:
+=item If the B<config> directory does not exist or is empty, B<Raku-Doc> will fail.
+=item The Configuration consists of one or more C<Raku> files that evaluate to a hash.
+=item2 Each Config file in the B<Config> directory will be evaluated in alphabetical order.
+=item2 Configuration keys may not be over-written. An C<Collection::Config> exception will be thrown if a key exists.
+
+The configuration defines at a minimum the following locations, relative to the root of the B<Mode>,
+assumed to be C<$?CWD/$mode/>, where C<$mode> is the String command following Raku-Doc, or 'Website':
+=item the B<cache>
+=item2 default: '../cache',
+=item the B<templates>
+=item2 default: 'templates',
+=item the B<content files>
+=item2 default: 'sources'
+=item the implied extension for POD6 files
+=item2 default: 'pod6'
+=item3 pod6 may exist in other extensions, but a bare name implies this extension
+=item the path to the Cro app
+=item2 default: 'app'
+=item the output
+=item2 default: 'app/html'
+=item the port number for localhost in the browser
+=item2 default: 3000
+
+The default options for Raku-Doc can be set in the Website configuration, but are ignored otherwise. They are:
+=item no-gui = False
+=item no-status = False
+=item recompile = False
+=item no-refresh = False
+=item recompile = False
+
+Each Mode will have a number of other configuration parameters. For a Website:
+=item the file that is the root
+=item2 default: 'index' (given the implied extension, this refers to the file index.pod6)
+
+=head1 File dependencies
+
+Some content files require data generated by other content files. For example, a content file that outputs
+a Table of Contents for all the other content files requires that all those files have previously been
+processed.
+
+Further, when a content file is changed, its HTML output will need to be generated and B<also>
+the collection's Table of Contents will also need to be regenerated.
+
+This is done by specifying a list of pairs in a hash with key 'order' in the Configuration.
+
+In the absence of the 'order' key in the Configuration, no content file with have a dependent.
+
+Since all files in the config directory are evaluated. the order can be specified in a separate file which
+has a single key. Foe example, C<config/01-order.raku> which contains:
+
+=begin code
+%( 'order' => %(
+    index => / 'source/' * /,
+    toc => / 'index' /,
+    glossary => / 'index' /,
+    search => / 'glossary' | 'toc' /,
+    )
+)
+=end code
+
+This order specifies that 'index.pod6' is processed if any other file matching the regex is re-generated, 'toc.pod5' and
+'glossary.pod6' are regenerated if 'index' is regenated, and 'search' if either of 'toc' or 'glossary'
+are regenerated.
+
+=end pod
