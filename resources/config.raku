@@ -5,7 +5,7 @@ use v6.*;
     sources => 'raku-docs', # location of sources
     #| the array of strings sent to the OS by run to obtain sources, eg git clone
     #| assumes CWD set to the directory of collection
-    source-obtain => <rsync -a /home/richard/development/raku-alternative-documentation/test-docs/ raku-docs/>,
+    source-obtain => <rsync -a /home/richard/development/raku-alt-documentation/test-docs/ raku-docs/>,
     #| the array of strings run to refresh the sources, eg. git pull
     #| assumes CWD set to the directory of sources
     source-refresh => (),

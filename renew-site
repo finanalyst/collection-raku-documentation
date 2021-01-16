@@ -1,2 +1,3 @@
 #! /bin/bash
-rar a -r ~/development/raku-alt-documentation/resources/website ~/development/raku-alt-documentation/Website
+cd ~/development/raku-alt-documentation
+rar a -r resources/website Website

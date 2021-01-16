@@ -1,7 +1,7 @@
 use v6.*;
-our $camelia-svg = %?RESOURCES<Camelia.svg>.slurp;
-our $css-text = '<style>' ~ %?RESOURCES<pod.css>.slurp ~ '</style>';
-our $camelia-ico = %?RESOURCES<camelia-ico.bin>.slurp;
+my $camelia-svg = 'Camelia.svg'.IO.slurp;
+my $css-text = '<style>' ~ 'pod.css'.IO.slurp ~ '</style>';
+my $camelia-ico = 'camelia-ico.bin'.IO.slurp;
 
 %(
     'camelia-img' => sub ( %prm, %tml ) { $camelia-svg },

@@ -1,9 +1,10 @@
 #!/usr/bin/env raku
-use lib '/home/richard/development/raku-alternative-documentation/lib';
-constant CONFIG = '/home/richard/development/raku-alternative-documentation/resources/config.raku'.IO;
-constant WEBSITE = '/home/richard/development/raku-alternative-documentation/resources/website.rar'.IO;
+use lib '/home/richard/development/raku-alt-documentation/lib';
+constant CONFIG = '/home/richard/development/raku-alt-documentation/resources/config.raku'.IO;
+constant WEBSITE = '/home/richard/development/raku-alt-documentation/resources/website.rar'.IO;
 
 use Collection;
+use RakuConfig;
 
 multi sub MAIN(|c) {
     unless 'config.raku'.IO.f {

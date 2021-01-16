@@ -1,9 +1,8 @@
 use v6.*;
 use Terminal::Spinners;
-use Collection::Exceptions;
+use RakuConfig;
 use Pod::From::Cache;
 use ProcessedPod;
-use PrettyDump;
 
 unit module Collection;
 
@@ -11,7 +10,7 @@ proto sub collect(|) is export {*}
 
 sub refresh(:$no-status, :$recompile, :$no-refresh --> Pod::From::Cache ) {
     # ==== Set options =======
-    # both recompule and no-refresh are set in mode-level configurations, so only appear in collect called in a mode call.
+    # both recompile and no-refresh are set in mode-level configurations, so only appear in collect called in a mode call.
     my %config = get-config(:required< no-status cache sources source-obtain source-refresh mode >);
     my Bool $no-st = $no-status // %config<no-status>;
 
@@ -65,11 +64,15 @@ multi sub collect(Str $mode, :$no-refresh, :$recompile, :$no-status, :$no-rerend
             unless +@templates;
         my ProcessedPod $pr .= new;
         $pr.templates(~@templates[0]);
-        for @templates[1 .. *- 1] { $pr.modify-templates(~$_) }
+        for @templates[1 .. *- 1] { $pr.modify-templates(~$_, :path("$mode/templates")) }
         # add plugins if any
-        for %config<plugins>.list -> %pl {
-            $pr.add-plugin(%pl<name>, :path(%pl<path>), :name-space(%pl<name-space>))
+        for %config<plugins>.kv -> $plug, %conf {
+            %conf<path> = "$mode/plugins/" ~ ( %conf<path> // $plug );
+            $pr.add-plugin($plug, |%conf)
+            # Since the configuration matches what the add-plugin method expects as named parameters
         }
+        $pr.no-code-escape = %config<no-code-escape> if %config<no-code-escape>:exists;
+
         my @files = $fullren ?? $cache.sources.list !! $cache.list-files.list;
         my %processed;
         counter(:start(+@files), :header('Rendering files'));
@@ -91,57 +94,6 @@ multi sub collect(Str $mode, :$no-refresh, :$recompile, :$no-status, :$no-rerend
     }
 }
 
-#| :path is relative to Collection directory,
-#| if given, should be a directory containing .raku files
-#| :required are the keys needed in a config after all .raku files are evaluated
-#| at least one config key should be required.
-#| this sub is used to get template files as well
-sub get-config(:$path = 'config.raku', :@required!, --> Hash)
-        is export {
-    state %config;
-    state $prev-path;
-    return %config if $prev-path and $path eq $prev-path and %config.keys (>=) @required;
-
-    $prev-path = $path;
-    %config = Empty;
-    if $path eq 'config.raku' {
-        X::Collection::NoFiles.new(:path('Collection root'), :comment($path)).throw
-        unless 'config.raku'.IO.f;
-        %config = EVALFILE $path;
-        CATCH {
-            default {
-                X::Collection::BadConfig.new(:$path, :response(.gist)).throw
-            }
-        }
-    }
-    elsif "$*CWD/$path".IO.d {
-        my @files = "$*CWD/$path".IO.dir(test => / '.raku' /).sort>>.Str;
-        X::Collection::NoFiles.new(:$path, :comment('config files')).throw
-        unless +@files;
-        for @files -> $file {
-            my %partial = EVALFILE "$file";
-            CATCH {
-                default {
-                    X::Collection::BadConfig.new(:path($path.subst(/ ^ "$*CWD" '/' /, '')), :response(.gist)).throw
-                }
-            }
-            my @overlap = (%config.keys (&) %partial.keys).keys;
-            X::Collection::OverwriteKey
-                    .new(:path($path.subst(/ ^ "$*CWD" '/' /, '')), :@overlap)
-                    .throw
-            if +@overlap;
-            %config  ,= %partial
-            # merge partial into config
-
-        }
-    }
-    X::Collection::MissingKeys.new(:missing((@required (-) %config.keys).keys.flat)).throw
-        unless %config.keys (>=) @required;
-    # the keys on the RHS above are required in %config. To throw here, the templates supplied are not
-    # a superset of the required keys.
-    %config
-}
-
 sub counter(:$start, :$dec, :$header = 'Caching files ' ) {
     state $hash-bar = Bar.new(:type<bar>);
     state $inc;
@@ -156,60 +108,4 @@ sub counter(:$start, :$dec, :$header = 'Caching files ' ) {
         $done += $inc;
         $hash-bar.show: $done;
     }
-}
-
-sub compile-dump($ds --> Str) {
-    my $pretty = PrettyDump.new;
-    my $pair-code = -> PrettyDump $pretty, $ds, Int:D :$depth = 0 --> Str {
-        [~]
-        $ds.key,
-        ' => ',
-        $pretty.dump: $ds.value, :depth(0)
-
-    };
-    my $hash-code = -> PrettyDump $pretty, $ds, Int:D :$depth = 0 --> Str {
-        my $longest-key = $ds.keys.max: *.chars;
-        my $template = "%-{ 2 + $depth + 1 + $longest-key.chars }s => %s";
-
-        my $str = do {
-            if @($ds).keys {
-                my $separator = [~] $pretty.pre-separator-spacing, ',', $pretty.post-separator-spacing;
-                [~]
-                $pretty.pre-item-spacing,
-                join($separator,
-                        grep { $_ ~~ Str:D },
-                                map {
-                                    /^ \t* '｢' .*? '｣' \h+ '=>' \h+/
-                                            ??
-                                            sprintf($template, .split: / \h+ '=>' \h+  /, 2)
-                                            !!
-                                            $_
-                                },
-                                        map { $pretty.dump: $_, :depth($depth + 1) }, $ds.pairs
-                ),
-                $pretty.post-item-spacing;
-            }
-            else {
-                $pretty.intra-group-spacing;
-            }
-        }
-
-        "\%($str)"
-    }
-    my $match-code = -> PrettyDump $pretty, $ds, Int:D :$depth = 0 --> Str {
-        $pretty.Match($ds, :start</>, :end</>)
-    };
-    my $array-code = -> PrettyDump $pretty, $ds, Int:D :$depth = 0 --> Str {
-        $pretty.Array($ds, :start<[>)
-    };
-    my $list-code = -> PrettyDump $pretty, $ds, Int:D :$depth = 0 --> Str {
-        $pretty.List($ds, :start<(>)
-    };
-
-    $pretty.add-handler: 'Pair', $pair-code;
-    $pretty.add-handler: 'Hash', $hash-code;
-    $pretty.add-handler: 'Array', $array-code;
-    $pretty.add-handler: 'Match', $match-code;
-    $pretty.add-handler: 'List', $list-code;
-    $pretty.dump: $ds
 }

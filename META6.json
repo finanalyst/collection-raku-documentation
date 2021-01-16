@@ -12,7 +12,7 @@
     "Pod::From::Cache",
     "File::Temp",
     "Terminal::Spinners",
-    "Pretty::Dump"
+    "RakuConfig"
   ],
   "build-depends": [],
   "test-depends": [
@@ -27,11 +27,11 @@
     "config.raku"
   ],
   "support": {
-    "bugtracker": "https://github.com/finanalyst/raku-alt-documentation/issues",
+    "bugtracker": "https://github.com/finanalyst/raku-alternative-documentation/issues",
     "email": "richard@hainsworth.wales",
-    "source": "https://github.com/finanalyst/raku-alt-documentation.git"
+    "source": "https://github.com/finanalyst/raku-alternative-documentation.git"
   },
   "license": "Artistic-2.0",
-  "source-url": "git://github.com/finanalyst/raku-alt-documentation.git",
+  "source-url": "git://github.com/finanalyst/raku-alternative-documentation.git",
   "source-type": "git"
 }
