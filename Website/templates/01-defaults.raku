@@ -181,7 +181,7 @@ use ProcessedPod;
     },
     'glossary' => sub ( %prm, %tml ) {
         with %prm<glossary> {
-            '<div id="Glossary" class="glossary">' ~ "\n"
+            '<div id="_nav_Glossary" class="glossary">' ~ "\n"
                     ~ '<div class="glossary-caption">Glossary</div>' ~ "\n"
                     ~ '<div class="glossary-defn header">Term explained</div><div class="header glossary-place">In section</div>'
                     ~ [~] %prm<glossary>.map({
@@ -212,7 +212,7 @@ use ProcessedPod;
     },
     'toc' => sub ( %prm, %tml ) {
         with %prm<toc> {
-            "<div id=\"TOC\"><table>\n<caption>Table of Contents</caption>\n"
+            "<div id=\"_nav_TOC\"><table>\n<caption>Table of Contents</caption>\n"
                     ~ [~] %prm<toc>.map({
                 '<tr class="toc-level-' ~ .<level> ~ '">'
                         ~ '<td class="toc-text"><a href="#'

@@ -9,5 +9,6 @@
     destination => 'html',
     output-ext => 'html',
     app-root => 'index',
-
+    mode-cache => 'website-cache',
+    mode-sources => 'website-sources',
 )

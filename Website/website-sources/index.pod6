@@ -1,0 +1,10 @@
+=begin pod
+=TITLE Table of Contents
+=SUBTITLE Website Collection
+
+=head1 TOC for the Website
+
+=TOC
+
+=end pod
+

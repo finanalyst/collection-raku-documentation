@@ -1,0 +1,11 @@
+=begin pod
+=TITLE Glossary
+=SUBTITLE Website Glossary
+
+=head1 Glossary for the Website
+
+=Glossary
+
+=end pod
+
+say $=pod;

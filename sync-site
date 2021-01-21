@@ -1,0 +1,3 @@
+#! /bin/bash
+cd ~/development/raku-alt-documentation
+rsync -a Website/ trial/Website/

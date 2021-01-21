@@ -1,0 +1,7 @@
+=begin pod
+=TITLE Website Footnotes
+=SUBTITLE All the footnotes gathered together
+
+=Footnotes
+
+=end pod
