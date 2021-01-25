@@ -2,14 +2,10 @@
 
 =TITLE Collection-based Raku Documentation
 
-=SUBTITLE Creates a Collection of Rakudoc (aka POD6) sources, default starts a local web-site powered by Cro.
-
 =DESCRIPTION Collects the Raku Documentation's content sources existing in github repo, creates output
 suitable for a running with Cro.
 
 =AUTHOR Richard Hainsworth, aka finanalyst
-
-=LICENSE Artist 2.0
 
 This Module provides a local website available via a browser at localhost:3000 of the Raku documentation.
 The Module uses Collection and Raku::Pod::Render to link all the Rakudoc (aka Pod6) files together.
@@ -73,24 +69,34 @@ options can be changed in the C<Website> config files. The C<Collection> documen
 all the options. Some of them are:
 
 Briefly, the options are:
+=begin item
+B<no-status>
 
-=defn no-status
 Caching and rendering can take time, so a progress bar is provided for the terminal. By setting C<no-status> on the command
 line or in the Website config files, no status bar is shown.
+=end item
+=begin item
+B<no-refresh>
 
-=defn no-refresh
 This prevents C<Raku-Doc> (actually C<Collection::collect>) from getting new changes to the documentation sources, and so no changes will be made to the
 cache.
+=end item
+=begin item
+B<recompile>
 
-=defn recompile
 By default, only source files that have changed are cached. This option deletes the source cache, forcing all source files to be
 recompiled.
+=end item
+=begin item
+B<no-rerender>
 
-=defn no-rerender
 Even if there are changes to source files, the output html files are not re-rendered.
+=end item
+=begin item
+B<full-render>
 
-=defn full-render
 Even if there only some or no changes to the source files, all the files in the cache will be rendered again. The same
 effect can be achieved by deleting the C<Website/html> directory.
-
+=end item
+B<LICENSE> Artistic-2.0
 =end pod

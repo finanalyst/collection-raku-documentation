@@ -1,1 +1,0 @@
-/home/richard/development/raku-MAIN-doc/doc/Language/pod.pod6

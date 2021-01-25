@@ -1,18 +1,16 @@
 # Collection-based Raku Documentation
->Creates a Collection of Rakudoc (aka POD6) sources, default starts a local web-site powered by Cro.
+> **Description** Collects the Raku Documentation's content sources existing in github repo, creates output suitable for a running with Cro.
+
+> **Author** Richard Hainsworth, aka finanalyst
 
 
 ----
+----
 ## Table of Contents
-[License](#license)  
 [Installation](#installation)  
 [Raku-Doc](#raku-doc)  
 
 ----
-# LICENSE
-
-Artist 2.0
-
 This Module provides a local website available via a browser at localhost:3000 of the Raku documentation. The Module uses Collection and Raku::Pod::Render to link all the Rakudoc (aka Pod6) files together. The Cro app and HTML output files are created using the Website mode, but other modes can be created. For more information about creating different modes, and for an explanation about how to create Websites from other content sources, see [ContentCollection](ContentCollection.md).
 
 # Installation
@@ -61,16 +59,27 @@ The Raku Documentation source files are regularly updated. The **Website** mode 
 
 Briefly, the options are:
 
-> **no-status**  
-Caching and rendering can take time, so a progress bar is provided for the terminal. By setting C<no-status> on the command line or in the Website config files, no status bar is shown.
-> **no-refresh**  
-This prevents C<Raku-Doc> (actually C<Collection::collect>) from getting new changes to the documentation sources, and so no changes will be made to the cache.
-> **recompile**  
+*  **no-status**
+
+Caching and rendering can take time, so a progress bar is provided for the terminal. By setting `no-status` on the command line or in the Website config files, no status bar is shown.
+
+*  **no-refresh**
+
+This prevents `Raku-Doc` (actually `Collection::collect`) from getting new changes to the documentation sources, and so no changes will be made to the cache.
+
+*  **recompile**
+
 By default, only source files that have changed are cached. This option deletes the source cache, forcing all source files to be recompiled.
-> **no-rerender**  
+
+*  **no-rerender**
+
 Even if there are changes to source files, the output html files are not re-rendered.
-> **full-render**  
-Even if there only some or no changes to the source files, all the files in the cache will be rendered again. The same effect can be achieved by deleting the C<Website/html> directory.
+
+*  **full-render**
+
+Even if there only some or no changes to the source files, all the files in the cache will be rendered again. The same effect can be achieved by deleting the `Website/html` directory.
+
+**LICENSE** Artistic-2.0
 
 
 
@@ -79,4 +88,4 @@ Even if there only some or no changes to the source files, all the files in the 
 
 
 ----
-Rendered from README at 2021-01-25T14:37:35Z
+Rendered from README at 2021-01-25T22:38:29Z

@@ -1,1 +1,0 @@
-/home/richard/development/raku-MAIN-doc/doc/Language/numerics.pod6
