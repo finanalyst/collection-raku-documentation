@@ -1,0 +1,15 @@
+=begin pod
+=TITLE Changelog
+=SUBTITLE For the Collection-Raku-Documentation module
+
+=head1 2021-01-22 Spin off Collection into its own Module
+=item the intention was always for Raku-Alt-Documentation to be the first collection, but not
+the last.
+=item This module now has a small initialisation file and binary to start it
+=item The focus in this module will be on plugins, templates, and Website source files
+
+=head1 2021-01-25 Change name to reflect Collection hierarchy
+=item Renamed various files/entities to reflect new names
+=item Shortened README, removing most option/plugin/stage information to Collection docs.
+
+=end pod

@@ -1,6 +1,6 @@
 {
-  "name": "Raku::Alt::Documentation",
-  "description": "Use Cro and Raku::Pod::Render. Different search system. Global and local TOCs and Glossaries. Documents local installation.",
+  "name": "Collection-Raku-Documentation",
+  "description": "Use Cro and Collection to supply Raku documentation. Different search system. Global and local TOCs and Glossaries. Documents local installation.",
   "version": "0.1",
   "perl": "6.*",
   "authors": [
@@ -8,30 +8,27 @@
   ],
   "auth": "github:finanalyst",
   "depends": [
-    "Raku::Pod::Render",
-    "Pod::From::Cache",
-    "File::Temp",
-    "Terminal::Spinners",
-    "RakuConfig"
+    "RakuConfig",
+    "Collection"
   ],
   "build-depends": [],
   "test-depends": [
     "Test::META"
   ],
   "provides": {
-    "Collection": "lib/Collection.pm6",
-    "Collection::Exceptions": "lib/Collection/Exceptions.pm6",
-    "Raku-Doc": "bin/Raku-Doc"
+    "Raku-Doc": "bin/Raku-Doc",
+    "Collection::RakuDocumentation": "lib/RakuDoc.pm6"
   },
   "resources": [
-    "config.raku"
+    "config.raku",
+    "website.rar"
   ],
   "support": {
-    "bugtracker": "https://github.com/finanalyst/raku-alt-documentation/issues",
+    "bugtracker": "https://github.com/finanalyst/collection-raku-documentation/issues",
     "email": "richard@hainsworth.wales",
-    "source": "https://github.com/finanalyst/raku-alt-documentation.git"
+    "source": "https://github.com/finanalyst/collection-raku-documentation.git"
   },
   "license": "Artistic-2.0",
-  "source-url": "git://github.com/finanalyst/raku-alt-documentation.git",
+  "source-url": "git://github.com/finanalyst/collection-raku-documentation.git",
   "source-type": "git"
 }

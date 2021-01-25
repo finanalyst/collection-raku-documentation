@@ -1,27 +1,2 @@
 #!/usr/bin/env raku
-use lib '/home/richard/development/raku-alt-documentation/lib';
-constant CONFIG = '/home/richard/development/raku-alt-documentation/resources/config.raku'.IO;
-constant WEBSITE = '/home/richard/development/raku-alt-documentation/resources/website.rar'.IO;
-
-use Collection;
-use RakuConfig;
-
-multi sub MAIN(|c) {
-    unless 'config.raku'.IO.f {
-        exit note "The directory ｢~/{$*CWD.relative($*HOME)}｣ has no config file, but it is not empty. Aborting"
-            if + $*CWD.dir;
-        say "Initialising collection in ｢~/{ $*CWD.relative($*HOME) }｣";
-        'config.raku'.IO.spurt: CONFIG.slurp;
-        my %config = get-config(:required<cache sources source-obtain mode>);
-        my $proc = run %config<source-obtain>.list, :err, :out;
-        my $proc-rv = $proc.err.get;
-        exit note $proc-rv if $proc-rv;
-        $proc = run 'unrar', 'x', ~WEBSITE, :err, :out;
-        $proc-rv = $proc.err.get;
-        exit note "unrar error when unpacking Website files. Error is:" ~ $proc-rv
-        if $proc-rv;
-        say 'Initialised'
-    }
-    collect( |c ) unless |c ~~ 'Init';
-}
-
+use Collection::RakuDocumentation;

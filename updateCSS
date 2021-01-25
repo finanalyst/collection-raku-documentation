@@ -1,2 +1,0 @@
-#!/bin/bash
-sass "/home/richard/development/raku-alt-documentation/scss/pod.scss":"/home/richard/development/raku-alt-documentation/Website/templates/pod.css"
