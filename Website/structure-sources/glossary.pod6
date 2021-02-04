@@ -7,5 +7,3 @@
 =Glossary
 
 =end pod
-
-say $=pod;

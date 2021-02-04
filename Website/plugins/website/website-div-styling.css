@@ -1,0 +1,41 @@
+.toc-container {
+    display: grid;
+    justify-content: center;
+    grid-template-rows: 55px auto ;
+    grid-template-columns: [fn] 3% [h1] 3% [h2] 3% [h3] auto [end];
+    row-gap: 5px;
+}
+.toc-container > * > a {
+    text-decoration: none;
+    color: inherit;
+}
+.toc-caption {
+    grid-column: fn / end;
+    grid-row: 0 / 1;
+    justify-self: center;
+    font-size:xx-large;
+}
+.toc-file   {
+    grid-column: 1 / end;
+    justify-self: left;
+    align-self: center;
+    font-size: x-large;
+    line-height: 1.3;
+    color: darkgoldenrod
+}
+.toc-head-1 {
+    grid-column: 2 / end;
+    justify-self: left;
+    font-size: large;
+    color: darkolivegreen
+}
+.toc-head-2 {
+    grid-column: h2 / end;
+    justify-self: left;
+    color: darkolivegreen
+}
+.toc-head-3 {
+    grid-column: h3 / end;
+    justify-self: left;
+    color: darkolivegreen
+}

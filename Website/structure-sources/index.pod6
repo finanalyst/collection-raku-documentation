@@ -4,7 +4,7 @@
 
 =head1 TOC for the Website
 
-=TOC
+=for Website :template<ws-toc>
+Table of Contents Caption
 
 =end pod
-

@@ -1,0 +1,26 @@
+
+=begin pod
+=TITLE Gather CSS Plugin for Collection
+=DESCRIPTION Plugin manages the css, either local or remote, provided by other plugins. It must be
+after all such other plugins in the plugins-required configuration of the Mode.
+
+=head1 Useage
+
+This plugin looks at all the namespaces in the B<ProcessedPod> object's plugin-data area and seeks
+C<css> or C<css-link> keys.
+
+=head2 Local css files
+
+A C<css> is interpreted as the name of a local file in the other plugin's directory.
+The contents of the file will be concatenated and placed in a single file
+called by the key C<mode-name> in the B<ProcessedPod>'s plugin data area.
+
+A template is generated so the the css is served with the output contents.
+
+=head1 Provides
+
+Plugin provides or generates
+=item a callable that interogates the C<ProcessedPod> object it is passed and find css/css-link keys.
+=item a template for C<css>.
+
+=end pod

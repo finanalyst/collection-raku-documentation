@@ -1,0 +1,37 @@
+=begin pod
+
+=TITLE Frontmatter Collection Plugin
+
+Provides a C<complilation> plugin that collects all of the TOC, Glossary, Footnote, and Meta data for each
+file in the collection, and places it in the C<ProcessedPod> object's data. Individual Custom blocks
+can then access the data and render all of the Components.
+
+
+=begin code
+=for Website :template<ws-toc>
+Caption for the Table of Contents
+=end code
+
+=head1 Custom blocks
+
+One custom block is given: B<Website>
+
+It can be used with three C<templates>s,
+=item C<:template<ws-toc>
+=item C<:template<ws-glossary>
+=item C<:template<ws-footnotes>
+
+=head1 Templates
+
+The three templates above are defined.
+
+Without an explicit C<template> configuration, C<ws-toc> is the default.
+
+=head1 CSS / SCSS
+
+The CSS is generated from the SCSS file. The gather-css plugin does not yet use the scss, but it is provided.
+
+=end pod
+
+
+

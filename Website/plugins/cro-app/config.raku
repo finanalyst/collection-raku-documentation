@@ -1,0 +1,3 @@
+%(
+    :completion<cro-run.raku>
+)

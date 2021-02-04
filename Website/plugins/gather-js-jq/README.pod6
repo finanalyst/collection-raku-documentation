@@ -1,0 +1,41 @@
+
+=begin pod
+=TITLE Documentation on gather-js-jq plugin for Collection
+
+=DESCRIPTION Looks for C<script>/C<script-link> & C<jquery>/<jquery-link> key in other plugins. Provides
+such script(s) as a local file(s) to be served, or a link (eg. a CDN source).
+
+=head1 Usage
+
+Other C<render> plugins can provide custom javascript (aka ECMA) or C<JQuery> files to be served with an html page.
+This plugin takes those files/links and deals with them so that they can be served with the HTML in the
+content files. This requires modification of the templates, and for local files copying to the correct
+output directory.
+
+=head2 Local javascript files
+
+The C<script> key in the other plugin's config file is assumed to be a filename containing text that is to be
+copied into the C<destination> folder.
+
+This plugin copies all script files to the appropriate
+sub-directory of the destination directory, and configures the templates to serve them.
+
+=head2 Remote javascript
+
+The C<script-link> key in the other plugin's config file is taken to be the URL of the remote source. The plugin
+configures the templates to access the source.
+
+=head2 Local JQuery
+
+The C<jquery> key in the other plugin's config file is assumed to be the filename of the local source.
+See local javascript files.
+
+If there is a single C<jquery> or C<jquery-script> found, then loads this plugin will load the
+jquery lib specified in the config file for this plugin. (If another plugin requires a different, eg. later,
+version of JQuery, then the config for this plugin must be updated manually).
+
+=head2 Remote JQuery
+
+The C<jquery-link> key in the other plugin's config file is assumed to be the URL to a JQuery source.
+
+=end pod

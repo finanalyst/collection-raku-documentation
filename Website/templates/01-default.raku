@@ -167,15 +167,19 @@ use ProcessedPod;
                 ~ "\n\t</body>\n</html>\n"
     },
     'footnotes' => sub ( %prm, %tml ) {
-        if %prm<notes>.defined and %prm<notes>.keys {
-            "<div id=\"_Footnotes\" class=\"footnotes\">\n<ol>"
+        with %prm<notes> {
+            if .elems {
+            "<div id=\"_Footnotes\" class=\"footnotes\">\n<ul>"
                     ~ [~] .map({ '<li id="' ~ %tml<escaped>($_<fnTarget>) ~ '">'
+                    ~ ('<span class="footnote-number">' ~ ( $_<fnNumber> // '' ) ~ '</span>')
                     ~ ($_<text> // '')
                     ~ '<a class="footnote" href="#'
                     ~ %tml<escaped>($_<retTarget>)
                     ~ "\"> « Back »</a></li>\n"
             })
-                    ~ "\n</ol>\n</div>\n"
+                    ~ "\n</ul>\n</div>\n"
+            }
+            else { '' }
         }
         else { '' }
     },
@@ -232,9 +236,14 @@ use ProcessedPod;
                 ~ %tml<favicon>(%prm, %tml)
                 ~ (%prm<metadata> // '')
                 ~ (  ( %prm<css>.defined and %prm<css> ne '' )
-                ?? ('<link rel="stylesheet" href="' ~ %prm<css> ~ '">')
-                !! %tml<css-text>(%prm, %tml)
-        )
+                    ?? ('<link rel="stylesheet" href="' ~ %prm<css> ~ '">')
+                    !! ''
+                  )
+                ~ %tml<css-text>(%prm, %tml)
+                ~ (  ( %prm<jq-lib>.defined and %prm<jq-lib> ne '' )
+                    ?? ('<script src"' ~ %prm<jq-lib> ~ '"></script>')
+                    !! ''
+                  )
                 ~ (%prm<head> // '')
                 ~ "\</head>\n"
     },
@@ -243,8 +252,9 @@ use ProcessedPod;
     },
     'footer' => sub ( %prm, %tml ) {
         '<footer><div>Rendered from <span class="path">'
-                ~ (( %prm<path>.defined && %prm<path> ne '') ?? %tml<escaped>(%prm<path>) !! 'Unknown')
+                ~ (( %prm<path>.defined && %prm<path> ne '') ?? %tml<escaped>(%prm<path>) !! '')
                 ~ '</span></div>'
+                ~ '<!-- filename = ' ~ %prm<name> ~ '-->'
                 ~ '<div>at <span class="time">'
                 ~ (( %prm<renderedtime>.defined && %prm<path> ne '') ?? %tml<escaped>(%prm<renderedtime>) !! 'a moment before time began!?')
                 ~ '</span></div>'
