@@ -1,5 +1,6 @@
 use v6.*;
 use ProcessedPod;
+use PrettyDump;
 %(
 # the following are extra for HTML files and are needed by the render (class) method
 # in the source-wrap template.
@@ -9,9 +10,14 @@ use ProcessedPod;
         else { '' }
     },
     'raw' => sub ( %prm, %tml ) { (%prm<contents> // '') },
-    'camelia-img' => sub ( %prm, %tml ) { '<camelia />' },
-    'css-text' => sub ( %prm, %tml ) { '<style>debug</style>' },
-    'favicon' => sub ( %prm, %tml ) { '<meta>NoIcon</meta>' },
+    'camelia-img' => sub ( %prm, %tml ) { "\n<camelia />" },
+    'css-text' => sub ( %prm, %tml ) { "\n<style>debug</style>" },
+    'favicon' => sub ( %prm, %tml ) { "\n<meta>NoIcon</meta>" },
+    'css' => sub ( %prm, %tml ) { '' },
+    'jq-lib' => sub ( %prm, %tml ) { '' },
+    'js' => sub ( %prm, %tml ) { '' },
+    'jq' => sub ( %prm, %tml ) { '' },
+    'js-bottom' => sub ( %prm, %tml ) { '' },
     'block-code' => sub ( %prm, %tml ) {
         '<pre class="pod-block-code">'
                 ~ (%prm<contents> // '')
@@ -152,32 +158,33 @@ use ProcessedPod;
                 ~ "\t<body class=\"pod\">\n"
                 ~ %tml<header>(%prm, %tml)
                 ~ '<div class="pod-content">'
-                ~ (( (%prm<toc>.defined and %prm<toc>.keys) or (%prm<glossary>.defined and %prm<glossary>.keys) ) ?? '<nav>' !! '')
+                ~ ( (%prm<toc> or %prm<glossary>) ?? '<nav>' !! '')
                 ~ (%prm<toc> // '')
                 ~ (%prm<glossary> // '')
-                ~ (( (%prm<toc>.defined and %prm<toc>.keys) or (%prm<glossary>.defined and %prm<glossary>.keys) ) ?? '</nav>' !! '')
+                ~ ( (%prm<toc> or %prm<glossary>) ?? '</nav>' !! '')
                 ~ %tml<top-of-page>(%prm, %tml)
                 ~ %tml<subtitle>(%prm, %tml)
-                ~ '<div class="pod-body' ~ (( %prm<toc>.defined and %prm<toc> ne '' ) ?? '' !! ' no-toc') ~ '">'
+                ~ '<div class="pod-body">'
                 ~ (%prm<body> // '')
                 ~ "\t\t</div>\n"
                 ~ (%prm<footnotes> // '')
                 ~ '</div>'
                 ~ %tml<footer>(%prm, %tml)
+                ~ %tml<js-bottom>({},{})
                 ~ "\n\t</body>\n</html>\n"
     },
     'footnotes' => sub ( %prm, %tml ) {
         with %prm<notes> {
             if .elems {
-            "<div id=\"_Footnotes\" class=\"footnotes\">\n<ul>"
-                    ~ [~] .map({ '<li id="' ~ %tml<escaped>($_<fnTarget>) ~ '">'
+            "<div id=\"_Footnotes\" class=\"footnotes\">\n"
+                ~ [~] .map({ '<div class="footnote" id="' ~ %tml<escaped>($_<fnTarget>) ~ '">'
                     ~ ('<span class="footnote-number">' ~ ( $_<fnNumber> // '' ) ~ '</span>')
                     ~ ($_<text> // '')
-                    ~ '<a class="footnote" href="#'
+                    ~ '<a class="footnote-linkback" href="#'
                     ~ %tml<escaped>($_<retTarget>)
-                    ~ "\"> « Back »</a></li>\n"
-            })
-                    ~ "\n</ul>\n</div>\n"
+                    ~ "\"> « Back »</a></div>\n"
+                })
+                ~ "\n</div>\n"
             }
             else { '' }
         }
@@ -233,22 +240,17 @@ use ProcessedPod;
         "\<head>\n"
                 ~ '<title>' ~ %tml<escaped>(%prm<title>) ~ "\</title>\n"
                 ~ '<meta charset="UTF-8" />' ~ "\n"
-                ~ %tml<favicon>(%prm, %tml)
+                ~ %tml<favicon>({},{})
                 ~ (%prm<metadata> // '')
-                ~ (  ( %prm<css>.defined and %prm<css> ne '' )
-                    ?? ('<link rel="stylesheet" href="' ~ %prm<css> ~ '">')
-                    !! ''
-                  )
-                ~ %tml<css-text>(%prm, %tml)
-                ~ (  ( %prm<jq-lib>.defined and %prm<jq-lib> ne '' )
-                    ?? ('<script src"' ~ %prm<jq-lib> ~ '"></script>')
-                    !! ''
-                  )
-                ~ (%prm<head> // '')
+                ~ %tml<css>({},{})
+                ~ %tml<css-text>({},{})
+                ~ %tml<jq-lib>({},{})
+                ~ %tml<jq>({},{})
+                ~ %tml<js>({},{})
                 ~ "\</head>\n"
     },
     'header' => sub ( %prm,%tml) {
-        '<header>' ~ %tml<camelia-img>(%prm, %tml) ~ '<h1 class="title">' ~ %prm<title> ~ '</h1></header>'
+        "\n<header>\n" ~ %tml<camelia-img>(%prm, %tml) ~ '<h1 class="title">' ~ %prm<title> ~ "</h1>\n</header>\n"
     },
     'footer' => sub ( %prm, %tml ) {
         '<footer><div>Rendered from <span class="path">'

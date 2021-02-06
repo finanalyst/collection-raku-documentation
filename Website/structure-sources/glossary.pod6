@@ -1,9 +1,8 @@
-=begin pod
-=TITLE Glossary
-=SUBTITLE Website Glossary
+=begin pod :no-toc :no-glossary :no-footnotes :no-meta
 
-=head1 Glossary for the Website
+=TITLE Glossary Raku Documentation
 
-=Glossary
+=for Website :make<glossary>
+Glossary for the Website
 
 =end pod

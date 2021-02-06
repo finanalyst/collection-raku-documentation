@@ -1,10 +1,10 @@
 sub (%processed, @plugins-used, --> Pair ) {
     #%.links{$entry}<target location>
     my @report = 'Link report', ;
-    for %processed.kv -> $fn, %page {
-        next unless %page<links> and +%page<links>.keys;
+    for %processed.kv -> $fn, $podf {
+        next unless $podf.links and +$podf.links.keys;
         @report.append: "$fn contains links";
-        for %page<links>.kv -> $entry, (:$target, :$location) {
+        for $podf.links.kv -> $entry, (:$target, :$location) {
             @report.append: "\t$location target is: $target"
         }
     }
@@ -16,9 +16,9 @@ sub (%processed, @plugins-used, --> Pair ) {
         }
     }
     @report.append("\n\nTemplates report");
-    for %processed.kv -> $fn, %page {
-        next unless %page<templates-used>;
-        @report.append("$fn used\n" ~ %page<templates-used>.raku);
+    for %processed.kv -> $fn, $podf {
+        next unless $podf.templates-used;
+        @report.append("$fn used\n" ~ $podf.templates-used.raku);
     }
     'link-plugin-report.txt' => @report.join("\n")
 }

@@ -1,2 +1,4 @@
 #!/bin/bash
-sass "/home/richard/development/raku-alt-documentation/Website/scss/pod.scss":"/home/richard/development/raku-alt-documentation/Website/templates/pod.css"
+cd /home/richard/development/raku-collection-raku-documentation/Website
+sass "scss/pod.scss":"templates/pod.css"
+sass "plugins/website/website-styling.scss":"plugins/website/website-div-styling.css"

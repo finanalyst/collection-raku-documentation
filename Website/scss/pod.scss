@@ -196,4 +196,13 @@ footer {
     border-style: solid;
     border-color: blue;
     border-radius: 1em;
+    .footnote {
+        span .footnote-number {
+            vertical-align: super;
+        }
+        a .footnote-linkback {
+            color: blue;
+            text-decoration: none;
+        }
+    }
 }

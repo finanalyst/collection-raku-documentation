@@ -88,15 +88,15 @@ By default, only source files that have changed are cached. This option deletes 
 recompiled.
 =end item
 =begin item
-B<no-rerender>
-
-Even if there are changes to source files, the output html files are not re-rendered.
-=end item
-=begin item
 B<full-render>
 
 Even if there only some or no changes to the source files, all the files in the cache will be rendered again. The same
 effect can be achieved by deleting the C<Website/html> directory.
+=end item
+=begin item
+B<collection-info>
+
+Turns on tracing for Collection. Reports when milestones passed, and the plugins at each milestone.
 =end item
 B<LICENSE> Artistic-2.0
 =end pod

@@ -71,13 +71,13 @@ This prevents `Raku-Doc` (actually `Collection::collect`) from getting new chang
 
 By default, only source files that have changed are cached. This option deletes the source cache, forcing all source files to be recompiled.
 
-*  **no-rerender**
-
-Even if there are changes to source files, the output html files are not re-rendered.
-
 *  **full-render**
 
 Even if there only some or no changes to the source files, all the files in the cache will be rendered again. The same effect can be achieved by deleting the `Website/html` directory.
+
+*  **collection-info**
+
+Turns on tracing for Collection. Reports when milestones passed, and the plugins at each milestone.
 
 **LICENSE** Artistic-2.0
 
@@ -88,4 +88,4 @@ Even if there only some or no changes to the source files, all the files in the 
 
 
 ----
-Rendered from README at 2021-01-25T22:38:29Z
+Rendered from README at 2021-02-06T00:32:31Z

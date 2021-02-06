@@ -12,4 +12,8 @@ the last.
 =item Renamed various files/entities to reflect new names
 =item Shortened README, removing most option/plugin/stage information to Collection docs.
 
+=head1 2021-02-06 HTML Rendering working fully
+=item Glossary TOC Footnote generated for whole site using Website block
+=item Major work on Collection to get plugins to work consistently
+
 =end pod

@@ -9,3 +9,7 @@ test-docs/
 /.sass-cache/117b257320647ad1840aa3945ffe6314104db1de/pod.scssc
 /raku-collection-raku-documentation.iml
 /raku-collection-rakudocs.iml
+/Website/.sass-cache/b866bd8db39335f7932729af0b005b1f23a03906/_highlights.scssc
+/Website/.sass-cache/b866bd8db39335f7932729af0b005b1f23a03906/pod.scssc
+/Website/plugins/website/website-div-styling.css.map
+/Website/.sass-cache/25c94da2d6244e9b4d998267d7cff2363c4a898d/website-styling.scssc

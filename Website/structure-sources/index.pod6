@@ -1,10 +1,8 @@
-=begin pod
-=TITLE Table of Contents
-=SUBTITLE Website Collection
+=begin pod :no-toc :no-glossary :no-footnotes :no-meta
 
-=head1 TOC for the Website
+=TITLE TOC Raku Documentation
 
-=for Website :template<ws-toc>
-Table of Contents Caption
+=for Website :make<toc>
+Table of Contents for the Website
 
 =end pod

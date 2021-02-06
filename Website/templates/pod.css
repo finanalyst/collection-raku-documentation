@@ -378,5 +378,10 @@ footer {
   border-style: solid;
   border-color: blue;
   border-radius: 1em; }
+  .footnotes .footnote span .footnote-number {
+    vertical-align: super; }
+  .footnotes .footnote a .footnote-linkback {
+    color: blue;
+    text-decoration: none; }
 
 /*# sourceMappingURL=pod.css.map */

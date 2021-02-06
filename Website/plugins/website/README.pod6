@@ -8,7 +8,7 @@ can then access the data and render all of the Components.
 
 
 =begin code
-=for Website :template<ws-toc>
+=for Website :make<toc>
 Caption for the Table of Contents
 =end code
 
@@ -16,16 +16,16 @@ Caption for the Table of Contents
 
 One custom block is given: B<Website>
 
-It can be used with three C<templates>s,
-=item C<:template<ws-toc>
-=item C<:template<ws-glossary>
-=item C<:template<ws-footnotes>
+It can be used with three C<make> options,
+=item C<:make<toc>>
+=item C<:make<glossary>>
+=item C<:ake<footnotes>>
 
 =head1 Templates
 
-The three templates above are defined.
+Three templates are defined for each C<make> option.
 
-Without an explicit C<template> configuration, C<ws-toc> is the default.
+Without an explicit C<make> configuration, C<:make<toc>> is the default.
 
 =head1 CSS / SCSS
 

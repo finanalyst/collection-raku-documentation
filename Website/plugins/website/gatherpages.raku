@@ -1,10 +1,16 @@
 sub ($pr, %processed) {
-    for <toc footnotes glossary meta> -> $component {
-        #%data contains keys for each source and sub-keys for each page component
-        # what is required is to make the structure pointed to by raw-component available
-        # to a collection structure with sub-keys of filenames
-        $pr.add-data("collection-$component",
-                %( |gather for %processed.keys {
-                    take $_ => %processed{$_}{"raw-$component"} }) )
-    }
+    my $ws = $pr.get-data('website');
+    $ws<ws-toc> =
+            %( |gather for %processed.kv -> $fn, $podf {
+                take $fn => $podf.raw-toc});
+    $ws<ws-glossary> =
+            %( |gather for %processed.kv -> $fn, $podf {
+                take $fn => $podf.raw-glossary
+                    if $podf.raw-glossary.keys
+            });
+    $ws<ws-footnotes> =
+            %( |gather for %processed.kv -> $fn, $podf {
+                take $fn => $podf.raw-footnotes
+                    if $podf.raw-footnotes.elems
+            });
 }
