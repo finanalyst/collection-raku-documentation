@@ -15,4 +15,8 @@
     :report-path<reports>,
     :output-ext<html>,
     :templates<templates>,
+    completion-options => %(
+        :port<35000>,
+        :host<localhost>,
+    ),
 )

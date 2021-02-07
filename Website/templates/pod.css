@@ -221,10 +221,14 @@ atom-text-editor.is-focused .line.cursor-line {
     margin-bottom: 0.2em; }
   .pod-content dd {
     margin-bottom: 1em; }
-  .pod-content h1 a, .pod-content h2 a, .pod-content h3 a, .pod-content h4 a, .pod-content h5 a, .pod-content h6 a {
-    color: black; }
+  .pod-content h1, .pod-content h2, .pod-content h3, .pod-content h4, .pod-content h5, .pod-content h6 {
+    scroll-margin-top: 6.5rem; }
+    .pod-content h1 a, .pod-content h2 a, .pod-content h3 a, .pod-content h4 a, .pod-content h5 a, .pod-content h6 a {
+      color: black; }
   .pod-content h1 {
     padding-top: 0.25em; }
+  .pod-content .top-of-page {
+    scroll-margin-top: 9rem; }
 
 .pod-table tr:nth-child(odd) {
   background-color: rgba(0, 0, 0, 0.031373); }

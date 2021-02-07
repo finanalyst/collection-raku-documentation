@@ -18,12 +18,16 @@
         margin-bottom: 1em;
     }
     h1, h2, h3, h4, h5, h6 {
+        scroll-margin-top: 6.5rem;
         a {
             color: black;
         }
     }
     h1 {
         padding-top: 0.25em;
+    }
+    .top-of-page {
+        scroll-margin-top: 9rem;
     }
 }
 .pod-table tr:nth-child(odd) {

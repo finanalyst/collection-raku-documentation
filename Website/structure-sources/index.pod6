@@ -1,8 +1,9 @@
 =begin pod :no-toc :no-glossary :no-footnotes :no-meta
 
-=TITLE TOC Raku Documentation
+=TITLE Raku Documentation
 
-=for Website :make<toc>
-Table of Contents for the Website
+=head1 L<For table of contents|toc>
+
+=head1 L<For glossary|glossary>
 
 =end pod

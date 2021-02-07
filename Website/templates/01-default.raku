@@ -133,7 +133,7 @@ use PrettyDump;
     },
     'top-of-page' => sub ( %prm, %tml ) {
         if %prm<title-target>:exists and %prm<title-target> ne '' {
-            '<div id="' ~ %tml<escaped>(%prm<title-target>) ~ '"></div>'
+            '<div id="' ~ %tml<escaped>(%prm<title-target>) ~ '" class="top-of-page"></div>'
         }
         else { '' }
     },

@@ -9,7 +9,9 @@
   "auth": "github:finanalyst",
   "depends": [
     "RakuConfig",
-    "Collection"
+    "Collection",
+    "Cro::HTTP",
+    "Cro::WebSocket"
   ],
   "build-depends": [],
   "test-depends": [
