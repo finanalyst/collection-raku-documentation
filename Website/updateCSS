@@ -1,4 +1,4 @@
 #!/bin/bash
-cd /home/richard/development/raku-collection-raku-documentation/Website
-sass "scss/pod.scss":"templates/pod.css"
-sass "plugins/website/website-styling.scss":"plugins/website/website-div-styling.css"
+cd /home/richard/development/raku-collection-raku-documentation/Website/plugins
+sass "website/website-div-styling.scss":"website/website-div-styling.css"
+sass "raku-styling/raku-default-styling.scss":"raku-styling/raku-default-styling.css"

@@ -17,7 +17,7 @@ sub ( @files, $destination, $landing, $ext, %config ) {
         Cro::HTTP::Log::File.new(logs => $*OUT, errors => $*ERR)
     ]
     );
-
+    say "Serving $landing on %config<host>\:%config<port>";
     $http.start;
     react {
         whenever signal(SIGINT) {

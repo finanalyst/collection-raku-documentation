@@ -49,7 +49,7 @@ header {
     overflow: hidden;
     border-top: none;
     font-size: x-large;
-    background: #e6dbd0bd;
+    background: #8BC313bd;
     z-index: 10;
     #Camelia_bug {
       width: 100px;
@@ -196,17 +196,39 @@ footer {
         margin: 3px 0;
     }
 }
+sup.content-footnote {
+    font-weight: bold;
+    font-size: smaller;
+    a {
+        scroll-margin-top: 7rem;
+    }
+}
 .footnotes {
     border-style: solid;
-    border-color: blue;
+    border-color: #f29862d1;
     border-radius: 1em;
+    padding: 1em;
+    margin: 1em;
     .footnote {
-        span .footnote-number {
+        span.footnote-number {
             vertical-align: super;
+            padding-right: 1em;
+            color: darkorchid;
+            font-weight: bolder;
         }
-        a .footnote-linkback {
-            color: blue;
+        a.footnote-linkback {
+            color: navy;
             text-decoration: none;
         }
+    }
+}
+li.defn-item {
+    list-style-type: none;
+    p:first-of-type {
+        font-weight: bolder;
+        margin-bottom: 0.2em;
+    }
+    p:not(p:first-of-type) {
+        padding-left: 2em;
     }
 }

@@ -248,7 +248,7 @@ header {
   overflow: hidden;
   border-top: none;
   font-size: x-large;
-  background: #e6dbd0bd;
+  background: #8BC313bd;
   z-index: 10; }
   header #Camelia_bug {
     width: 100px;
@@ -378,14 +378,30 @@ footer {
   box-shadow: 0.5em 0.5em 1em #888888 p;
     box-shadow-margin: 3px 0; }
 
+sup.content-footnote {
+  font-weight: bold;
+  font-size: smaller; }
+  sup.content-footnote a {
+    scroll-margin-top: 7rem; }
+
 .footnotes {
   border-style: solid;
-  border-color: blue;
-  border-radius: 1em; }
-  .footnotes .footnote span .footnote-number {
+  border-color: #f29862d1;
+  border-radius: 1em;
+  padding: 1em;
+  margin: 1em; }
+  .footnotes .footnote span.footnote-number {
     vertical-align: super; }
-  .footnotes .footnote a .footnote-linkback {
-    color: blue;
+  .footnotes .footnote a.footnote-linkback {
+    color: navy;
     text-decoration: none; }
 
-/*# sourceMappingURL=pod.css.map */
+li.defn-item {
+  list-style-type: none; }
+  li.defn-item p:first-of-type {
+    font-weight: bolder;
+    margin-bottom: 0.2em; }
+  li.defn-item p:not(p:first-of-type) {
+    padding-left: 2em; }
+
+/*# sourceMappingURL=raku-default-styling.css.map */

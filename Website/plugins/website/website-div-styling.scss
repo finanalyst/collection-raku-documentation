@@ -1,9 +1,11 @@
+
+
 .ws-toc-container {
     display: grid;
     justify-content: center;
-    grid-template-rows: 55px auto ;
+    grid-template-rows: 5em auto ;
     grid-template-columns: [fn] 3% [h1] 3% [h2] 3% [h3] 3% [h4] auto [end];
-    row-gap: 5px;
+    row-gap: 0.05em;
     > * > a {
         text-decoration: none;
         color: inherit;
@@ -11,7 +13,6 @@
 }
 .ws-toc-caption {
     grid-column: fn / end;
-    grid-row: 0 / 1;
     justify-self: center;
     font-size: xx-large;
 }
@@ -47,10 +48,10 @@
 
 .ws-glossary-container {
     display: grid;
-    grid-template-columns: 10% 10% 70% 10%;
-    border-radius: inherit;
-    padding: 15px;
-    background-color: inherit;
+    justify-content: center;
+    grid-template-rows: 5em auto ;
+    grid-template-columns: 10% 10% auto;
+    row-gap: 0.05em;
     > * > a {
         text-decoration: none;
         color: navy;
@@ -59,10 +60,9 @@
 .ws-glossary-caption {
     grid-column: 1 / span 4;
     justify-self: center;
-    font-size:120%;
-    font-weight: bold;
+    font-size: xx-large;
 }
-.ws-glossary-file {
+.ws-glossary-defn {
     grid-column: 1 / end;
     justify-self: left;
     align-self: center;
@@ -73,9 +73,10 @@
         font-weight: bold;
     }
 }
-.ws-glossary-defn {
+.ws-glossary-file {
     grid-column: 2 / span 2;
-    font-size:11pt;
+    font-size: 11pt;
+    justify-self: left;
     line-height: 1.1;
     margin-top: 0.4em;
     color: brown;
@@ -86,6 +87,7 @@
 .ws-glossary-place {
     grid-column: 3 / span 2;
     line-height: 1.1;
+    justify-self: left;
     &.header {
         font-weight: bold;
         color: navy;

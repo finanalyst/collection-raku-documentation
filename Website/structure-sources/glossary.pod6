@@ -1,6 +1,6 @@
 =begin pod :no-toc :no-glossary :no-footnotes :no-meta
 
-=TITLE Glossary Raku Documentation
+=TITLE Itemised Index
 
 =for Website :make<glossary>
 Glossary for the Website

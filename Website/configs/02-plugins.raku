@@ -3,7 +3,7 @@
     plugins => 'plugins',
     plugins-required => %(
         :setup(),
-        :render<website gather-css>,
+        :render<raku-styling website camelia simple-extras gather-css>,
         :report<test-link-report>,
         :compilation<website>,
         :completion<cro-app>,

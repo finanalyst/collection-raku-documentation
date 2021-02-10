@@ -26,19 +26,19 @@
     ws-glossary => sub (%prm,%tml) {
         '<div class="ws-glossary-container">' ~ "\n"
             ~ '<div class="ws-glossary-caption">'~ %prm<contents> ~ '</div>'
-            ~ '<div class="ws-glossary-file header">Source file</div>'
             ~ '<div class="ws-glossary-defn header">Term explained</div>'
+            ~ '<div class="ws-glossary-file header">Source file</div>'
             ~ '<div class="ws-glossary-place header">In section</div>'
             ~ %prm<website><ws-glossary>.sort.map({
-                my $fn = .key;
-                '<div class="ws-glossary-file">'
-                        ~ .key ~ '</div>'
-                        ~ .value.sort.map({
-                    '<div class="ws-glossary-defn">'
-                            ~ .key
-                            ~ '</div>'
-                            ~ [~] .value.map({
-                        '<div class="ws-glossary-place"><a href="' ~ $fn ~ '.html#'
+                '<div class="ws-glossary-defn">'
+                    ~ .key ~ '</div>'
+                    ~ .value.sort.map({
+                        my $fn = .key;
+                        '<div class="ws-glossary-file">'
+                        ~ $fn
+                        ~ '</div>'
+                        ~ [~] .value.map({
+                            '<div class="ws-glossary-place"><a href="' ~ $fn ~ '.html#'
                             ~ %tml<escaped>($_<target>)
                             ~ '">'
                             ~ ($_<place>.defined ?? $_<place> !! '')

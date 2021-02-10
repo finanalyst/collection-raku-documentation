@@ -1,6 +1,5 @@
 use v6.*;
 use ProcessedPod;
-use PrettyDump;
 %(
 # the following are extra for HTML files and are needed by the render (class) method
 # in the source-wrap template.
@@ -10,14 +9,13 @@ use PrettyDump;
         else { '' }
     },
     'raw' => sub ( %prm, %tml ) { (%prm<contents> // '') },
-    'camelia-img' => sub ( %prm, %tml ) { "\n<camelia />" },
-    'css-text' => sub ( %prm, %tml ) { "\n<style>debug</style>" },
-    'favicon' => sub ( %prm, %tml ) { "\n<meta>NoIcon</meta>" },
-    'css' => sub ( %prm, %tml ) { '' },
-    'jq-lib' => sub ( %prm, %tml ) { '' },
-    'js' => sub ( %prm, %tml ) { '' },
-    'jq' => sub ( %prm, %tml ) { '' },
-    'js-bottom' => sub ( %prm, %tml ) { '' },
+    'camelia-img' => sub ( %prm, %tml ) { "\n<camelia />" }, #placeholder
+    'favicon' => sub ( %prm, %tml ) { "\n<meta>NoIcon</meta>" }, #placeholder
+    'css' => sub ( %prm, %tml ) { '' }, #placeholder
+    'jq-lib' => sub ( %prm, %tml ) { '' }, #placeholder
+    'js' => sub ( %prm, %tml ) { '' }, #placeholder
+    'jq' => sub ( %prm, %tml ) { '' }, #placeholder
+    'js-bottom' => sub ( %prm, %tml ) { '' }, #placeholder
     'block-code' => sub ( %prm, %tml ) {
         '<pre class="pod-block-code">'
                 ~ (%prm<contents> // '')
@@ -56,7 +54,7 @@ use PrettyDump;
                 ~ '</a>'
     },
     'format-n' => sub ( %prm, %tml ) {
-        '<sup><a name="'
+        '<sup class="content-footnote"><a name="'
                 ~ %tml<escaped>(%prm<retTarget>)
                 ~ '" href="#' ~ %tml<escaped>(%prm<fnTarget>)
                 ~ '">[' ~ %tml<escaped>(%prm<fnNumber>)
@@ -86,9 +84,16 @@ use PrettyDump;
     'image' => sub ( %prm, %tml ) { '<img src="' ~ (%prm<src> // 'path/to/image') ~ '"'
             ~ ' width="' ~ (%prm<width> // '100px') ~ '"'
             ~ ' height="' ~ (%prm<height> // 'auto') ~ '"'
-            ~ ' alt="' ~ (%prm<alt> // 'XXXXX') ~ '">'
+            ~ ' alt="' ~ (%prm<alt> // 'XXXXX') ~ '"'
+            ~ ( %prm<class>:exists ?? (' class"' ~ %prm<class>  ~ '"') !! '' )
+            ~ ( %prm<id>:exists ?? (' class"' ~ %prm<id>  ~ '"') !! '' )
+            ~ '>'
     },
-    'item' => sub ( %prm, %tml ) { '<li>' ~ (%prm<contents> // '') ~ "</li>\n" },
+    'item' => sub ( %prm, %tml ) {
+        '<li' ~ ( %prm<class> ?? (' class="' ~ %prm<class> ~ '"') !! '' ) ~ '>'
+        ~ (%prm<contents> // '')
+        ~ "</li>\n"
+    },
     'list' => sub ( %prm, %tml ) {
         "<ul>\n"
                 ~ %prm<items>.join
@@ -167,8 +172,8 @@ use PrettyDump;
                 ~ '<div class="pod-body">'
                 ~ (%prm<body> // '')
                 ~ "\t\t</div>\n"
-                ~ (%prm<footnotes> // '')
                 ~ '</div>'
+                ~ (%prm<footnotes> // '')
                 ~ %tml<footer>(%prm, %tml)
                 ~ %tml<js-bottom>({},{})
                 ~ "\n\t</body>\n</html>\n"
@@ -243,14 +248,22 @@ use PrettyDump;
                 ~ %tml<favicon>({},{})
                 ~ (%prm<metadata> // '')
                 ~ %tml<css>({},{})
-                ~ %tml<css-text>({},{})
                 ~ %tml<jq-lib>({},{})
                 ~ %tml<jq>({},{})
                 ~ %tml<js>({},{})
                 ~ "\</head>\n"
     },
     'header' => sub ( %prm,%tml) {
-        "\n<header>\n" ~ %tml<camelia-img>(%prm, %tml) ~ '<h1 class="title">' ~ %prm<title> ~ "</h1>\n</header>\n"
+        "\n<header>\n"
+                ~ '<div class="home" ><a href="/index.html">' ~ %tml<camelia-img>(%prm, %tml) ~ '</a></div>'
+                ~ '<div class="page-title">' ~ %prm<title> ~ "</div>\n"
+                ~ '<div class="menu-item"><a href="https://raku.org">Raku homepage</a></div>'
+                ~ '<div class="menu-item"><a href="/language.html">Language</a></div>'
+                ~ '<div class="menu-item"><a href="/toc.html">Contents tables</a></div>'
+                ~ '<div class="menu-item"><a href="/glossary.html">Index</a></div>'
+                ~ '<div class="menu-item"><a href="/search.html">Search</a></div>'
+                ~ '<div class="menu-item"><a href="https://webchat/freenode/net/?channels=#raku">Chat with us</a></div>'
+                ~ "</header>\n"
     },
     'footer' => sub ( %prm, %tml ) {
         '<footer><div>Rendered from <span class="path">'

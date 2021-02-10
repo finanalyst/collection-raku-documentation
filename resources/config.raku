@@ -8,6 +8,7 @@ use v6.*;
     #| the array of strings run to refresh the sources, eg. git pull
     #| assumes CWD set to the directory of sources
     :source-refresh(),
+    :!no-status, # show progress
     :mode<Website>, # the default mode, which must exist
     :ignore< 404 HomePage >,
     :extensions< rakudoc pod pod6 p6 pm pm6 >,
