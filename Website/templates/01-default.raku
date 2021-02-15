@@ -1,4 +1,4 @@
-use v6.*;
+use v6.d;
 use ProcessedPod;
 %(
 # the following are extra for HTML files and are needed by the render (class) method
@@ -16,6 +16,7 @@ use ProcessedPod;
     'js' => sub ( %prm, %tml ) { '' }, #placeholder
     'jq' => sub ( %prm, %tml ) { '' }, #placeholder
     'js-bottom' => sub ( %prm, %tml ) { '' }, #placeholder
+    'search' => sub ( %prm, %tml ) { 'SEARCH' }, #placeholder
     'block-code' => sub ( %prm, %tml ) {
         '<pre class="pod-block-code">'
                 ~ (%prm<contents> // '')
@@ -257,13 +258,16 @@ use ProcessedPod;
         "\n<header>\n"
                 ~ '<div class="home" ><a href="/index.html">' ~ %tml<camelia-img>(%prm, %tml) ~ '</a></div>'
                 ~ '<div class="page-title">' ~ %prm<title> ~ "</div>\n"
+                ~ '<div class="search">' ~ %tml<search>({},{}) ~ "</div>\n"
+                ~ '<div class="menu">'
                 ~ '<div class="menu-item"><a href="https://raku.org">Raku homepage</a></div>'
                 ~ '<div class="menu-item"><a href="/language.html">Language</a></div>'
-                ~ '<div class="menu-item"><a href="/toc.html">Contents tables</a></div>'
+                ~ '<div class="menu-item"><a href="/toc.html">TOC</a></div>'
                 ~ '<div class="menu-item"><a href="/glossary.html">Index</a></div>'
-                ~ '<div class="menu-item"><a href="/search.html">Search</a></div>'
+                ~ '<div class="menu-item"><a href="/types.html">Types</a></div>'
+                ~ '<div class="menu-item"><a href="/programs.html">Programs</a></div>'
                 ~ '<div class="menu-item"><a href="https://webchat/freenode/net/?channels=#raku">Chat with us</a></div>'
-                ~ "</header>\n"
+                ~ "</div></header>\n"
     },
     'footer' => sub ( %prm, %tml ) {
         '<footer><div>Rendered from <span class="path">'

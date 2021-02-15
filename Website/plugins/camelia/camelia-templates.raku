@@ -1,4 +1,4 @@
-use v6.*;
+use v6.d;
 my $camelia-svg = 'Camelia.svg'.IO.slurp;
 my $camelia-ico = 'camelia-ico.bin'.IO.slurp;
 

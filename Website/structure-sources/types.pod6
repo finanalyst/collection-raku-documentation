@@ -1,0 +1,37 @@
+=begin pod :no-glossary
+=TITLE This is a list of the built-in types that are documented.
+
+=for ListFiles  :select<kind=Type, subkind=class, category=basic>
+Basic classes
+
+=for ListFiles  :select<kind=Type, subkind=class, category=composite>
+Composite classes
+
+=for ListFiles  :select<kind=Type, subkind=class, category=basic>
+Basic classes
+
+=for ListFiles :select<kind=Type, subkind=enum, category=basic>
+Basic enums
+
+=for ListFiles :select<kind=Type, subkind=enum, category=domain-specific>
+Domain-specific enums
+
+=for ListFiles :select<kind=Type, subkind=module, category=module>
+Module modules
+
+=for ListFiles :select<kind=Type, subkind=role, category=basic>
+Basic roles
+
+=for ListFiles :select<kind=Type, subkind=role, category=composite>
+Composite roles
+
+=for ListFiles :select<kind=Type, subkind=role, category=domain-specific>
+Domain-specific roles
+
+=for ListFiles :select<kind=Type, subkind=role, category=exception>
+Exception roles
+
+=for ListFiles :select<kind=Type, subkind=role, category=metamodel>
+Metamodel roles
+
+=end pod

@@ -1,0 +1,6 @@
+=begin pod :no-glossary
+=TITLE Raku Programs Documentation
+
+=for ListFiles :select<kind=Programs>
+
+=end pod

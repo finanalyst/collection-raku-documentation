@@ -1,2 +1,1 @@
-#!/usr/bin/env raku
 use Collection::RakuDocumentation;

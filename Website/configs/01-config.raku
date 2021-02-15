@@ -11,7 +11,7 @@
     :mode-refresh(), # ditto
     :collection-info, # show milestone data
     :mode-extensions<rakudoc pod6>, # only use these for content
-    :destination<html>, # where the html files will be sent
+    :destination<html>, # where the html files will be sent relative to Mode directory
     :landing-place<index>, # the first file
     :report-path<reports>,
     :output-ext<html>,

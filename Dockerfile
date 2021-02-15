@@ -3,9 +3,7 @@ LABEL Maintainer Richard Hainsworth, aka finanalyst
 WORKDIR /raku-dox
 ARG cro_version=0.8.4
 
-COPY test-docs raku-docs/
-COPY resources/config.raku config.raku
-COPY Website Website/
+COPY resources/docker-config.raku config.raku
 COPY lib lib/
 COPY t t/
 COPY META6.json .
@@ -25,7 +23,7 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
     && zef install 'Raku::Pod::Render' \
     && raku-pod-render-install-highlighter \
     && zef install . --deps-only \
-    && raku -I. bin/Raku-Doc --no-status --no-completion
+    && raku -I. -c bin/Raku-Doc
 
 EXPOSE 30000
-CMD raku -I. bin/Raku-Doc --no-status
+CMD raku -I. bin/Raku-Doc && bash
