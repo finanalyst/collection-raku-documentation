@@ -23,4 +23,9 @@ the last.
 =item Started work on gather-css to add and link css. Flaws encountered, TODO
 =item Added search button header. leads to page under construction.
 
+=head1 2021-02-21 v0.6
+=item added qjuery manager
+=item filterlines jquery plugin
+=item additions to main collection content
+
 =end pod

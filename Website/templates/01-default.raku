@@ -249,10 +249,10 @@ use ProcessedPod;
                 ~ '<meta charset="UTF-8" />' ~ "\n"
                 ~ %tml<favicon>({},{})
                 ~ (%prm<metadata> // '')
-                ~ %tml<css>({},{})
                 ~ %tml<jq-lib>({},{})
                 ~ %tml<jq>({},{})
                 ~ %tml<js>({},{})
+                ~ %tml<css>({},{})
                 ~ "\</head>\n"
     },
     'header' => sub ( %prm,%tml) {

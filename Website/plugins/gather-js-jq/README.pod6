@@ -12,6 +12,8 @@ This plugin takes those files/links and deals with them so that they can be serv
 content files. This requires modification of the templates, and for local files copying to the correct
 output directory.
 
+All javascript files are assumed to be text files that can be slurped.
+
 =head2 Local javascript files
 
 The C<script> key in the other plugin's config file is assumed to be a filename containing text that is to be
@@ -19,6 +21,8 @@ copied into the C<destination> folder.
 
 This plugin copies all script files to the appropriate
 sub-directory of the destination directory, and configures the templates to serve them.
+
+The C< <script> ... </script> > tags will be added by the plugin.
 
 =head2 Remote javascript
 
@@ -30,7 +34,7 @@ configures the templates to access the source.
 The C<jquery> key in the other plugin's config file is assumed to be the filename of the local source.
 See local javascript files.
 
-If there is a single C<jquery> or C<jquery-script> found, then loads this plugin will load the
+If any C<jquery> or C<jquery-script> key is found, then this plugin will load the
 jquery lib specified in the config file for this plugin. (If another plugin requires a different, eg. later,
 version of JQuery, then the config for this plugin must be updated manually).
 

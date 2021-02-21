@@ -1,6 +1,9 @@
 =begin pod :no-glossary
 =TITLE This is a list of the built-in types that are documented.
 
+
+=begin filterlines
+
 =for ListFiles  :select<kind=Type, subkind=class, category=basic>
 Basic classes
 
@@ -33,5 +36,8 @@ Exception roles
 
 =for ListFiles :select<kind=Type, subkind=role, category=metamodel>
 Metamodel roles
+
+
+=end filterlines
 
 =end pod

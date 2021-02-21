@@ -183,4 +183,26 @@ can be eliminated with a C<:headlevel(0)>.
 =for Image :src<images/octopus_build.gif> :class<justify-center>
 New searching functionality is being developed
 
+=head1 JQuery Plugins
+
+All websites need JQuery plugins or JS scripts. C<Collection> creates the infrastructure for these
+plugins to be written and added to a site.
+
+For example, the C<filterlines> plugin uses a small JQuery script, adds some html around existing Pod content
+and handles everything else.
+
+=begin code
+=begin filterlines
+=for ListFiles :select<kind=Programs>
+Programs that support Raku development
+=end filterlines
+=end code
+
+renders as
+
+=begin filterlines
+=for ListFiles :select<kind=Programs>
+Programs that support Raku development
+=end filterlines
+
 =end pod

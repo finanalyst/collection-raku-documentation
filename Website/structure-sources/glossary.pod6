@@ -2,7 +2,11 @@
 
 =TITLE Itemised Index
 
+=begin filterlines
+
 =for Website :make<glossary>
 Glossary for the Website
+
+=end filterlines
 
 =end pod

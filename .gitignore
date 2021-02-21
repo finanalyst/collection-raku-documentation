@@ -3,7 +3,6 @@
 app/html/
 raku-alt-documentation.iml
 trial/
-test-docs/
 .sass-cache/
 /Website/templates/pod.css.map
 raku-collection-raku-documentation.iml
@@ -12,12 +11,10 @@ Website/.sass-cache
 Website/plugins/website/website-div-styling.css.map
 renew-site
 sync-site
-/doc-main/
 /analysis/
 /Website/plugins/raku-styling/raku-default-styling.css.map
 /resources/website.rar
-/doc-main
 /Website/plugins/listfiles/listf-styling.css.map
-/assets/
 font-awesome-4.7.0/
 font-awesome-4.7.0.zip
+

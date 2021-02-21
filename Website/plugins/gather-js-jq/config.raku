@@ -2,5 +2,6 @@
 %(
     :render<js-collator.raku>,
     :jquery-lib<https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js>,
-    :templates(), # TODO <template.raku>
+    :template-raku<js-templates.raku>, # Will be written by js-collator
+    :custom-raku(), # no custom blocks
 )
