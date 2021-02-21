@@ -10,13 +10,14 @@ use ProcessedPod;
     },
     'raw' => sub ( %prm, %tml ) { (%prm<contents> // '') },
     'camelia-img' => sub ( %prm, %tml ) { "\n<camelia />" }, #placeholder
+    'camelia-faded' => sub ( %prm, %tml ) { "\n<camelia-faded />" }, #placeholder
     'favicon' => sub ( %prm, %tml ) { "\n<meta>NoIcon</meta>" }, #placeholder
     'css' => sub ( %prm, %tml ) { '' }, #placeholder
     'jq-lib' => sub ( %prm, %tml ) { '' }, #placeholder
     'js' => sub ( %prm, %tml ) { '' }, #placeholder
     'jq' => sub ( %prm, %tml ) { '' }, #placeholder
     'js-bottom' => sub ( %prm, %tml ) { '' }, #placeholder
-    'search' => sub ( %prm, %tml ) { 'SEARCH' }, #placeholder
+    'search' => sub ( %prm, %tml ) { '<a href=search.html>Search page</a>' }, #placeholder
     'block-code' => sub ( %prm, %tml ) {
         '<pre class="pod-block-code">'
                 ~ (%prm<contents> // '')
@@ -266,7 +267,7 @@ use ProcessedPod;
                 ~ '<div class="menu-item"><a href="/glossary.html">Index</a></div>'
                 ~ '<div class="menu-item"><a href="/types.html">Types</a></div>'
                 ~ '<div class="menu-item"><a href="/programs.html">Programs</a></div>'
-                ~ '<div class="menu-item"><a href="https://webchat/freenode/net/?channels=#raku">Chat with us</a></div>'
+                ~ '<div class="menu-item"><a href="/collection-examples.html">Collection examples</a></div>'
                 ~ "</div></header>\n"
     },
     'footer' => sub ( %prm, %tml ) {

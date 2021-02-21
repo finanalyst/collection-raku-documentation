@@ -1,4 +1,5 @@
-sub (%processed, @plugins-used, --> Pair ) {
+use PrettyDump;
+sub (%processed, @plugins-used, $processedpod --> Pair ) {
     #%.links{$entry}<target location>
     my @report = 'Link report', ;
     for %processed.kv -> $fn, $podf {
@@ -11,14 +12,18 @@ sub (%processed, @plugins-used, --> Pair ) {
     @report.append: "\n\nPlugin report";
     for @plugins-used {
         @report.append: "Plugins used at ｢{ .key }｣ milestone:";
-        for .value.kv -> $plug, %params {
-            @report.append: "\t｢$plug｣ called with: ", %params.gist;
+        @report.append( "\tNone" ) unless .value.elems;
+        for .value.list -> (:key($plug), :value(%params)) {
+            @report.append("\t｢$plug｣ called with: " ~ pretty-dump( %params).subst(/\n/,"\n\t\t",:g));
         }
     }
     @report.append("\n\nTemplates report");
     for %processed.kv -> $fn, $podf {
         next unless $podf.templates-used;
-        @report.append("$fn used\n" ~ $podf.templates-used.raku);
+        @report.append("｢$fn｣ used:");
+        for $podf.templates-used.sort(*.key) -> (:key($tmp), :value($times) ) {
+            @report.append("\t$tmp: $times times(s))")
+        }
     }
     'link-plugin-report.txt' => @report.join("\n")
 }

@@ -16,4 +16,11 @@ the last.
 =item Glossary TOC Footnote generated for whole site using Website block
 =item Major work on Collection to get plugins to work consistently
 
+=head1 2021-02-21 v0.5
+=item Added plugin to manage images
+=item Added plugin for FontAwesome
+=item Changed header to have link to a Collections example page (instead of webchat)
+=item Started work on gather-css to add and link css. Flaws encountered, TODO
+=item Added search button header. leads to page under construction.
+
 =end pod

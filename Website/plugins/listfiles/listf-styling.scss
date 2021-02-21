@@ -2,7 +2,7 @@
 .listf-container {
     display: grid;
     grid-template-rows: 3em auto;
-    grid-template-columns: 2% 20% auto;
+    grid-template-columns: 2% 30% auto;
     justify-contents: center;
     row-gap: 0.05em;
     div:nth-of-type(4n-2) {

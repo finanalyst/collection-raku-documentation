@@ -12,4 +12,11 @@ use v6.d;
     :mode<Website>, # the default mode, which must exist
     :ignore< 404 HomePage >,
     :extensions< rakudoc pod pod6 p6 pm pm6 >,
+    :asset-basename<assets>,
+    :asset-paths( %( # type of asset is key, then metadata for that type
+        image => %(
+            :directory<images>,
+            :extensions<png jpeg jpeg svg mp4 webm gif>,
+        ),
+    )),
 )

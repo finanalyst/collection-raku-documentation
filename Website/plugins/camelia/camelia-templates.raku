@@ -1,6 +1,7 @@
 use v6.d;
 my $camelia-svg = 'Camelia.svg'.IO.slurp;
 my $camelia-ico = 'camelia-ico.bin'.IO.slurp;
+my $camelia-faded-svg = 'Camelia-faded.svg'.IO.slurp;
 
 %(
     'camelia-img' => sub ( %prm, %tml ) { $camelia-svg },
@@ -13,4 +14,5 @@ my $camelia-ico = 'camelia-ico.bin'.IO.slurp;
                 ~ ( %prm<id>:exists ?? ( ' id="' ~ %prm<id> ~ '" ') !! '')
                 ~ ">\n"
     },
+    :camelia-faded( $camelia-faded-svg ),
 )

@@ -1,0 +1,9 @@
+=begin pod :no-toc :no-glossary
+=TITLE Search Page
+
+=head1 Page is stll under construction
+
+=for Image :src<images/octopus_build.gif> :class<justify-center>
+New searching functionality is being developed
+
+=end pod
