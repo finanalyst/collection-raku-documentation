@@ -2,6 +2,7 @@ use v6.d;
 use Test;
 use ProcessedPod;
 plan 16;
+
 my %config;
 lives-ok { %config = EVALFILE 'config.raku' }, 'config exists';
 
@@ -14,19 +15,19 @@ my %pm = :select("kind=lang, s-kind=basic"),
          :listfiles( %(
             :meta( %(
                 file1 => %( :config(%(:kind<lang>, :s-kind<basic>,)),
-                    :name('Some file1'), :desc('A bit file1')
+                    :title('Some file1'), :desc('A bit file1')
                 ),
                 file2 => %( :config( %(:kind<lang>, :s-kind<new>, )),
-                    :name('Some file2'), :desc('A bit file2')
+                    :title('Some file2'), :desc('A bit file2')
                 ),
                 file3 => %( :config(%(:kind<class>, :s-kind<basic>, )),
-                    :name('Some file3'), :desc('A bit file3')
+                    :title('Some file3'), :desc('A bit file3')
                 ),
                 'file4.pod6' => %( :config(%(:category<role>, :s-kind<basic>, :kind<lang>, )),
-                    :name(''), :desc('')
+                    :title(''), :desc('')
                 ),
                 file5 => %( :config(%(:kind<lang>, :s-kind<base-class>, )),
-                            :name('Some file5'), :desc('A bit file5')
+                            :title('Some file5'), :desc('A bit file5')
                 ),
             ) ),
          ) );
@@ -72,20 +73,21 @@ like $rv,
 
 my &callable;
 lives-ok { &callable = EVALFILE %config<compilation> }, 'callable loads ok';
-my %processed = %( afile => PodFile.new(:name('Good Title'), :subtitle('A subtitle'), :pod-config-data( :one<two>, :three<four> )),
-        bfile => PodFile.new(:name(''),:subtitle(''), ),
+my %processed = %( afile => PodFile.new(:title('Good Title'), :subtitle('A subtitle'), :pod-config-data( :one<two>, :three<four> )),
+        bfile => PodFile.new(:title(''),:subtitle(''), :pod-config-data( :one<two>, :three<four> ) ),
 );
+say "afile gist:", %processed<afile>.gist;
+
 my $pr = ProcessedPod.new;
 $pr.add-data('listfiles', %config);
 &callable($pr, %processed);
 $rv = $pr.get-data('listfiles');
+say $rv.gist;
 ok $rv<meta>:exists, 'data added';
 is-deeply $rv<meta>.keys.sort, <afile bfile>, 'files  returned in correct place';
-is $rv<meta><afile><name>, 'Good Title', 'got title';
+is $rv<meta><afile><title>, 'Good Title', 'got title';
 is $rv<meta><afile><desc>, 'A subtitle', 'got subtitle';
 is $rv<meta><afile><config><one>, 'two', 'got pod config data';
-is $rv<meta><bfile><name>, '', 'filename is title when none given';
+is $rv<meta><bfile><title>, '', 'filename is title when none given';
 
-
-done-testing;
-
+done-testing

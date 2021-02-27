@@ -28,4 +28,20 @@ the last.
 =item filterlines jquery plugin
 =item additions to main collection content
 
+=head1 2021-02-27 v0.7
+=item Raku::Pod::Render enhanced so gist on PodFile can be inspected
+=item Raku::Pod::Render's test-templates rewritten to allow for three Test-Template tests
+=item test suite added to Website mode that will be generic to Collection.
+=item tests check mode configuration and keys
+=item tests check completeness of templates (in principle, all templates can be specified - see PodRender - to
+test validity of the template keys that have been written). So far only minimum template specs are validated
+
+=item tests check for presence and correctness of all plugins, and whether plugins in the plugins-needed
+hash match the requirements. (TODO, test the signatures of the callables to see if they match the milestone needs)
+
+=item all plugins must now have a config.raku and a README.pod6
+
+=item progress made on the Search page functionality
+=item searchability is now inherent in the website TOC/Glossary output structures.
+
 =end pod

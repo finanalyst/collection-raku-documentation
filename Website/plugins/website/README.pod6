@@ -1,11 +1,10 @@
 =begin pod
 
-=TITLE Frontmatter Collection Plugin
+=TITLE Website Plugin for Collection
 
-Provides a C<complilation> plugin that collects all of the TOC, Glossary, Footnote, and Meta data for each
+Provides a C<complilation> plugin that collects the TOC, Glossary, Footnote, and Meta data for each
 file in the collection, and places it in the C<ProcessedPod> object's data. Individual Custom blocks
-can then access the data and render all of the Components.
-
+can then access the data and render these Components, eg.
 
 =begin code
 =for Website :make<toc>
@@ -14,16 +13,28 @@ Caption for the Table of Contents
 
 =head1 Custom blocks
 
-One custom block is given: B<Website>
+One custom block is provided: B<Website>
 
-It can be used with three C<make> options,
+It can be used with several C<make> options:
 =item C<:make<toc>>
 =item C<:make<glossary>>
-=item C<:ake<footnotes>>
+=item C<:make<footnotes>>
+=item C<:make<toc-gloss>>
+
+Each of these are searchable, unless the C< :no-search> option is given
+=code
+    =for Website :make<footnotes> :no-search
+    Caption to the table search block is offset to the right
+
+The default for customised Pod::Blocks is for the Caption text to be included in the TOC. But this may not
+be desired, so either the initial C<=begin pod> can be given a C<:no-toc> and/or C<:no-glossary>, or
+the option C<:header-level(0)> can be given, eg.
+=code
+    =for Website :make<toc> :header-level(0)
 
 =head1 Templates
 
-Three templates are defined for each C<make> option.
+Templates are defined for each C<make> option.
 
 Without an explicit C<make> configuration, C<:make<toc>> is the default.
 

@@ -2,7 +2,7 @@
   display: grid;
   justify-content: center;
   grid-template-rows: 5em auto;
-  grid-template-columns: [fn] 3% [h1] 3% [h2] 3% [h3] 3% [h4] auto [end];
+  grid-template-columns: [fn] 5% [h1] 3% [h2] 3% [h3] 3% [h4] auto [end];
   row-gap: 0.05em; }
   .ws-toc-container > * > a {
     text-decoration: none;
@@ -12,6 +12,22 @@
   grid-column: fn / end;
   justify-self: center;
   font-size: xx-large; }
+
+.ws-toc-file-heading {
+  grid-column: 1 / end;
+  justify-self: left;
+  align-self: center;
+  font-size: x-large;
+  line-height: 1.3;
+  color: darkgoldenrod;
+  font-weight: bolder; }
+
+.ws-toc-heading {
+  grid-column: 2 / end;
+  justify-self: left;
+  font-size: large;
+  color: darkolivegreen;
+  font-weight: bolder; }
 
 .ws-toc-file {
   grid-column: 1 / end;

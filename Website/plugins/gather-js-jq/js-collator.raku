@@ -1,49 +1,66 @@
-#!/usr/bin/env perl6
 sub ( $pp ) {
-    # change the placeholders in the templates
-    # Initially assume only jquery scripts
-    # TODO add other scripts and links
-
-    my Bool $loadjq-lib = True;
-    my $scripts = '';
-    #    my @links;
-    #    my @adds;
+    my Bool $loadjq-lib = False;
+    my @js;
+    my @js-bottom;
     my %own-config = EVALFILE 'config.raku';
-    for $pp.plugin-datakeys {
-        next if $_ eq 'js-collator' ;
-        my $data = $pp.get-data($_);
+    for $pp.plugin-datakeys -> $plug {
+        next if $plug eq 'js-collator' ;
+        my $data = $pp.get-data($plug);
         next unless $data ~~ Associative;
-        if $data<jquery>:exists and $data<jquery> ~~ Str:D {
-            my $file = ($data<path> ~ '/' ~ $data<jquery>).IO;
-            $scripts ~= "\n<script>\n" ~ $file.slurp ~ "\n</script>\n"
+        if $data<js-script>:exists and $data<js-script> ~~ Str:D {
+            @js.push( ($data<js-script>, $plug ) )
         }
-        #        elsif $data<css-link>:exists and $data<css-link> ~~ Str:D {
-        #            @links.append($data<css-link>)
-        #        }
-        #        elsif $data<add-css>:exists and $data<add-css> ~~ Str:D {
-        #            @adds.append(%(:path($data<path>), :file($data<add-css>)))
-        #        }
+        elsif $data<js-link>:exists and $data<js-link> ~~ Str:D {
+            @js.push( ($data<js-link>, '' ) )
+        }
+        elsif $data<js-bottom>:exists and $data<js-bottom> ~~ Str:D {
+            @js-bottom.push(( $data<js-bottom>, $plug ));
+        }
+        elsif $data<jquery>:exists and $data<jquery> ~~ Str:D {
+            @js.push(( $data<jquery>, $plug ));
+            $loadjq-lib = True
+        }
+        elsif $data<jquery-link>:exists and $data<jquery-link> ~~ Str:D {
+            @js.push( ($data<jquery-link>, '' ) );
+            $loadjq-lib = True
+        }
     }
-    #    return {} unless $css or +@adds or +@links;
-    my $template = "\%( \n ";
+    my $template = "\%( \n "; # empty list emitted if not jq/js
     $template ~= 'jq-lib => sub (%prm, %tml) {'
-        ~ "\n\'\<script src=\"" ~ %own-config<jquery-lib> ~ '"></script>' ~ "\' },\n"
+        ~ "\n\'\<script src=\"" ~ %own-config<jquery-lib> ~ '"></script>' ~ "\' \n},\n"
         if $loadjq-lib;
-    my %move-dest;
-    if $scripts {
-        $template ~= 'jq => sub (%prm, %tml) {' ~ "\n"
-                ~ '\'' ~ $scripts ~ "\'},\n"
+    my @move-dest;
+    my $elem;
+    for @js -> ($file, $plug ){
+        FIRST {
+            $template ~= 'js => sub (%prm, %tml) {' ;
+            $elem = 0;
+        }
+        LAST {
+            $template ~= "}\n"
+        }
+        $template ~= ( $elem ?? '~ ' !! '' )
+                ~ '\'<script src="'
+                ~ ( $plug ?? 'assets/scripts/' !! '' )
+                ~ $file
+                ~ "\"\>\</script>'\n";
+        ++$elem;
+        @move-dest.push( ("assets/scripts/$file" , $plug, $file ) )
+            if $plug
     }
-    #    for @adds {
-    #        say '"\n" ~ ' ~ "'<link rel=\"stylesheet\" href=\"/assets/css/{ $_.<file> }\">'";
-    #        $template ~= "\n" ~ '"\n" ~ ' ~ "'<link rel=\"stylesheet\" href=\"/assets/css/{ $_.<file> }\">'";
-    #        ($_.<path> ~ '/' ~ $_.<file>).IO.copy($_.<file>);
-    #        %move-dest{'assets/css/' ~ $_.<file>} = $_.<file>
-    #    }
-    #    for @links {
-    #        $template ~= "\n" ~ '"\n" ~ ' ~ "'<link rel=\"stylesheet\" href=\"$_\" >'";
-    #    }
-    $template ~= ')';
-    "js-templates.raku".IO.spurt: $template;
-    %move-dest
+    for @js-bottom -> ($file, $plug ){
+        FIRST {
+            $template ~= 'js-bottom => sub (%prm, %tml) {' ;
+            $elem = 0;
+        }
+        LAST {
+            $template ~= "}\n"
+        }
+        $template ~= ( $elem ?? '~ ' !! '' ) ~ '\'<script src="assets/scripts/' ~ $file ~ "\"\>\</script>'\n";
+        ++$elem;
+        @move-dest.push( ("assets/scripts/$file" , $plug, $file ) )
+    }
+    $template ~= ")\n";
+    "js-templates.raku".IO.spurt($template);
+    @move-dest
 }

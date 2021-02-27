@@ -40,15 +40,15 @@ my regex select {
 
         my @sel-files;
         for %prm<listfiles><meta>.kv -> $fn, %data {
-            # data is config, name, desc
+            # data is config, title, desc
             my Bool $ok;
             for %criteria.kv -> $k, $v {
-                $ok = (%data<config>{$k}:exists and ?(%data<config>{$k} ~~ $v));
+                $ok = (%data<config>{$k}:exists and ?(%data<config>{$k} ~~ / <$v> /));
                 last unless $ok
             }
             next unless $ok;
             @sel-files.push: [
-                (%data<name> ?? %data<name> !! $fn),
+                ((%data<title> eq '' or %data<title> eq 'NO_TITLE') ?? $fn !! %data<title> ),
                 (%data<desc> ?? %data<desc> !! (%prm<no-desc> ?? %prm<no-desc> !! 'No description found')),
                 $fn
             ];

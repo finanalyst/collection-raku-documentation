@@ -21,8 +21,9 @@ sub (%processed, @plugins-used, $processedpod --> Pair ) {
     for %processed.kv -> $fn, $podf {
         next unless $podf.templates-used;
         @report.append("｢$fn｣ used:");
-        for $podf.templates-used.sort(*.key) -> (:key($tmp), :value($times) ) {
-            @report.append("\t$tmp: $times times(s))")
+        # decreasing sort by number of times used
+        for $podf.templates-used.sort(- *.value) -> (:key($tmp), :value($times) ) {
+            @report.append("\t$tmp: $times times(s)")
         }
     }
     'link-plugin-report.txt' => @report.join("\n")

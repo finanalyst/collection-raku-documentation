@@ -2,6 +2,6 @@
     :render,
     :css<raku-default-styling.css>,
     :custom-raku(),
-    :templates-raku(),
+    :template-raku(),
     :scss<raku-default-styling.scss>
 )

@@ -1,6 +1,6 @@
 %(
     :render<fa-assets.raku>,
-    :custom-template(),
+    :custom-raku(),
     :template-raku<fa-template.raku>,
-    :css<font-awesome.min.css>,
+    :add-css<font-awesome.min.css>,
 )

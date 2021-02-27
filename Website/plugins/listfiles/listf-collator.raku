@@ -8,7 +8,7 @@ sub ( $pr , %processed ) {
         my %data = $podf.pod-config-data // {} ;
         next unless  %data.elems;
         take $fn => %( :config($podf.pod-config-data),
-            :name($podf.title), :desc( $podf.subtitle )
+            :title($podf.title), :desc( $podf.subtitle )
             )
     } )
 }

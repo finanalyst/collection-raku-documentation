@@ -7,12 +7,14 @@
         }
     },
     ws-toc => sub (%prm,%tml) {
-        '<div class="ws-toc-container"><div class="ws-toc-caption">'
-                ~ %prm<contents> ~ '</div>'
-                ~ %prm<website><ws-toc>.sort.map({
+        "\n" ~ '<div class="ws-toc-container">' ~ "\n"
+                ~ '<div class="ws-toc-caption">' ~ %prm<contents>.cache ~ '</div>' ~ "\n"
+                ~ '<div class="ws-toc-file-heading">Web page</div>' ~ "\n"
+                ~ '<div class="ws-toc-heading">Chapter headings</div>' ~ "\n"
+                ~ %prm<website><ws-toc>.cache.sort.map({
             my $fn = .key;
             '<div class="ws-toc-file">'
-                    ~ .key ~ '</div>'
+                    ~ .key ~ '</div>' ~ "\n"
                     ~ .value.map({
                 "<div class=\"ws-toc-head-{
                     $_<level> }\">\<a href=\"{
@@ -24,26 +26,29 @@
                 ~ '</div>'
     },
     ws-glossary => sub (%prm,%tml) {
+        my $id = 'src-id">';
+        $id = (%prm<id> ~ '">') if %prm<id>;
         '<div class="ws-glossary-container">' ~ "\n"
-            ~ '<div class="ws-glossary-caption">'~ %prm<contents> ~ '</div>'
+            ~ '<div class="ws-glossary-caption">' ~ %prm<contents> ~ '</div>'
+            ~ '<input class="ws-glossary-search" data-id="' ~ $id ~ ' type="text" placeholder="Search index ...">'
             ~ '<div class="ws-glossary-defn header">Term explained</div>'
             ~ '<div class="ws-glossary-file header">Source file</div>'
             ~ '<div class="ws-glossary-place header">In section</div>'
-            ~ %prm<website><ws-glossary>.sort.map({
-                '<div class="ws-glossary-defn">'
+            ~ %prm<website><ws-glossary>.cache.sort.map({
+                '<div class="ws-glossary-defn ' ~ $id
                     ~ .key ~ '</div>'
                     ~ .value.sort.map({
                         my $fn = .key;
-                        '<div class="ws-glossary-file">'
+                        '<div class="ws-glossary-file ' ~ $id
                         ~ $fn
-                        ~ '</div>'
+                        ~ '</div><div class="ws-glossary-place ' ~ $id
                         ~ [~] .value.map({
-                            '<div class="ws-glossary-place"><a href="' ~ $fn ~ '.html#'
+                            '<a href="' ~ $fn ~ '.html#'
                             ~ %tml<escaped>($_<target>)
                             ~ '">'
                             ~ ($_<place>.defined ?? $_<place> !! '')
-                            ~ "</a></div>\n"
-                    })
+                            ~ "</a>\n"
+                    }) ~ "</div>\n"
                 })
             })
         ~ '</div>'

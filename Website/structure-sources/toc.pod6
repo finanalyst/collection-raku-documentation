@@ -2,7 +2,7 @@
 
 =TITLE TOC
 
-=begin filterlines
+=begin filterlines :selector('.ws-toc-head-1, .ws-toc-head-2, .ws-toc-head-3, .ws-toc-head-4 *')
 
 =for Website :make<toc>
 Table of Contents for the Website

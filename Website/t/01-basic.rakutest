@@ -1,0 +1,27 @@
+use v6.d;
+use Test;
+use RakuConfig;
+my %config;
+
+plan 17;
+my @required = <mode-sources mode-cache mode-obtain mode-refresh mode-extensions
+            destination asset-out-path landing-place report-path output-ext
+            templates completion-options plugins plugins-required no-code-escape>;
+lives-ok { %config = get-config(:path<configs>, :@required) }, 'config exists';
+
+for <mode-sources mode-cache destination asset-out-path landing-place report-path output-ext
+            templates plugins> {
+    isa-ok %config{$_}, Str:D, "%config{$_} is a defined string";
+}
+
+for <completion-options plugins-required> { isa-ok %config{$_}, Hash, "$_}should be a hash" }
+
+for <mode-sources templates plugins> { is %config{$_}.IO.d, True, "%config{$_} is a directory that must exist" }
+
+isa-ok %config<mode-extensions>, List, "mode-extensions is a List";
+my @sources = %config<mode-sources>.IO.dir>>.relative(%config<mode-sources>)>>.IO>>.basename>>.IO>>.extension('');
+
+cmp-ok %config<landing-place>, 'eq', one(@sources), "Landing file ｢%config<landing-place>｣ is in ｢%config<mode-sources>｣";
+
+done-testing;
+

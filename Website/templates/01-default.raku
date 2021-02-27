@@ -201,7 +201,7 @@ use ProcessedPod;
         if %prm<glossary>.defined and %prm<glossary>.keys {
             '<div id="_Glossary" class="glossary">' ~ "\n"
                     ~ '<div class="glossary-caption">Glossary</div>' ~ "\n"
-                    ~ '<div class="glossary-defn header">Term explained</div><div class="header glossary-place">In section</div>'
+                    ~ '<div class="glossary-defn header">Term explained</div><div class="glossary-place header">In section</div>'
                     ~ [~] %prm<glossary>.map({
                         '<div class="glossary-defn">'
                         ~ ($_<text> // '')
@@ -250,7 +250,6 @@ use ProcessedPod;
                 ~ %tml<favicon>({},{})
                 ~ (%prm<metadata> // '')
                 ~ %tml<jq-lib>({},{})
-                ~ %tml<jq>({},{})
                 ~ %tml<js>({},{})
                 ~ %tml<css>({},{})
                 ~ "\</head>\n"

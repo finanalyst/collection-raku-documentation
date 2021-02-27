@@ -1,0 +1,56 @@
+use Test;
+use RakuConfig;
+
+my %config;
+try {
+    %config = get-config(:path<configs>);
+}
+exit note "$!" if $!;
+
+my $plug-dir = %config<plugins>;
+my @available = $plug-dir.IO.dir(test => /^ \w+ /)>>.basename;
+plan +@available.elems;
+
+for @available.sort -> $p {
+    subtest "Tests for $p plugin" => {
+        my %p-conf;
+        my $exists = "%config<plugins>/$p".IO.d;
+        ok $exists, "$p directory exists";
+        next diag('no further testing without plugin directory') unless $exists;
+        my $orig = $*CWD;
+        chdir "%config<plugins>/$p";
+        lives-ok { %p-conf = get-config(:no-cache) }, "$p has config file";
+        ok "README.pod6".IO.f, "$p has README file";
+        next diag('no further testing with config keys for plugin') unless +%p-conf.keys;
+        my &callable;
+        for %p-conf.keys.sort {
+            when 'css' or 'add-css' { ok %p-conf{$_}.IO.f, "$_ is a file" }
+            when 'css-link' or 'jquery-link' { ok %p-conf<css-link> ~~ Str:D, "$_ is a string" }
+            when 'js-script' or 'js-bottom' or 'jquery' { ok %p-conf{$_}.IO.f, "$_ is a file" }
+            when 'render' {
+                if %p-conf<render> ~~ Str:D {
+                    ok %p-conf<render>.IO.f, "$p has a render callable and the file exists";
+                    lives-ok { &callable = EVALFILE %p-conf{$_} }, "the render callable for $p loads ok";
+                }
+                ok %p-conf<template-raku>:exists, "template-raku must exist in a render plugin $p";
+                ok %p-conf<custom-raku>:exists, "custom-raku must exist in a render plugin $p";
+                if %p-conf<template-raku> {
+                    my %templates;
+                    lives-ok { %templates = EVALFILE %p-conf<template-raku> }, 'templates load ok';
+                }
+                if %p-conf<custom-raku> {
+                    my @blocks;
+                    lives-ok { @blocks = EVALFILE %p-conf<custom-raku> }, 'blocks load ok';
+                }
+            }
+            when 'setup' or 'compilation' or 'report' or 'completion' {
+                ok %p-conf{$_}.IO.f, "$p has a $_ callable file";
+                lives-ok { &callable = EVALFILE %p-conf{$_} }, "$_ callable for $p loads ok";
+            }
+        }
+        done-testing;
+        chdir $orig
+    }
+}
+
+done-testing;

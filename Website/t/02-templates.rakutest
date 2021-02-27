@@ -1,0 +1,24 @@
+use Test;
+use Test-Templates;
+use RakuConfig;
+
+my %config;
+try {
+    %config = get-config(:path<configs>);
+}
+exit note "$!" if $!;
+my $first = True;
+my %temps;
+my @files = %config<templates>.IO.dir;
+
+plan @files.elems + 2;
+
+for @files {
+    lives-ok { %temps = EVALFILE ~$_ }, 'template files eval to hashes';
+    if $first {
+        templates-present %temps;
+        templates-match %temps;
+        $first = False
+    }
+}
+done-testing;
