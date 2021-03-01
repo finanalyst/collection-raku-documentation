@@ -44,4 +44,9 @@ hash match the requirements. (TODO, test the signatures of the callables to see 
 =item progress made on the Search page functionality
 =item searchability is now inherent in the website TOC/Glossary output structures.
 
+=head1 2021-03-1 v0.8
+=item Working version of Search page
+=item altered page header
+=item added placeholder to FilterFile plugin
+
 =end pod

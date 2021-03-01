@@ -1,8 +1,11 @@
 =begin pod :no-glossary
-=TITLE This is a list of the built-in types that are documented.
+=TITLE Documented Types
+=SUBTITLE Built in types
 
+This is a list of the built-in types that are documented, sorted by class/enum/module/role
+and by categories.
 
-=begin filterlines
+=begin filterlines :headlevel(0) :placeholder<Search in filename lines ... >
 
 =for ListFiles  :select<kind=Type, subkind=class, category=basic>
 Basic classes
@@ -16,7 +19,7 @@ Basic classes
 =for ListFiles :select<kind=Type, subkind=enum, category=basic>
 Basic enums
 
-=for ListFiles :select<kind=Type, subkind=enum, category=domain-specific>
+=for ListFiles :select<kind=Type, subkind=enum, category=domain\-specific>
 Domain-specific enums
 
 =for ListFiles :select<kind=Type, subkind=module, category=module>
@@ -28,7 +31,7 @@ Basic roles
 =for ListFiles :select<kind=Type, subkind=role, category=composite>
 Composite roles
 
-=for ListFiles :select<kind=Type, subkind=role, category=domain-specific>
+=for ListFiles :select<kind=Type, subkind=role, category=domain\-specific>
 Domain-specific roles
 
 =for ListFiles :select<kind=Type, subkind=role, category=exception>

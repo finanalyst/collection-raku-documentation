@@ -34,12 +34,7 @@ L<Type Reference|type>
 Index of built-in classes, roles and enums.
 
 =end item
-=begin item  :class<defn-item>
-L<Routine Reference|routine>
 
-Index of built-in subroutines and methods.
-
-=end item
 =begin item  :class<defn-item>
 L<Raku Programs|programs>
 

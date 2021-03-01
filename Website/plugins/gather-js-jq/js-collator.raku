@@ -41,7 +41,7 @@ sub ( $pp ) {
         }
         $template ~= ( $elem ?? '~ ' !! '' )
                 ~ '\'<script src="'
-                ~ ( $plug ?? 'assets/scripts/' !! '' )
+                ~ ( $plug ?? '/assets/scripts/' !! '' )
                 ~ $file
                 ~ "\"\>\</script>'\n";
         ++$elem;
@@ -56,7 +56,7 @@ sub ( $pp ) {
         LAST {
             $template ~= "}\n"
         }
-        $template ~= ( $elem ?? '~ ' !! '' ) ~ '\'<script src="assets/scripts/' ~ $file ~ "\"\>\</script>'\n";
+        $template ~= ( $elem ?? '~ ' !! '' ) ~ '\'<script src="/assets/scripts/' ~ $file ~ "\"\>\</script>'\n";
         ++$elem;
         @move-dest.push( ("assets/scripts/$file" , $plug, $file ) )
     }

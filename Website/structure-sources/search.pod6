@@ -1,18 +1,11 @@
 =begin pod :no-toc :no-glossary
 =TITLE Search Page
 
-=head1 Page is stll under construction
+=head1 Search the Website
 
-=begin Filterlines :selector('.ws-glossary-place:not(.header), .ws-toc-head-2 , .ws-toc-head-1, .ws-toc-head-3, .ws-toc-head-4 *')
+=begin Website :make<toc-glossary> :toc-caption<Table of Contents> :glossary-caption<Website Index>
+Combined Contents and Index
 
-=begin Website :make<toc>
-Table of Contents for the Website
 =end Website
-
-=begin Website :make<glossary>
-Glossary for the Website
-=end Website
-=end Filterlines
-
 
 =end pod

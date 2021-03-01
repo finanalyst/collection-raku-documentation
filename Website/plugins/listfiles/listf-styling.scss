@@ -3,7 +3,7 @@
     display: grid;
     grid-template-rows: 3em auto;
     grid-template-columns: 2% 30% auto;
-    justify-content: center;
+    justify-content: left;
     row-gap: 0.05em;
     div:nth-of-type(4n-2) {
         background-color: rgba(0, 0, 0, 0.04);

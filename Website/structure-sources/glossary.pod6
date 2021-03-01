@@ -2,12 +2,7 @@
 
 =TITLE Itemised Index
 
-=begin filterlines :selector<.ws-glossary-place:not(.header) * > :remove< .ws-glossary-place .ws-glossary-file >
-
 =for Website :make<glossary>
-Glossary for the Website
-
-=end filterlines
-
+Index of the whole Website
 
 =end pod

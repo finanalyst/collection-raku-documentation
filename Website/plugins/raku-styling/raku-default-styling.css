@@ -244,8 +244,8 @@ header {
   width: 100%;
   display: grid;
   grid-template-rows: 3em 2em;
-  grid-template-columns: 100px auto 20% 100px;
-  grid-template-areas: "home title search search" " . menu menu .";
+  grid-template-columns: 100px auto 15% 100px;
+  grid-template-areas: "home title extra extra" " . menu menu .";
   border-radius: 0 0 4em 4em;
   margin: 0;
   padding: 0.5em 0em 0 0em;
@@ -263,6 +263,26 @@ header {
     font-family: sans-serif;
     font-weight: bold;
     font-size: x-large; }
+  header .extra {
+    grid-area: extra;
+    text-align: center;
+    border-radius: 1em;
+    background-color: #A0CE3DBD;
+    font-family: sans-serif;
+    font-weight: normal;
+    font-size: large;
+    color: 9A161D;
+    padding: 0.5em;
+    margin: 0.2em 1em 0.4em 1em;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 2px 0 rgba(255, 255, 255, 0.4), inset 0 0 3px 0 rgba(0, 0, 0, 0.4), inset 0 0 3px 5px rgba(0, 0, 0, 0.05), 2px 2px 4px 0 rgba(0, 0, 0, 0.25); }
+    header .extra:hover {
+      text-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+      box-shadow: 0.5em -0.3em 0.5em #ef7, -0.5em -0.3em 0.5em #ef7, inset 0 0 2px 0 rgba(255, 255, 255, 0.4), inset 0 0 3px 0 rgba(0, 0, 0, 0.4), inset 0 0 3px 5px rgba(0, 0, 0, 0.05), 2px 2px 4px 0 rgba(0, 0, 0, 0.25); }
+    header .extra:active {
+      position: relative;
+      top: 3px;
+      color: inherit; }
   header .menu {
     grid-area: menu;
     justify-self: stretch;
@@ -279,42 +299,17 @@ header {
       font-family: sans-serif;
       font-weight: normal;
       font-size: large;
-      padding: 0.5em 0.5em 0 0.5em;
-      margin: 0 0.5em 0 0.5em; }
+      color: #9A161D;
+      padding: 0.5em 0.5em 0.3em 0.5em;
+      margin: 0 0.5em 0 0.5em;
+      box-shadow: inset 0 0 2px 0 rgba(255, 255, 255, 0.4), inset 0 0 3px 0 rgba(0, 0, 0, 0.4), inset 0 0 3px 5px rgba(0, 0, 0, 0.05), 2px 2px 4px 0 rgba(0, 0, 0, 0.25); }
       header .menu .menu-item:hover {
-        box-shadow: 0.5em -0.3em 0.5em #ef7; }
-  header .search {
-    grid-area: search;
-    align-self: stretch;
-    justify-self: stretch;
-    display: flex;
-    justify-content: space-around;
-    background-color: teal;
-    border-radius: 1em;
-    padding: 1em;
-    margin-right: 2em; }
-    header .search a {
-      align-self: center;
-      box-shadow: inset 0px 1px 0px 0px #fff6af;
-      background: linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
-      background-color: #ffec64;
-      border-radius: 6px;
-      border: 1px solid #ffaa22;
-      display: inline-block;
-      cursor: pointer;
-      color: #333333;
-      font-family: Arial;
-      font-size: 15px;
-      font-weight: bold;
-      padding: 6px 24px;
-      text-decoration: none;
-      text-shadow: 0px 1px 0px #ffee66; }
-      header .search a:hover {
-        background: linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
-        background-color: #ffab23; }
-      header .search a:active {
-        position: relative;
-        top: 1px; }
+        box-shadow: 0.5em -0.3em 0.5em #ef7, -0.5em -0.3em 0.5em #ef7, inset 0 0 2px 0 rgba(255, 255, 255, 0.4), inset 0 0 3px 0 rgba(0, 0, 0, 0.4), inset 0 0 3px 5px rgba(0, 0, 0, 0.05), 2px 2px 4px 0 rgba(0, 0, 0, 0.25); }
+      header .menu .menu-item a {
+        color: inherit; }
+    header .menu a .menu-item:active {
+      position: relative;
+      top: 1px; }
 
 kbd {
   font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace; }

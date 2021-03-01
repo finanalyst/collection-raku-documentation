@@ -258,15 +258,15 @@ use ProcessedPod;
         "\n<header>\n"
                 ~ '<div class="home" ><a href="/index.html">' ~ %tml<camelia-img>(%prm, %tml) ~ '</a></div>'
                 ~ '<div class="page-title">' ~ %prm<title> ~ "</div>\n"
-                ~ '<div class="search">' ~ %tml<search>({},{}) ~ "</div>\n"
-                ~ '<div class="menu">'
-                ~ '<div class="menu-item"><a href="https://raku.org">Raku homepage</a></div>'
-                ~ '<div class="menu-item"><a href="/language.html">Language</a></div>'
-                ~ '<div class="menu-item"><a href="/toc.html">TOC</a></div>'
-                ~ '<div class="menu-item"><a href="/glossary.html">Index</a></div>'
-                ~ '<div class="menu-item"><a href="/types.html">Types</a></div>'
-                ~ '<div class="menu-item"><a href="/programs.html">Programs</a></div>'
-                ~ '<div class="menu-item"><a href="/collection-examples.html">Collection examples</a></div>'
+                ~ '<a class="extra" href="collection-examples.html">Collection examples</a>'
+                ~ '<div class="menu">' ~ "\n"
+                ~ '<a href="https://raku.org"><div class="menu-item">Raku homepage</div></a>'
+                ~ '<a href="/language.html"><div class="menu-item">Language</div></a>'
+                ~ '<a href="/search.html"><div class="menu-item">Search Site</div></a>'
+                ~ '<a href="/toc.html"><div class="menu-item">TOC</div></a>'
+                ~ '<a href="/glossary.html"><div class="menu-item">Index</div></a>'
+                ~ '<a href="/types.html"><div class="menu-item">Types</div></a>'
+                ~ '<a href="/programs.html"><div class="menu-item">Programs</div></a>'
                 ~ "</div></header>\n"
     },
     'footer' => sub ( %prm, %tml ) {

@@ -1,0 +1,3 @@
+#! /bin/bash
+cd ~/development/raku-collection-raku-documentation/Website
+prove -e raku --ext rakutest t/03*

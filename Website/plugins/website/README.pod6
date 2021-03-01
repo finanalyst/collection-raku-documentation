@@ -19,7 +19,7 @@ It can be used with several C<make> options:
 =item C<:make<toc>>
 =item C<:make<glossary>>
 =item C<:make<footnotes>>
-=item C<:make<toc-gloss>>
+=item C<:make<toc-glossary> :toc-caption<Table of Contents> :glossary-caption<Website Index>
 
 Each of these are searchable, unless the C< :no-search> option is given
 =code

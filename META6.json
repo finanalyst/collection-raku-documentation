@@ -1,7 +1,7 @@
 {
   "name": "Collection-Raku-Documentation",
   "description": "Use Cro and Collection to supply Raku documentation. Different search system. Global and local TOCs and Glossaries. Documents local installation.",
-  "version": "0.7",
+  "version": "0.8",
   "perl": "6.d",
   "authors": [
     "Richard Hainsworth"

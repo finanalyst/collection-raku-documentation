@@ -3,34 +3,42 @@
         given %prm<make> {
             when 'glossary' { %tml<ws-glossary>(%prm, %tml) }
             when 'footnotes' { %tml<ws-footnotes>(%prm, %tml) }
+            when 'toc-glossary' { %tml<ws-combined>(%prm, %tml) }
             default { %tml<ws-toc>(%prm, %tml) }
         }
     },
     ws-toc => sub (%prm,%tml) {
+        my Bool $ns = %prm<no-search> // False;
+        my $id = 'src-id">'; # id MUST be on the end of a definition
+        $id = (%prm<id> ~ '">') if %prm<id>;
+        $id = 'no-search">' if $ns;
         "\n" ~ '<div class="ws-toc-container">' ~ "\n"
-                ~ '<div class="ws-toc-caption">' ~ %prm<contents>.cache ~ '</div>' ~ "\n"
-                ~ '<div class="ws-toc-file-heading">Web page</div>' ~ "\n"
-                ~ '<div class="ws-toc-heading">Chapter headings</div>' ~ "\n"
-                ~ %prm<website><ws-toc>.cache.sort.map({
+            ~ '<div class="ws-toc-caption">' ~ %prm<contents>.cache ~ '</div>' ~ "\n"
+            ~ ($ns ?? '' !! ('<input class="ws-toc-search" type="text" placeholder="Search headings ..." data-id="' ~ $id))
+            ~ '<div class="ws-toc-file-heading">Web page</div>' ~ "\n"
+            ~ '<div class="ws-toc-heading">Chapter headings</div>' ~ "\n"
+            ~ %prm<website><ws-toc>.cache.sort.map({
             my $fn = .key;
-            '<div class="ws-toc-file">'
+            '<div class="ws-toc-file ' ~ $id
                     ~ .key ~ '</div>' ~ "\n"
+                    ~ '<div class="ws-toc-headers ' ~ $id
                     ~ .value.map({
                 "<div class=\"ws-toc-head-{
-                    $_<level> }\">\<a href=\"{
+                    $_<level> } { $id }\<a href=\"{
                     $fn }.html#{
-                    $_<target> }\">{
-                    $_<text> }\</a></div>\n"
-            })
+                    $_<target> }\" class=\"{$id}{$_<text> }\</a></div>\n"
+            }) ~ '</div>'
         })
-                ~ '</div>'
+        ~ '</div>'
     },
     ws-glossary => sub (%prm,%tml) {
-        my $id = 'src-id">';
+        my Bool $ns = %prm<no-search> // False;
+        my $id = 'src-id">'; # id MUST be on the end of a definition
         $id = (%prm<id> ~ '">') if %prm<id>;
-        '<div class="ws-glossary-container">' ~ "\n"
-            ~ '<div class="ws-glossary-caption">' ~ %prm<contents> ~ '</div>'
-            ~ '<input class="ws-glossary-search" data-id="' ~ $id ~ ' type="text" placeholder="Search index ...">'
+        $id = 'no-search">' if $ns;
+        "\n" ~ '<div class="ws-glossary-container">' ~ "\n"
+            ~ '<div class="ws-glossary-caption">' ~ %prm<contents> ~ '</div>' ~ "\n"
+            ~ ($ns ?? '' !! ('<input class="ws-glossary-search" type="text" placeholder="Search index ..." data-id="' ~ $id))
             ~ '<div class="ws-glossary-defn header">Term explained</div>'
             ~ '<div class="ws-glossary-file header">Source file</div>'
             ~ '<div class="ws-glossary-place header">In section</div>'
@@ -45,7 +53,7 @@
                         ~ [~] .value.map({
                             '<a href="' ~ $fn ~ '.html#'
                             ~ %tml<escaped>($_<target>)
-                            ~ '">'
+                            ~ '" class="' ~ $id
                             ~ ($_<place>.defined ?? $_<place> !! '')
                             ~ "</a>\n"
                     }) ~ "</div>\n"
@@ -71,5 +79,53 @@
                 })
             })
         ~ '</div>'
+    },
+    ws-combined => sub (%prm,%tml) {
+        my Bool $ns = %prm<no-search> // False;
+        my $id = 'src-id">'; # id MUST be on the end of a definition
+        $id = (%prm<id> ~ '">') if %prm<id>;
+        $id = 'no-search">' if $ns;
+        "\n" ~ '<div class="ws-combined">'
+        ~ ($ns ?? '' !! ('<input class="ws-combined-search" type="text" placeholder="Search headings ..." data-id="' ~ $id))
+        ~ '<div class="ws-toc-container">' ~ "\n"
+                ~ '<div class="ws-toc-caption">' ~ (%prm<toc-caption> // '') ~ '</div>' ~ "\n"
+                ~ '<div class="ws-toc-file-heading">Web page</div>' ~ "\n"
+                ~ '<div class="ws-toc-heading">Chapter headings</div>' ~ "\n"
+                ~ %prm<website><ws-toc>.cache.sort.map({
+            my $fn = .key;
+            '<div class="ws-toc-file ' ~ $id
+                    ~ .key ~ '</div>' ~ "\n"
+                    ~ '<div class="ws-toc-headers ' ~ $id
+                    ~ .value.map({
+                "<div class=\"ws-toc-head-{
+                    $_<level> } { $id }\<a href=\"{
+                    $fn }.html#{
+                    $_<target> }\" class=\"{$id}{$_<text> }\</a></div>\n"
+            }) ~ '</div>'
+        })
+        ~ '</div>'
+        ~ '<div class="ws-glossary-container">' ~ "\n"
+                ~ '<div class="ws-glossary-caption">' ~ (%prm<glossary-caption> // '') ~ '</div>' ~ "\n"
+                ~ '<div class="ws-glossary-defn header">Term explained</div>'
+                ~ '<div class="ws-glossary-file header">Source file</div>'
+                ~ '<div class="ws-glossary-place header">In section</div>'
+                ~ %prm<website><ws-glossary>.cache.sort.map({
+            '<div class="ws-glossary-defn ' ~ $id
+                    ~ .key ~ '</div>'
+                    ~ .value.sort.map({
+                my $fn = .key;
+                '<div class="ws-glossary-file ' ~ $id
+                        ~ $fn
+                        ~ '</div><div class="ws-glossary-place ' ~ $id
+                        ~ [~] .value.map({
+                    '<a href="' ~ $fn ~ '.html#'
+                            ~ %tml<escaped>($_<target>)
+                            ~ '" class="' ~ $id
+                            ~ ($_<place>.defined ?? $_<place> !! '')
+                            ~ "</a>\n"
+                }) ~ "</div>\n"
+            })
+        })
+        ~ "</div>\n</div>"
     },
 )
