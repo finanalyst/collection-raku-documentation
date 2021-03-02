@@ -9,6 +9,8 @@
 [2021-02-21 v0.5](#2021-02-21-v05)  
 [2021-02-21 v0.6](#2021-02-21-v06)  
 [2021-02-27 v0.7](#2021-02-27-v07)  
+[2021-03-1 v0.8](#2021-03-1-v08)  
+[2021-03-02 v0.8.1](#2021-03-02-v081)  
 
 ----
 # 2021-01-22 Spin off Collection into its own Module
@@ -47,8 +49,6 @@
 *  additions to main collection content
 
 # 2021-02-27 v0.7
-
-
 *  Raku::Pod::Render enhanced so gist on PodFile can be inspected
 
 *  Raku::Pod::Render's test-templates rewritten to allow for three Test-Template tests
@@ -67,9 +67,25 @@
 
 *  searchability is now inherent in the website TOC/Glossary output structures.
 
+# 2021-03-1 v0.8
+*  Working version of Search page
+
+*  altered page header
+
+*  added placeholder to FilterFile plugin
+
+# 2021-03-02 v0.8.1
+
+
+*  change README.pod6
+
+*  Don't configure to automatically clone Raku docs
+
+*  prepare for addition to Ecosystem.
+
 
 
 
 
 ----
-Rendered from CHANGELOG at 2021-02-27T21:59:18Z
+Rendered from CHANGELOG at 2021-03-02T10:31:38Z

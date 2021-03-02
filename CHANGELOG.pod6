@@ -49,4 +49,9 @@ hash match the requirements. (TODO, test the signatures of the callables to see 
 =item altered page header
 =item added placeholder to FilterFile plugin
 
+=head1 2021-03-02 v0.8.1
+=item change README.pod6
+=item Don't configure to automatically clone Raku docs
+=item prepare for addition to Ecosystem.
+
 =end pod

@@ -12,7 +12,7 @@ The Module uses Collection and Raku::Pod::Render to link all the Rakudoc (aka Po
 The Cro app and HTML
 output files are created using the Website mode, but other modes can be created. For more information
 about creating different modes, and for an explanation about how to create Websites from other
-content sources, see L<ContentCollection>.
+content sources, see L<Collection|https://github.com/finanalyst/collection>.
 
 =head1 Installation
 
@@ -25,30 +25,6 @@ and then install the highlighter, as described in the C<Raku::Pod::Render> READM
 Then the following should be possible
 
     raku-pod-render-install-highlighter
-
-=head1 Docker
-
-A docker image (C<finanalyst/collection-raku>)is available that already has everything installed. It is intended for running on a server but where
-copies of the C<Website> directory and C<config.raku> files in this distribution and a
-clone of the Rau/doc repository exists in a directory called C<raku-doc> are present on the server.
-
-The aim of the docker image is to reduce the hassle of installing C<Cro>, C<Raku::Pod::Render>, C<node.js>
-and C<npm> and installing the highlighter. The Raku/doc repository is regularly updated and quite large, so
-putting it in the container seems less performant. Keeping C<Website> available for change allows for the configuration
-options to be changed, and for new plugins to be added.
-
-The final HTML is served by C<Cro> on port 30000, but this can be configured in C<Website/configs/01-config.raku>.
-
-The intention is for the image to be used as follows (assuming docker is installed):
-
-    sudo docker pull finanalyst/collection-raku
-
-    sudo docker run -d -p 30000:30000 -v /home/web/raku-docs -v /home/web/Website --rm finanalyst/collection-raku
-
-The docker image will run a C<git pull> on raku-docs, render those html files that have changed, then serve
-the results at 30000. Naturally, the port can be changed using C<docker> say to 18080 as
-
-    sudo docker run -d -p 18080:30000  -v /home/web/raku-docs -v /home/web/Website --rm finanalyst/collection-raku
 
 =head1 Raku-Doc
 
@@ -63,7 +39,20 @@ progress status bar for the longer stages.
     cd My-Local-Raku-Documentation
     Raku-Doc Init
 
-This sets up the directory and clones a copy of the C<Raku/doc> repository.
+This sets up the Collection directory, and installs the dependencies.
+
+It does not clone a copy of the C<Raku/doc> repository because an existing version may be available on the system.
+
+Consequently, the user needs to clone the Raku docs repository using something like C<git clone https://github.com/Raku/doc.git raku-docs>.
+Then the path used can be put into the config.raku file in the C<sources-refresh> key. Once the raku-docs are ready, the INIT stage is
+complete.
+
+For example, to render the full Raku Docs, the following would work, where C<raku-local> is a local directory.
+
+    - raku-local
+        - raku-docs
+        - Website
+        config.raku
 
 After the C<Init> stage, calling C<Raku-Doc> without any other options implies the mode B<Website>
 with default options. Other modes (see
@@ -111,5 +100,58 @@ B<collection-info>
 
 Turns on tracing for Collection. Reports when milestones passed, and the plugins at each milestone.
 =end item
+
+=head1 Problems
+
+Collection is still being actively developed.
+
+=item When running C<Raku-Doc> with a C<sources-refresh> key set to a git pull stanza, Raku-Doc teminates after a git pull.
+Workaround: run C<Raku-Doc> again.
+
+=item The aim is to only update HTML files that have changed. However, the time taken to reload cached html is slower than to
+generate them ad novo. So it is best to run C<Raku-Doc --full-render> each time. Caching of Pod6 files, however, works well.
+
+=head1 Plugins
+
+This distribution contains a number of Collection plugins that are intended to be more generic than just for Raku-Documentation-Collection.
+
+There is also a test facility, so C<cd Website ;; prove -re 'raku -I.' t> will run tests on the Website mode.
+
+Another testing facility is the executable C<test-plugins> in the repository, but not yet added as a resource. It is used in the Website directory
+and runs the plugin tests.
+
+=head1 Docker
+
+A docker image (C<finanalyst/collection-raku>) is available that already has everything installed.
+It is intended for running on a server but where
+copies of the C<Website> directory and C<config.raku> files in this distribution and a
+clone of the Rau/doc repository exists in a directory called C<raku-doc> are present on the server.
+
+The aim of the docker image is to reduce the hassle of installing C<Cro>, C<Raku::Pod::Render>, C<node.js>
+and C<npm> and installing the highlighter. The Raku/doc repository is regularly updated and quite large, so
+putting it in the container seems less performant. Keeping C<Website> available for change allows for the configuration
+options to be changed, and for new plugins to be added.
+
+The final HTML is served by C<Cro> on port 30000, but this can be configured in C<Website/configs/01-config.raku>.
+
+The intention is for the image to be used as follows (assuming docker is installed):
+
+    sudo docker pull finanalyst/collection-raku
+
+    sudo docker run -d -p 30000:30000 -v /home/web/raku-docs:raku-docs -v /home/web/Website:Website --rm finanalyst/collection-raku
+
+C</home/web/raku-docs> is the path to a clone of the Raku-docs repository created with C<git clone https://github.com/Raku/doc.git raku-docs>.
+
+C</home/web/Website> is the path to a the Website directory created by running C<Raku-Doc Init> from this distribution. Keeping the
+Website directory out side the docker image allows for local tweaking of the configuration and plugin files. The C<config.raku> in the
+docker images, which defines where Collection will look for files, expects the Raku pod files at C<raku-docs/docs> and the Website mode
+directory at C<Website>. The html is generated in C<Website/html>, so outside the docker container.
+
+The docker image will run a C<git pull> on raku-docs, render those html files that have changed, then serve
+the results at 30000. Naturally, the port can be changed using C<docker> say to 18080 as
+
+    sudo docker run -d -p 18080:30000  -v /home/web/raku-docs:raku-docs -v /home/web/Website:Website --rm finanalyst/collection-raku
+
+
 B<LICENSE> Artistic-2.0
 =end pod
