@@ -1,0 +1,7 @@
+=begin pod
+=item Caching processed
+=item styling of visited / unvisited links
+=item report of links, to see if they generate 404 or other errors
+=item graphviz of hierarchy diagrams
+
+=end pod

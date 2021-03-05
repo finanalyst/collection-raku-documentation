@@ -20,22 +20,22 @@ use ProcessedPod;
     'search' => sub ( %prm, %tml ) { '<a href=search.html>Search page</a>' }, #placeholder
     'block-code' => sub ( %prm, %tml ) {
         '<pre class="pod-block-code">'
-                ~ (%prm<contents> // '')
-                ~ '</pre>'
+            ~ (%prm<contents> // '')
+            ~ '</pre>'
     },
     'comment' => sub ( %prm, %tml ) { '<!-- ' ~ (%prm<contents> // '') ~ ' -->' },
     'declarator' => sub ( %prm, %tml ) {
         '<a name="' ~ %tml<escaped>(%prm<target> // '')
-                ~ '"></a><article><code class="pod-code-inline">'
-                ~ ( %prm<code> // '') ~ '</code>' ~ (%prm<contents> // '') ~ '</article>'
+            ~ '"></a><article><code class="pod-code-inline">'
+            ~ ( %prm<code> // '') ~ '</code>' ~ (%prm<contents> // '') ~ '</article>'
     },
     'dlist-start' => sub ( %prm, %tml ) { "<dl>\n" },
     'defn' => sub ( %prm, %tml ) {
         '<dt>'
-                ~ %tml<escaped>(%prm<term> // '')
-                ~ '</dt><dd>'
-                ~ (%prm<contents> // '')
-                ~ '</dd>'
+            ~ %tml<escaped>(%prm<term> // '')
+            ~ '</dt><dd>'
+            ~ (%prm<contents> // '')
+        ~ '</dd>'
     },
     'dlist-end' => sub ( %prm, %tml ) { "\n</dl>" },
     'format-b' => gen-closure-template('strong'),
@@ -47,13 +47,25 @@ use ProcessedPod;
     'format-u' => gen-closure-template('u'),
     'para' => gen-closure-template('p'),
     'format-l' => sub ( %prm, %tml ) {
+        # transform a local file with an internal target
+        my $trg = %prm<target>;
+        if %prm<local> {
+            if $trg ~~ / (<-[#]>+) '#' (.+) $ / {
+                $trg = "$0\.html\#$1";
+            }
+            else {
+                $trg ~= '.html'
+            }
+        }
+        elsif %prm<internal> {
+            $trg = "#$trg"
+        }
+
         '<a href="'
-                ~ (%prm<internal> ?? '#' !! '')
-                ~ %prm<target>
-                ~ (%prm<local> ?? '.html'!! '')
-                ~ '">'
-                ~ (%prm<contents> // '')
-                ~ '</a>'
+            ~ $trg
+            ~ '">'
+            ~ (%prm<contents> // '')
+            ~ '</a>'
     },
     'format-n' => sub ( %prm, %tml ) {
         '<sup class="content-footnote"><a name="'
@@ -73,15 +85,15 @@ use ProcessedPod;
     },
     'heading' => sub ( %prm, %tml ) {
         '<h' ~ (%prm<level> // '1')
-                ~ ' id="'
-                ~ %tml<escaped>(%prm<target>)
-                ~ '"><a href="#'
-                ~ %tml<escaped>(%prm<top>)
-                ~ '" class="u" title="go to top of document">'
-                ~ (( %prm<text>.defined && %prm<text> ne '') ?? %prm<text> !! '')
-                ~ '</a></h'
-                ~ (%prm<level> // '1')
-                ~ ">\n"
+            ~ ' id="'
+            ~ %tml<escaped>(%prm<target>)
+            ~ '"><a href="#'
+            ~ %tml<escaped>(%prm<top>)
+            ~ '" class="u" title="go to top of document">'
+            ~ (( %prm<text>.defined && %prm<text> ne '') ?? %prm<text> !! '')
+            ~ '</a></h'
+            ~ (%prm<level> // '1')
+            ~ ">\n"
     },
     'image' => sub ( %prm, %tml ) { '<img src="' ~ (%prm<src> // 'path/to/image') ~ '"'
             ~ ' width="' ~ (%prm<width> // '100px') ~ '"'

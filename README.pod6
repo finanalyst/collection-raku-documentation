@@ -152,6 +152,9 @@ the results at 30000. Naturally, the port can be changed using C<docker> say to 
 
     sudo docker run -d -p 18080:30000  -v /home/web/raku-docs:raku-docs -v /home/web/Website:Website --rm finanalyst/collection-raku
 
+=head1 Copyright and License
+
+(c) Richard N Hainsworth, 2021
 
 B<LICENSE> Artistic-2.0
 =end pod

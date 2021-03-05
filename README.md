@@ -12,6 +12,7 @@
 [Problems](#problems)  
 [Plugins](#plugins)  
 [Docker](#docker)  
+[Copyright and License](#copyright-and-license)  
 
 ----
 This Module provides a local website available via a browser at localhost:3000 of the Raku documentation. The Module uses Collection and Raku::Pod::Render to link all the Rakudoc (aka Pod6) files together. The Cro app and HTML output files are created using the Website mode, but other modes can be created. For more information about creating different modes, and for an explanation about how to create Websites from other content sources, see [Collection](https://github.com/finanalyst/collection).
@@ -116,6 +117,9 @@ The docker image will run a `git pull` on raku-docs, render those html files tha
 ```
 sudo docker run -d -p 18080:30000  -v /home/web/raku-docs:raku-docs -v /home/web/Website:Website --rm finanalyst/collection-raku
 ```
+# Copyright and License
+(c) Richard N Hainsworth, 2021
+
 **LICENSE** Artistic-2.0
 
 
@@ -125,4 +129,4 @@ sudo docker run -d -p 18080:30000  -v /home/web/raku-docs:raku-docs -v /home/web
 
 
 ----
-Rendered from README at 2021-03-02T10:37:52Z
+Rendered from README at 2021-03-05T14:07:47Z

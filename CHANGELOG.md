@@ -11,6 +11,7 @@
 [2021-02-27 v0.7](#2021-02-27-v07)  
 [2021-03-1 v0.8](#2021-03-1-v08)  
 [2021-03-02 v0.8.1](#2021-03-02-v081)  
+[2021-03-5 v0.8.2](#2021-03-5-v082)  
 
 ----
 # 2021-01-22 Spin off Collection into its own Module
@@ -75,17 +76,26 @@
 *  added placeholder to FilterFile plugin
 
 # 2021-03-02 v0.8.1
-
-
 *  change README.pod6
 
 *  Don't configure to automatically clone Raku docs
 
 *  prepare for addition to Ecosystem.
 
+# 2021-03-5 v0.8.2
+
+
+*  fixed many 404 because
+
+	*  Raku names content and html directories differently
+
+	*  the template was not rendering local files correctly
+
+	*  Raku::Pod::Render was treating local files as external
+
 
 
 
 
 ----
-Rendered from CHANGELOG at 2021-03-02T10:31:38Z
+Rendered from CHANGELOG at 2021-03-05T14:07:46Z

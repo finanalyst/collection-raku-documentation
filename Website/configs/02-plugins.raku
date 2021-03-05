@@ -2,7 +2,7 @@
     no-code-escape => True, # must use this when using highlighter
     plugins => 'plugins',
     plugins-required => %(
-        :setup(),
+        :setup<raku-doc-setup>,
         :render<
             raku-styling website camelia simple-extras listfiles images font-awesome filterlines
             gather-js-jq gather-css

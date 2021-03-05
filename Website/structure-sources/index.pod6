@@ -29,7 +29,7 @@ An index (or glossary) of all the items indexed in each of the documentation fil
 =end item
 
 =begin item  :class<defn-item>
-L<Type Reference|type>
+L<Type Reference|types>
 
 Index of built-in classes, roles and enums.
 
@@ -46,14 +46,14 @@ source code.
 =end item
 
 =begin item :class<defn-item>
-L<FAQs (Frequently Asked Questions)|Language/faq>
+L<FAQs (Frequently Asked Questions)|language/faq>
 
 A collection of questions that have cropped up often, along with answers.
 
 =end item
 
 =begin item  :class<defn-item>
-L<Community|Language/community>
+L<Community|language/community>
 
 Information about the Raku development community, email lists, IRC and IRC bots, and blogs
 

@@ -54,4 +54,10 @@ hash match the requirements. (TODO, test the signatures of the callables to see 
 =item Don't configure to automatically clone Raku docs
 =item prepare for addition to Ecosystem.
 
+=head1 2021-03-5 v0.8.2
+=item fixed many 404 because
+=item2 Raku names content and html directories differently
+=item2 the template was not rendering local files correctly
+=item2 Raku::Pod::Render was treating local files as external
+
 =end pod
