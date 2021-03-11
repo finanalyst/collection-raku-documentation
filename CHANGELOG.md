@@ -12,6 +12,7 @@
 [2021-03-1 v0.8](#2021-03-1-v08)  
 [2021-03-02 v0.8.1](#2021-03-02-v081)  
 [2021-03-5 v0.8.2](#2021-03-5-v082)  
+[Head](#head)  
 
 ----
 # 2021-01-22 Spin off Collection into its own Module
@@ -83,8 +84,6 @@
 *  prepare for addition to Ecosystem.
 
 # 2021-03-5 v0.8.2
-
-
 *  fixed many 404 because
 
 	*  Raku names content and html directories differently
@@ -93,9 +92,19 @@
 
 	*  Raku::Pod::Render was treating local files as external
 
+# head
+
+2021-03-11 v0.8.3
+
+
+
+*  added error page to main header
+
+*  new plugin checks all links and creates error page where there is missing content
+
 
 
 
 
 ----
-Rendered from CHANGELOG at 2021-03-05T14:07:46Z
+Rendered from CHANGELOG at 2021-03-11T12:25:48Z

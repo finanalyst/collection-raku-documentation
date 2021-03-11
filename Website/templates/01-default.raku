@@ -63,7 +63,9 @@ use ProcessedPod;
 
         '<a href="'
             ~ $trg
-            ~ '">'
+            ~ '"'
+            ~ ( %prm<class> ?? (' class="' ~ %prm<class> ~ '"') !! '')
+            ~ '>'
             ~ (%prm<contents> // '')
             ~ '</a>'
     },
@@ -270,6 +272,7 @@ use ProcessedPod;
         "\n<header>\n"
                 ~ '<div class="home" ><a href="/index.html">' ~ %tml<camelia-img>(%prm, %tml) ~ '</a></div>'
                 ~ '<div class="page-title">' ~ %prm<title> ~ "</div>\n"
+                ~ '<a class="error-report" href="error-report.html">Error Report</a>'
                 ~ '<a class="extra" href="collection-examples.html">Collection examples</a>'
                 ~ '<div class="menu">' ~ "\n"
                 ~ '<a href="https://raku.org"><div class="menu-item">Raku homepage</div></a>'

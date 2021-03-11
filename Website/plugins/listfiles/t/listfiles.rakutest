@@ -76,13 +76,10 @@ lives-ok { &callable = EVALFILE %config<compilation> }, 'callable loads ok';
 my %processed = %( afile => PodFile.new(:title('Good Title'), :subtitle('A subtitle'), :pod-config-data( :one<two>, :three<four> )),
         bfile => PodFile.new(:title(''),:subtitle(''), :pod-config-data( :one<two>, :three<four> ) ),
 );
-say "afile gist:", %processed<afile>.gist;
-
 my $pr = ProcessedPod.new;
 $pr.add-data('listfiles', %config);
 &callable($pr, %processed);
 $rv = $pr.get-data('listfiles');
-say $rv.gist;
 ok $rv<meta>:exists, 'data added';
 is-deeply $rv<meta>.keys.sort, <afile bfile>, 'files  returned in correct place';
 is $rv<meta><afile><title>, 'Good Title', 'got title';

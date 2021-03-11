@@ -1,0 +1,21 @@
+.let-file {
+    display: flex;
+    color: black;
+    flex-direction: column;
+    font-weight: bold;
+    color: goldenrod;
+}
+.let-links {
+    display: flex;
+    flex-direction: row;
+    margin-left: 3em;
+    color: green;
+    * {
+        margin-left: inherit;
+        color: inherit;
+    }
+}
+.let-response {
+    font-size: large;
+    color: red;
+}

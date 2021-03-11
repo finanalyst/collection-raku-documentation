@@ -18,3 +18,11 @@ sync-site
 font-awesome-4.7.0/
 font-awesome-4.7.0.zip
 
+/*.css
+/Website/plugins/images/*.css.map
+/*.css.map
+/Website/plugins/images/.css
+/Website/plugins/images/.css.map
+/Website/plugins/font-awesome/font-awesome.min.css
+/Website/plugins/images/image-styling.css.map
+/Website/plugins/link-error-test/let-styling.css.map

@@ -4,11 +4,11 @@
     plugins-required => %(
         :setup<raku-doc-setup>,
         :render<
-            raku-styling website camelia simple-extras listfiles images font-awesome filterlines
+            raku-styling website camelia simple-extras listfiles images font-awesome filterlines link-error-test
             gather-js-jq gather-css
         >,
         :report<test-link-report>,
-        :compilation<website listfiles>,
+        :compilation<website listfiles link-error-test>,
         :completion<cro-app>,
     ),
 )

@@ -60,4 +60,8 @@ hash match the requirements. (TODO, test the signatures of the callables to see 
 =item2 the template was not rendering local files correctly
 =item2 Raku::Pod::Render was treating local files as external
 
+=head 2021-03-11 v0.8.3
+=item added error page to main header
+=item new plugin checks all links and creates error page where there is missing content
+
 =end pod
