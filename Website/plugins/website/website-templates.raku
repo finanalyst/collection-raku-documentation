@@ -21,13 +21,12 @@
             my $fn = .key;
             '<div class="ws-toc-file ' ~ $id
                     ~ .key ~ '</div>' ~ "\n"
-                    ~ '<div class="ws-toc-headers ' ~ $id
                     ~ .value.map({
-                "<div class=\"ws-toc-head-{
-                    $_<level> } { $id }\<a href=\"{
+                "<a href=\"{
                     $fn }.html#{
-                    $_<target> }\" class=\"{$id}{$_<text> }\</a></div>\n"
-            }) ~ '</div>'
+                    $_<target> }\" class=\"ws-toc-head-{
+                    $_<level> } {$id}{$_<text> }\</a>\n"
+            })
         })
         ~ '</div>'
     },
@@ -49,14 +48,14 @@
                         my $fn = .key;
                         '<div class="ws-glossary-file ' ~ $id
                         ~ $fn
-                        ~ '</div><div class="ws-glossary-place ' ~ $id
+                        ~ '</div>'
                         ~ [~] .value.map({
                             '<a href="' ~ $fn ~ '.html#'
                             ~ %tml<escaped>($_<target>)
-                            ~ '" class="' ~ $id
+                            ~ '" class="ws-glossary-place ' ~ $id
                             ~ ($_<place>.defined ?? $_<place> !! '')
                             ~ "</a>\n"
-                    }) ~ "</div>\n"
+                    })
                 })
             })
         ~ '</div>'
@@ -95,13 +94,12 @@
             my $fn = .key;
             '<div class="ws-toc-file ' ~ $id
                     ~ .key ~ '</div>' ~ "\n"
-                    ~ '<div class="ws-toc-headers ' ~ $id
                     ~ .value.map({
-                "<div class=\"ws-toc-head-{
-                    $_<level> } { $id }\<a href=\"{
+                "<a href=\"{
                     $fn }.html#{
-                    $_<target> }\" class=\"{$id}{$_<text> }\</a></div>\n"
-            }) ~ '</div>'
+                    $_<target> }\" class=\"ws-toc-head-{
+                    $_<level> } { $id }{$_<text> }\</a>\n"
+            })
         })
         ~ '</div>'
         ~ '<div class="ws-glossary-container">' ~ "\n"
@@ -116,14 +114,14 @@
                 my $fn = .key;
                 '<div class="ws-glossary-file ' ~ $id
                         ~ $fn
-                        ~ '</div><div class="ws-glossary-place ' ~ $id
+                        ~ '</div>'
                         ~ [~] .value.map({
-                    '<a href="' ~ $fn ~ '.html#'
+                        '<a href="' ~ $fn ~ '.html#'
                             ~ %tml<escaped>($_<target>)
-                            ~ '" class="' ~ $id
+                            ~ '" class="ws-glossary-place ' ~ $id
                             ~ ($_<place>.defined ?? $_<place> !! '')
                             ~ "</a>\n"
-                }) ~ "</div>\n"
+                })
             })
         })
         ~ "</div>\n</div>"

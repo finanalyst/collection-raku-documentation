@@ -2,7 +2,7 @@ use Cro::HTTP::Router;
 use Cro::HTTP::Server;
 use Cro::HTTP::Log::File;
 
-sub ( %processed, $destination, $landing, $ext, %config ) {
+sub ( $destination, $landing, $ext, %config ) {
     my $app = route {
         get -> *@path {
             static "$destination", @path,:indexes( "$landing\.$ext", );

@@ -43,25 +43,68 @@ $(document).ready(function(){
             $(this).toggle($(this).hasClass(['_srch-show']) || $(this).hasClass(['no-search']))
         });
     });
-    var comb_selector = '.ws-toc-head-1, .ws-toc-head-2, .ws-toc-head-3, .ws-toc-head-4 *, ';
-    comb_selector = comb_selector + '.ws-glossary-defn:not(.header), .ws-glossary-file:not(.header), .ws-glossary-place:not(.header), .ws-glossary-place:not(.header) *';
-    var comb_bubble = ['.ws-toc-headers','.ws-glossary-place:not(.header)', '.ws-glossary-file:not(.header)'];
-    var comb_show = '.ws-toc-file, .ws-toc-headers, .ws-toc-headers, .ws-toc-head-1, .ws-toc-head-2, .ws-toc-head-3, .ws-toc-head-4 *,';
-    comb_show = comb_show + '.ws-glossary-defn:not(.header), .ws-glossary-file:not(.header), .ws-glossary-place:not(.header), .ws-glossary-place:not(.header) *';
     $(".ws-combined-search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         var id = $(this).data('id');
-        $(comb_show).filter(function(){ return $(this).hasClass(id)}).removeClass(['_srch-show']);
-        $(comb_selector).filter(function() {
-            return $(this).hasClass(id) && $(this).text().toLowerCase().indexOf(value) > -1
+        $('.'+id).removeClass(['_srch-show']);
+        $('.'+id).filter(function() {
+            return $(this).text().toLowerCase().indexOf(value) > -1
         }).addClass(['_srch-show']);
-        comb_bubble.forEach(function(sel) {
-            $(sel).filter(function() {
-                if ($(this).has('*._srch-show').length > 0 ) { $(this).addClass(['_srch-show']) };
-                return $(this).hasClass('_srch-show')
-            }).prev().addClass(['_srch-show'])
+        // glossary
+        $('.ws-glossary-defn._srch-show').each(function() {
+            $(this).nextUntil('.ws-glossary-defn').addClass(['_srch-show']);
         });
-        $(comb_show).filter(function() {
+        $('.ws-glossary-file._srch-show').each(function() {
+            $(this).nextUntil('.ws-glossary-file, .ws-glossary-defn').addClass(['_srch-show']);
+        });
+        $('.ws-glossary-place._srch-show').each(function(){
+            var ups = $(this).prevUntil('.ws-glossary-file');
+            if (ups.length == 0) $(this).prev().addClass(['_srch-show']);
+            else ups.last().prev().addClass(['_srch-show']);
+        });
+        $('.ws-glossary-file._srch-show').each(function(){
+            var ups = $(this).prevUntil('.ws-glossary-file,.ws-glossary-defn');
+            if (ups.length == 0) $(this).prev().addClass(['_srch-show']);
+            else ups.last().prev().addClass(['_srch-show']);
+        });
+        // toc
+        $('.ws-toc-file._srch-show').each(function() {
+            $(this).nextUntil('.ws-toc-file').addClass(['_srch-show']);
+        });
+        $('.ws-toc-head-1._srch-show').each(function() {
+            $(this).nextUntil('.ws-toc-head-1, .ws-toc-file').addClass(['_srch-show']);
+        });
+        $('.ws-toc-head-2._srch-show').each(function() {
+            $(this).nextUntil('.ws-toc-head-2, .ws-toc-head-1, .ws-toc-file').addClass(['_srch-show']);
+        });
+        $('.ws-toc-head-3._srch-show').each(function() {
+            $(this).nextUntil('.ws-toc-head-3, .ws-toc-head-2, .ws-toc-head-1, .ws-toc-file').addClass(['_srch-show']);
+        });
+        $('.ws-toc-head-4._srch-show').each(function() {
+            $(this).nextUntil('.ws-toc-head-4, .ws-toc-head-3, .ws-toc-head-2, .ws-toc-head-1, .ws-toc-file').addClass(['_srch-show']);
+        });
+        $('.ws-toc-head-4._srch-show').each(function(){
+            var ups = $(this).prevUntil('.ws-toc-head-3');
+            if (ups.length == 0) $(this).prev().addClass(['_srch-show']);
+            else ups.last().prev().addClass(['_srch-show']);
+        });
+        $('.ws-toc-head-3._srch-show').each(function(){
+            var ups = $(this).prevUntil('.ws-toc-head-1');
+            if (ups.length == 0) $(this).prev().addClass(['_srch-show']);
+            else ups.last().prev().addClass(['_srch-show']);
+        });
+        $('.ws-toc-head-2._srch-show').each(function(){
+            var ups = $(this).prevUntil('.ws-toc-head-1');
+            if (ups.length == 0) $(this).prev().addClass(['_srch-show']);
+            else ups.last().prev().addClass(['_srch-show']);
+        });
+        $('.ws-toc-head-1._srch-show').each(function(){
+            var ups = $(this).prevUntil('.ws-toc-file');
+            if (ups.length == 0) $(this).prev().addClass(['_srch-show']);
+            else ups.last().prev().addClass(['_srch-show']);
+        });
+
+        $('.'+id).filter(function() {
             $(this).toggle($(this).hasClass(['_srch-show']) || $(this).hasClass(['no-search']))
         });
     });

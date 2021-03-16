@@ -26,9 +26,10 @@ use PrettyDump;
                     for $resp.list {
                         $rv ~= '<div class="let-links">'
                             ~ %tml<escaped>( .key )
-                            ~ '<div class="let-response">'
-                            ~ .value
-                            ~ '</div></div>'
+                                ~ '<div class="let-response ' ~ ( (?(+ .value) and .value < 400) ?? 'ok' !! '') ~ '">'
+                                ~ .value
+                                ~ ' <a class="live-link" href="' ~ .key ~ '">Live link</a>'
+                                ~ "</div></div>\n"
                     }
                     $rv ~= "</div>\n";
                 }

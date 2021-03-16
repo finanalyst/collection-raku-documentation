@@ -1,7 +1,5 @@
 #!/usr/bin/env perl6
-use LibCurl::HTTP;
 use Text::Diff::Sift4;
-use PrettyDump;
 
 sub ($pr, %processed) {
     my %errors = <no-file unknown remote no-target> Z=> {}, {}, {}, {};
@@ -24,17 +22,20 @@ sub ($pr, %processed) {
         # filter out remote schemas
         %links{$fn} = %(gather for $podf.links {
             if .value<location> eq 'external' {
-                push @remote-responses, start {
-                    my $http = LibCurl::HTTP.new;
-                    my $rv;
-                    try {
-                        $rv = [$fn, .value<target>, $http.HEAD(.value<target>).perform.response-code];
-                    }
-                    if $! {
-                        $rv = [$fn, .value<target> , $!.message];
-                    }
-                    $rv
-                }
+                my $proc = Proc::Async.new('curl', '-I', '-s', .value<target>);
+                @remote-responses.push: [$fn,.value<target>,$proc.Supply.first.Promise];
+                $proc.start;
+#                push @remote-responses, start {
+#                    my $http = LibCurl::HTTP.new;
+#                    my $rv;
+#                    try {
+#                        $rv = [$fn, .value<target>, $http.HEAD(.value<target>).perform.response-code];
+#                    }
+#                    if $! {
+#                        $rv = [$fn, .value<target> , $!.message];
+#                    }
+#                    $rv
+#                }
             }
             else {
                 take $_
@@ -87,10 +88,20 @@ sub ($pr, %processed) {
             }
         }
     }
-    await Promise.allof(@remote-responses);
-    for @remote-responses>>.result {
-        next if ( +.[2] and .[2] < 400);
-        %errors<remote>{ .[0] }.push( .[1] => .[2])
+    await Promise.allof(@remote-responses>>.[2]);
+    for @remote-responses {
+        my $resp = .[2].result;
+        with $resp {
+            $resp = .comb(/ \d\d\d /)[0];
+        }
+        else {
+            $resp = 'Could not find host'
+        }
+        # curl will find 405/502/503 errors, but the resource can still exist
+        next if ( ?(+$resp ) and $resp != 404 );
+        %errors<remote>{ .[0] }.push( .[1] => $resp)
+#        next if ( +.[2] and .[2] < 400);
+#        %errors<remote>{ .[0] }.push( .[1] => .[2])
     }
     $pr.add-data('linkerrortest', %errors);
     []
