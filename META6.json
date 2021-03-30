@@ -10,7 +10,8 @@
   "depends": [
     "RakuConfig",
     "Collection",
-    "Cro::HTTP"
+    "Cro::HTTP",
+    "LibCurl::Easy"
   ],
   "build-depends": [],
   "test-depends": [

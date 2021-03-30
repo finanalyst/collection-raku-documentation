@@ -1,107 +1,125 @@
 #!/usr/bin/env perl6
-use Text::Diff::Sift4;
+use LibCurl::HTTP;
+use PrettyDump;
 
 sub ($pr, %processed) {
+    my regex htmlcode { \% <[0..9 A..F]>**2 }; # only defined for Upper case
     my %errors = <no-file unknown remote no-target> Z=> {}, {}, {}, {};
     my %links;
     my %targets;
-    sub is-target($in-file, $target) {
-        my @tars = %targets{$in-file};
-        return False if $target ~~ any(@tars);
-        my @cands = @tars.grep({ sift4($target, $_) < 4 });
-        @tars.elems ?? @tars.join(',') !! 'None'
+    sub failed-targets( $file, Str $target) {
+        # straight check
+        return () if $target eq any( %targets{ $file }.list );
+        return ($target,) unless $target ~~ / <htmlcode> /;
+        # so target has delimited chars
+        my $new = $target.trans( < %20  %24  %26  %28  %29  %2A  %2B  %2F  %3C  %3E  %3F  %40  %5E   %80      %85        %88       %98      %A6  %BB  %C2  %E2  > =>
+                                 [ ' ', '$', '&', '(', ')', '*', '+', '/', '<', '>', '?', '@', '^', '&#128;', '&#133;', '&#136;', '&#152;', '¦', '»', 'Â', 'â'] );
+        return () if $new eq any( %targets{ $file }.list );
+        return ($target, $new)
     }
     my SetHash $files .= new;
     my SetHash $missing .= new;
-    my @remote-responses;
+    my @remote-links;
     for %processed.kv -> $fn, $podf {
         # not all files have links, but may be targets, so store filenames
-        $files{$fn}++;
+        $files{"/$fn"}++;
         # format of podf.links Str entry -> :location :target
         # entry is not needed, but keeps the pair together
         # filter out remote schemas
         %links{$fn} = %(gather for $podf.links {
             if .value<location> eq 'external' {
-                my $proc = Proc::Async.new('curl', '-I', '-s', .value<target>);
-                @remote-responses.push: [$fn,.value<target>,$proc.Supply.first.Promise];
-                $proc.start;
-#                push @remote-responses, start {
-#                    my $http = LibCurl::HTTP.new;
-#                    my $rv;
-#                    try {
-#                        $rv = [$fn, .value<target>, $http.HEAD(.value<target>).perform.response-code];
-#                    }
-#                    if $! {
-#                        $rv = [$fn, .value<target> , $!.message];
-#                    }
-#                    $rv
-#                }
+                push @remote-links, [$fn, .value<target>, .value<link> ]
             }
             else {
                 take $_
             }
         });
         #format of podf/targets array of target ids
-        %targets{$fn} = [$podf.targets.keys];
+        %targets{"/$fn"} = [$podf.targets.keys];
     }
+    # start requesting HTTP responses as soon as possible.
+    my $num = @remote-links.elems;
+    my $tail = $num ~ ' links  ';
+    my $rev = "\b" x $tail.chars;
+    my $head = 'Waiting for internet responses on ';
+    print  $head ~ $tail;
+    my $http = LibCurl::HTTP.new;
+    for @remote-links -> ($fn, $url, $link) {
+        my $resp;
+        try {
+            $resp = $http.HEAD($url).perform.response-code;
+        }
+        if $! {
+            $resp = $http.error;
+        }
+        $tail = --$num ~ ' links  ';
+        print $rev ~ $tail;
+        $rev = "\b" x $tail.chars;
+        next if ?(+$resp); # any numerical response code indicates http link is live
+        next if ( $resp ~~ / \:\s(\d\d\d) / and +$0 != 404 ); # failures with non 404 ok as well.
+        %errors<remote>{$fn}.push(%( :$url, :$resp, :$link ));
+    }
+    say "\b" x $head.chars ~ $rev ~ "Collected responses on { @remote-links.elems } links";
     # all data collected
-    # filter out local schema without #
     for %links.kv -> $fn, %spec {
-        # not interested in key of %spec
-        for %spec.values -> %registered {
+        for %spec.kv -> $link, %registered {
             given %registered<location> {
                 when 'local' {
                     if %registered<target> ~~ / ^ <-[#]>+ $ / {
-                        my $file = $0;
+                        # filter out local schema without #
+                        my $file = ~$/;
                         next if $files{$file};
                         # not missing
                         next if $missing{$file};
                         # already registered as missing
                         $missing{$file}++;
-                        %errors<no-file>{$fn}.append($file)
+                        %errors<no-file>{$fn}.push(%(
+                            :$file,
+                            link => %registered<link>
+                        ))
                     }
                     elsif %registered<target> ~~ / ^ (<-[#]>+) '#' (.+) $ / {
-                        my $file = $0;
+                        my $file = ~$0;
                         next if $missing{$file};
                         # already registered as missing
                         unless $files{$file} {
                             $missing{$file}++;
-                            %errors<no-file>{$fn}.append($file);
+                            %errors<no-file>{$fn}.push(%(
+                                :$file,
+                                link => %registered<link>
+                            ));
                             next
-                        }
-                        my $target = $1;
-                        unless my $near = is-target($file, $target) {
-                            %errors<no-target>{$fn}.push($target => $near)
-                        }
+                            }
+                        my $target = ~$1;
+                        # file exists, but is target listed for that file
+                        my @failed = failed-targets($file, $target);
+                        next unless @failed.elems;
+                        %errors<no-target>{$fn}.push(%(
+                            :$file,
+                            targets => @failed,
+                            link => %registered<link>
+                        ))
                     }
                     # otherwise no action for matches
                 }
-                when 'internal' and %registered<target> ~~ / ^ '#' (.+) $ / {
-                    my $target = $0;
-                    if my $near = is-target($fn, $target) {
-                        %errors<no-target>{$fn}.push($target => $near)
-                    }
+                when 'internal' and %registered<target> ~~ / ^ <-[#]>+ $ / {
+                    my $target = ~$/;
+                    my @failed = failed-targets("/$fn", $target);
+                    next unless @failed.elems;
+                    %errors<no-target>{$fn}.push(%(
+                        file => $fn,
+                        targets => @failed,
+                        link => %registered<link>
+                    ))
                 }
                 default {
-                    %errors<unknown>{$fn}.append(%registered<target>)
+                    %errors<unknown>{$fn}.push(%(
+                        link => %registered<link>,
+                        url => %registered<target>
+                    ))
                 }
             }
         }
-    }
-    await Promise.allof(@remote-responses>>.[2]);
-    for @remote-responses {
-        my $resp = .[2].result;
-        with $resp {
-            $resp = .comb(/ \d\d\d /)[0];
-        }
-        else {
-            $resp = 'Could not find host'
-        }
-        # curl will find 405/502/503 errors, but the resource can still exist
-        next if ( ?(+$resp ) and $resp != 404 );
-        %errors<remote>{ .[0] }.push( .[1] => $resp)
-#        next if ( +.[2] and .[2] < 400);
-#        %errors<remote>{ .[0] }.push( .[1] => .[2])
     }
     $pr.add-data('linkerrortest', %errors);
     []

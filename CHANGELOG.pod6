@@ -64,4 +64,11 @@ hash match the requirements. (TODO, test the signatures of the callables to see 
 =item added error page to main header
 =item new plugin checks all links and creates error page where there is missing content
 
+=head 2021-03-30 v0.8.4
+=item new link-error-test plugin, checks for 404s and intra-collection link/anchor existence
+=item improve styling of error report
+=item correct doc-change-route to correct Language->language etc.
+=item improve default styling
+=item remove TOC and Index tabs from header.
+
 =end pod

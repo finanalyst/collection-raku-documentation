@@ -13,6 +13,7 @@
 [2021-03-02 v0.8.1](#2021-03-02-v081)  
 [2021-03-5 v0.8.2](#2021-03-5-v082)  
 [Head](#head)  
+[Head](#head)  
 
 ----
 # 2021-01-22 Spin off Collection into its own Module
@@ -96,15 +97,29 @@
 
 2021-03-11 v0.8.3
 
-
-
 *  added error page to main header
 
 *  new plugin checks all links and creates error page where there is missing content
+
+# head
+
+2021-03-30 v0.8.4
+
+
+
+*  new link-error-test plugin, checks for 404s and intra-collection link/anchor existence
+
+*  improve styling of error report
+
+*  correct doc-change-route to correct Language->language etc.
+
+*  improve default styling
+
+*  remove TOC and Index tabs from header.
 
 
 
 
 
 ----
-Rendered from CHANGELOG at 2021-03-11T12:25:48Z
+Rendered from CHANGELOG at 2021-03-30T13:16:45Z

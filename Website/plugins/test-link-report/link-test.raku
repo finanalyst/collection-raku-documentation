@@ -5,8 +5,8 @@ sub (%processed, @plugins-used, $processedpod --> Pair ) {
     for %processed.kv -> $fn, $podf {
         next unless $podf.links and +$podf.links.keys;
         @report.append: "$fn contains links";
-        for $podf.links.kv -> $entry, (:$target, :$location) {
-            @report.append: "\t$location target is: $target"
+        for $podf.links.kv -> $entry, (:$target, :$location, :$link) {
+            @report.append: "\t｢$link｣ points to a(n) $location target at ｢$target｣"
         }
     }
     @report.append: "\n\nPlugin report";

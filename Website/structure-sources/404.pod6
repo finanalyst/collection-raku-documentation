@@ -1,5 +1,7 @@
 =begin pod :no-toc :no-glossary
 
+=TITLE 404 Page Not Found
+
 =comment
 <img style="float: right; margin: 0 0 1em 1em" src="/images/camelia-404.png" alt="" id="home_logo"/>
 

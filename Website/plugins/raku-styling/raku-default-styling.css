@@ -243,8 +243,8 @@ header {
   left: 0;
   width: 100%;
   display: grid;
-  grid-template-rows: 3em 2em;
-  grid-template-columns: 100px auto 15% 15% 100px;
+  grid-template-rows: 3.5em 2em;
+  grid-template-columns: 100px auto 12% 10% 100px;
   grid-template-areas: "home title error extra extra" " . menu menu menu .";
   border-radius: 0 0 4em 4em;
   margin: 0;
@@ -257,12 +257,13 @@ header {
     grid-area: home; }
   header .page-title {
     grid-area: title;
-    align-self: center;
     text-align: center;
     justify-self: stretch;
     font-family: sans-serif;
     font-weight: bold;
-    font-size: x-large; }
+    font-size: xx-large;
+    color: blanchedalmond;
+    text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.15); }
   header .error-report {
     grid-area: error;
     text-align: center;
@@ -273,7 +274,7 @@ header {
     font-size: large;
     color: 9A161D;
     padding: 0.5em;
-    margin: 0.2em 1em 0.4em 1em;
+    margin: 0.2em 1em 0.7em 1em;
     text-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
     box-shadow: inset 0 0 2px 0 rgba(255, 255, 255, 0.4), inset 0 0 3px 0 rgba(0, 0, 0, 0.4), inset 0 0 3px 5px rgba(0, 0, 0, 0.05), 2px 2px 4px 0 rgba(0, 0, 0, 0.25); }
     header .error-report:hover {
@@ -293,7 +294,7 @@ header {
     font-size: large;
     color: 9A161D;
     padding: 0.5em;
-    margin: 0.2em 1em 0.4em 1em;
+    margin: 0.2em 1em 0.7em 1em;
     text-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
     box-shadow: inset 0 0 2px 0 rgba(255, 255, 255, 0.4), inset 0 0 3px 0 rgba(0, 0, 0, 0.4), inset 0 0 3px 5px rgba(0, 0, 0, 0.05), 2px 2px 4px 0 rgba(0, 0, 0, 0.25); }
     header .extra:hover {
