@@ -1,13 +1,12 @@
-=begin pod :no-toc :no-glossary
+=begin pod :no-toc :no-glossary :class<content_404>
 
-=TITLE 404 Page Not Found
+=TITLE 404 Response
 
-=comment
-<img style="float: right; margin: 0 0 1em 1em" src="/images/camelia-404.png" alt="" id="home_logo"/>
+=CameliaShadow
 
 =head2 404: Page Not Found
 
-We're sorry, but the page you tried to reach cannot be found.
+We're sorry, but the resource (content page) you tried to reach cannot be found.
 
 =item If you got here by following
 a link on this site or as a result of searching on it, please report it

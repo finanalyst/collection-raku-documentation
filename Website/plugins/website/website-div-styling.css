@@ -54,6 +54,8 @@
   font-size: x-large;
   line-height: 1.3;
   color: darkgoldenrod; }
+  .ws-toc-file a {
+    color: inherit; }
 
 .ws-toc-head-1 {
   grid-column: 2 / end;
@@ -111,6 +113,8 @@
   color: brown; }
   .ws-glossary-file.header {
     font-weight: bold; }
+  .ws-glossary-file a {
+    color: inherit; }
 
 .ws-glossary-place {
   grid-column: 3 / span 2;

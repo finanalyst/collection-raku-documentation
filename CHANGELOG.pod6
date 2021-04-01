@@ -60,15 +60,26 @@ hash match the requirements. (TODO, test the signatures of the callables to see 
 =item2 the template was not rendering local files correctly
 =item2 Raku::Pod::Render was treating local files as external
 
-=head 2021-03-11 v0.8.3
+=head1 2021-03-11 v0.8.3
 =item added error page to main header
 =item new plugin checks all links and creates error page where there is missing content
 
-=head 2021-03-30 v0.8.4
+=head1 2021-03-30 v0.8.4
 =item new link-error-test plugin, checks for 404s and intra-collection link/anchor existence
 =item improve styling of error report
 =item correct doc-change-route to correct Language->language etc.
 =item improve default styling
 =item remove TOC and Index tabs from header.
+
+=head1 2021-04-01 v0.8.5
+=item improved link-error-test to detect %E2%xx$xx strings. These are three byte utf8. Only four used in Raku documentation
+=item improved Search page so that returning to page keeps the search state
+=item improved Search page so that Documents are also clickable, not just the parts that are found.
+=item added report milestone plugin to images, which looks at all plugins for :images key, and marks image files as used
+=item added asset report to link-plugin-asset report plugin
+=item added new Camelia blocks to provide image for homepage and 404 page.
+=item added faded camelia to background of pod files
+=item reworked minimum templates to handle pod content and page content.
+=item got link-error-test to sort files, and added links to files where there are problems.
 
 =end pod

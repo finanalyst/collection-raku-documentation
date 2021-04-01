@@ -5,6 +5,10 @@
 This is a render milestone plugin that moves images in the assets directory (as given in the B<Collection> level configuration)
 to the C<assets/images/> directory. More detail can be found in the Collection README regarding assets.
 
+A report milestone plugin is also provided which looks at all registered plugins to see whether there is an C<images>
+key in the plugin configuration. If so, the images listed in the key are marked as used, so that the assets manager
+will move them.
+
 =head1 Blocks
 
 The block name is C<Image>, though <image> is also possible.

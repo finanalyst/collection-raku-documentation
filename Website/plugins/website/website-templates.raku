@@ -88,12 +88,12 @@
         ~ ($ns ?? '' !! ('<input class="ws-combined-search" type="text" placeholder="Search headings ..." data-id="' ~ $id))
         ~ '<div class="ws-toc-container">' ~ "\n"
                 ~ '<div class="ws-toc-caption">' ~ (%prm<toc-caption> // '') ~ '</div>' ~ "\n"
-                ~ '<div class="ws-toc-file-heading">Web page</div>' ~ "\n"
-                ~ '<div class="ws-toc-heading">Chapter headings</div>' ~ "\n"
+                ~ '<div class="ws-toc-file-heading">Web page (clickable)</div>' ~ "\n"
+                ~ '<div class="ws-toc-heading">Chapter headings (clickable)</div>' ~ "\n"
                 ~ %prm<website><ws-toc>.cache.sort.map({
             my $fn = .key;
             '<div class="ws-toc-file ' ~ $id
-                    ~ .key ~ '</div>' ~ "\n"
+                    ~ "<a href=\"$fn\.html\">$fn\</a>" ~ '</div>' ~ "\n"
                     ~ .value.map({
                 "<a href=\"{
                     $fn }.html#{
@@ -104,16 +104,16 @@
         ~ '</div>'
         ~ '<div class="ws-glossary-container">' ~ "\n"
                 ~ '<div class="ws-glossary-caption">' ~ (%prm<glossary-caption> // '') ~ '</div>' ~ "\n"
-                ~ '<div class="ws-glossary-defn header">Term explained</div>'
-                ~ '<div class="ws-glossary-file header">Source file</div>'
-                ~ '<div class="ws-glossary-place header">In section</div>'
+                ~ '<div class="ws-glossary-defn header">Term explained (not clickable)</div>'
+                ~ '<div class="ws-glossary-file header">Source file (clickable)</div>'
+                ~ '<div class="ws-glossary-place header">In section (clickable)</div>'
                 ~ %prm<website><ws-glossary>.cache.sort.map({
             '<div class="ws-glossary-defn ' ~ $id
                     ~ .key ~ '</div>'
                     ~ .value.sort.map({
                 my $fn = .key;
                 '<div class="ws-glossary-file ' ~ $id
-                        ~ $fn
+                        ~ "<a href=\"$fn\.html\">$fn\</a>"
                         ~ '</div>'
                         ~ [~] .value.map({
                         '<a href="' ~ $fn ~ '.html#'

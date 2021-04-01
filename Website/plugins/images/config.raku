@@ -4,4 +4,5 @@
     :template-raku<image-templates.raku>,
     :custom-raku<image-blocks.raku>,
     :css<image-styling.css>,
+    :report<image-collector.raku>,
 );

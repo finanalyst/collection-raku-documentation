@@ -12,8 +12,9 @@
 [2021-03-1 v0.8](#2021-03-1-v08)  
 [2021-03-02 v0.8.1](#2021-03-02-v081)  
 [2021-03-5 v0.8.2](#2021-03-5-v082)  
-[Head](#head)  
-[Head](#head)  
+[2021-03-11 v0.8.3](#2021-03-11-v083)  
+[2021-03-30 v0.8.4](#2021-03-30-v084)  
+[2021-04-01 v0.8.5](#2021-04-01-v085)  
 
 ----
 # 2021-01-22 Spin off Collection into its own Module
@@ -93,20 +94,12 @@
 
 	*  Raku::Pod::Render was treating local files as external
 
-# head
-
-2021-03-11 v0.8.3
-
+# 2021-03-11 v0.8.3
 *  added error page to main header
 
 *  new plugin checks all links and creates error page where there is missing content
 
-# head
-
-2021-03-30 v0.8.4
-
-
-
+# 2021-03-30 v0.8.4
 *  new link-error-test plugin, checks for 404s and intra-collection link/anchor existence
 
 *  improve styling of error report
@@ -117,9 +110,30 @@
 
 *  remove TOC and Index tabs from header.
 
+# 2021-04-01 v0.8.5
+
+
+*  improved link-error-test to detect %E2%xx$xx strings. These are three byte utf8. Only four used in Raku documentation
+
+*  improved Search page so that returning to page keeps the search state
+
+*  improved Search page so that Documents are also clickable, not just the parts that are found.
+
+*  added report milestone plugin to images, which looks at all plugins for :images key, and marks image files as used
+
+*  added asset report to link-plugin-asset report plugin
+
+*  added new Camelia blocks to provide image for homepage and 404 page.
+
+*  added faded camelia to background of pod files
+
+*  reworked minimum templates to handle pod content and page content.
+
+*  got link-error-test to sort files, and added links to files where there are problems.
+
 
 
 
 
 ----
-Rendered from CHANGELOG at 2021-03-30T13:16:45Z
+Rendered from CHANGELOG at 2021-04-01T20:55:17Z

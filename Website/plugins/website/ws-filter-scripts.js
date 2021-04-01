@@ -43,9 +43,13 @@ $(document).ready(function(){
             $(this).toggle($(this).hasClass(['_srch-show']) || $(this).hasClass(['no-search']))
         });
     });
-    $(".ws-combined-search").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        var id = $(this).data('id');
+});
+$(document).ready(function(){
+    $(".ws-combined-search").each(function() {search( $(this) )} );
+    $(".ws-combined-search").on("keyup", function() {search( $(this) )} );
+    function search( obj ) {
+        var value = $(obj).val().toLowerCase();
+        var id = $(obj).data('id');
         $('.'+id).removeClass(['_srch-show']);
         $('.'+id).filter(function() {
             return $(this).text().toLowerCase().indexOf(value) > -1
@@ -107,6 +111,6 @@ $(document).ready(function(){
         $('.'+id).filter(function() {
             $(this).toggle($(this).hasClass(['_srch-show']) || $(this).hasClass(['no-search']))
         });
-    });
+    }
 });
 

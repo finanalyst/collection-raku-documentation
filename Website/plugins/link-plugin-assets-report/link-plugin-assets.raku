@@ -26,5 +26,12 @@ sub (%processed, @plugins-used, $processedpod --> Pair ) {
             @report.append("\t$tmp: $times times(s)")
         }
     }
+    @report.append("\n\nAssets report");
+    my %config = $processedpod.get-data('image');
+    my $man = %config<manager>;
+    for $man.asset-db.kv -> $nm, %info {
+        @report.append("｢$nm｣ is type { %info<type> } and is used by \n\t " ~ (%info<by> ?? %info<by>.join("\n\t" ) !! 'nothing') )
+    }
+
     'link-plugin-report.txt' => @report.join("\n")
 }

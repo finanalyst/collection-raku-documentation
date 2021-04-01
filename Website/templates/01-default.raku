@@ -128,6 +128,19 @@ use ProcessedPod;
                 ~ "\n</section>\n"
     },
     'output' => sub ( %prm, %tml ) { '<pre class="pod-output">' ~ (%prm<contents> // '') ~ '</pre>' },
+    'page-top' => sub ( %prm, %tml ) {
+        '<div class="pod-content ' ~ ( %prm<page-config><class> // '' ) ~ '">'
+    },
+    'page-bottom' => sub ( %prm, %tml ) { '</div>' },
+    'content-top' => sub ( %prm, %tml ) {
+        my $rv = '<div class="pod-body">' ~ "\n";
+        return $rv unless %prm<path>.defined and %prm<path> ~~ / ^ 'raku-docs' (.+) $ /;
+        $rv ~= '<button title="Edit this page" class="edit-raku-doc" '
+            ~ 'onclick="location=\'https://github.com/Raku/doc/edit/master' ~ %tml<escaped>( ~$0 ) ~ '\'">'
+            ~ '<img src="/assets/images/pencil.svg" >'
+            ~ '</button>'
+    },
+    'content-bottom' => sub ( %prm, %tml ) { '</div>' },
     'pod' => sub ( %prm, %tml ) {
         '<section name="'
                 ~ %tml<escaped>(%prm<name> // '') ~ '">'
@@ -178,17 +191,17 @@ use ProcessedPod;
                 ~ %tml<head-block>(%prm, %tml)
                 ~ "\t<body class=\"pod\">\n"
                 ~ %tml<header>(%prm, %tml)
-                ~ '<div class="pod-content">'
+                ~ %tml<page-top>(%prm, %tml)
                 ~ ( (%prm<toc> or %prm<glossary>) ?? '<nav>' !! '')
                 ~ (%prm<toc> // '')
                 ~ (%prm<glossary> // '')
                 ~ ( (%prm<toc> or %prm<glossary>) ?? '</nav>' !! '')
                 ~ %tml<top-of-page>(%prm, %tml)
                 ~ %tml<subtitle>(%prm, %tml)
-                ~ '<div class="pod-body">'
+                ~ %tml<content-top>(%prm, %tml)
                 ~ (%prm<body> // '')
-                ~ "\t\t</div>\n"
-                ~ '</div>'
+                ~ %tml<content-bottom>({},{})
+                ~ %tml<page-bottom>({},{})
                 ~ (%prm<footnotes> // '')
                 ~ %tml<footer>(%prm, %tml)
                 ~ %tml<js-bottom>({},{})
@@ -280,11 +293,13 @@ use ProcessedPod;
                 ~ '<a href="/search.html"><div class="menu-item">Search Site</div></a>'
                 ~ '<a href="/types.html"><div class="menu-item">Types</div></a>'
                 ~ '<a href="/programs.html"><div class="menu-item">Programs</div></a>'
+                ~ '<a href="https://modules.raku.org/"><div class="menu-item">Modules</div></a>'
+                ~ '<a href="https://docs.raku.org/"><div class="menu-item">Official site</div></a>'
                 ~ "</div></header>\n"
     },
     'footer' => sub ( %prm, %tml ) {
         '<footer><div>Rendered from <span class="path">'
-                ~ (( %prm<path>.defined && %prm<path> ne '') ?? %tml<escaped>(%prm<path>) !! '')
+                ~ (( %prm<path>.defined && %prm<path> ne '') ?? %tml<escaped>(%prm<path>) !! 'No path')
                 ~ '</span></div>'
                 ~ '<!-- filename = ' ~ %prm<name> ~ '-->'
                 ~ '<div>at <span class="time">'

@@ -1,3 +1,0 @@
-%(
-    :report<link-test.raku>,
-)

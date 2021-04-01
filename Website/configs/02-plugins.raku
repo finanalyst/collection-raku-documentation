@@ -7,7 +7,7 @@
             raku-styling website camelia simple-extras listfiles images font-awesome filterlines link-error-test
             gather-js-jq gather-css
         >,
-        :report<test-link-report>,
+        :report<images link-plugin-assets-report>,
         :compilation<website listfiles link-error-test>,
         :completion<cro-app>,
     ),

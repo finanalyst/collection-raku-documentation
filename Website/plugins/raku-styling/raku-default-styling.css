@@ -215,7 +215,10 @@ atom-text-editor.is-focused .line.cursor-line {
   margin: 1em;
   padding: 2em;
   border-radius: 1em;
-  box-shadow: 0.5em 0.5em 1em #888888; }
+  box-shadow: 0.5em 0.5em 1em #888888;
+  background-repeat: no-repeat;
+  background-position: right 2rem top 2rem;
+  background-size: 243px; }
   .pod-content dt {
     font-weight: bold;
     margin-bottom: 0.2em; }
@@ -229,6 +232,8 @@ atom-text-editor.is-focused .line.cursor-line {
     padding-top: 0.25em; }
   .pod-content .top-of-page {
     scroll-margin-top: 9rem; }
+  .pod-content:not(.content_404) {
+    background-image: url(/assets/images/Camelia-faded.svg); }
 
 .pod-table tr:nth-child(odd) {
   background-color: rgba(0, 0, 0, 0.031373); }
@@ -486,5 +491,14 @@ li.defn-item {
     margin-bottom: 0.2em; }
   li.defn-item p:not(p:first-of-type) {
     padding-left: 2em; }
+
+.edit-raku-doc {
+  background: linear-gradient(to bottom, #fff 0%, #ededed 100%);
+  cursor: pointer;
+  border-radius: 4px;
+  float: right;
+  margin-left: 2em;
+  width: 3em;
+  height: 2em; }
 
 /*# sourceMappingURL=raku-default-styling.css.map */

@@ -1,7 +1,7 @@
 use v6.d;
 my $camelia-svg = 'Camelia.svg'.IO.slurp;
 my $camelia-ico = 'camelia-ico.bin'.IO.slurp;
-my $camelia-faded-svg = 'Camelia-faded.svg'.IO.slurp;
+my $faded-camelia-svg = 'Camelia-faded.svg'.IO.slurp;
 
 %(
     'camelia-img' => sub ( %prm, %tml ) { $camelia-svg },
@@ -9,10 +9,16 @@ my $camelia-faded-svg = 'Camelia-faded.svg'.IO.slurp;
         "\n<link" ~ ' href="data:image/x-icon;base64,' ~ $camelia-ico ~ '" rel="icon" type="image/x-icon"' ~ "/>\n"
     },
     'camelia' => sub (%prm, %tml ) {
-        '<img src="' ~ $camelia-svg ~'"'
-                ~ ' class="' ~ ( %prm<class>:exists // 'camelia-css') ~ '"'
-                ~ ( %prm<id>:exists ?? ( ' id="' ~ %prm<id> ~ '" ') !! '')
-                ~ ">\n"
+        '<div class="' ~ ( %prm<class> // 'camelia') ~ '">'
+                ~ $camelia-svg ~
+                ~ "</div>\n"
     },
-    :camelia-faded( $camelia-faded-svg ),
+    'fadedcamelia' => sub (%prm, %tml ) {
+        '<div class="' ~ ( %prm<class> // 'camelia') ~ '">'
+                ~ $faded-camelia-svg ~
+                ~ "</div>\n"
+    },
+    'cameliashadow' => sub (%prm, %tml ) {
+        '<img src="assets/images/camelia-404.png" class="' ~ ( %prm<class> // 'camelia') ~ '">'
+    },
 )

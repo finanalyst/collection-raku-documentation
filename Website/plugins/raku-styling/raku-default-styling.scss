@@ -4,7 +4,7 @@
     padding: 0;
     margin: 0;
 }
-.pod-content    {
+.pod-content {
     border: #F2C100 0.2em solid;
     margin: 1em;
     padding: 2em;
@@ -28,6 +28,12 @@
     }
     .top-of-page {
         scroll-margin-top: 9rem;
+    }
+    background-repeat: no-repeat;
+    background-position: right 2rem top 2rem;
+    background-size: 243px;
+    &:not(.content_404) {
+        background-image: url(/assets/images/Camelia-faded.svg);
     }
 }
 .pod-table tr:nth-child(odd) {
@@ -371,4 +377,13 @@ li.defn-item {
     p:not(p:first-of-type) {
         padding-left: 2em;
     }
+}
+.edit-raku-doc {
+	background: linear-gradient(to bottom, #fff 0%, #ededed 100%);
+    cursor: pointer;
+	border-radius: 4px;
+ 	float: right;
+ 	margin-left: 2em;
+ 	width: 3em;
+ 	height: 2em;
 }
