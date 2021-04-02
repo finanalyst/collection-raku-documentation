@@ -6,7 +6,10 @@ sub ($pr, %processed) {
     my regex htmlcode {
         \% <[0..9 A..F]> ** 2
     };
-    my regex x-htmlcode {
+    my regex xx-htmlcode {
+        '%C2' <htmlcode>
+    }
+    my regex xxx-htmlcode {
         '%E2' <htmlcode> <htmlcode>
     }
     # only defined for Upper case
@@ -19,22 +22,34 @@ sub ($pr, %processed) {
         return () if $target eq any(%targets{$file}.list);
         return ($target,) unless $target ~~ / <htmlcode> /;
         # first check for xhtml
-        my $new;
-        if $target ~~ / <x-htmlcode> / {
-            =comment these are the four codes found in Raku documentation
+        my $new = $target;
+        given $target {
+            when / <xxx-htmlcode> / {
+                =comment these are the four three-byte codes found in Raku documentation
                 %E2%80%A6 \u2026 …
                 %E2%88%98 \u2218 ∘
                 %E2%88%85 \u2205 ∅
                 %E2%80%93 \u2213 ∓
 
-            $new = $target.trans( <%E2%80%A6 %E2%88%98 %E2%88%85 %E2%88%85 >
-                             => [ '…',       '∘',      '∅',      '∓']       )
-        }
-        else {
-            # so target has delimited chars
-            $new = $target
-                    .trans(< %20  %24  %26  %28  %29  %2A  %2B  %2F  %3C  %3E  %3F  %40  %5E   %A6  %BB  %C2  %E2  > =>
-                            [' ', '$', '&', '(', ')', '*', '+', '/', '<', '>', '?', '@', '^', '¦', '»', 'Â', 'â']);
+                $new .= trans(<%E2%80%A6 %E2%88%98 %E2%88%85 %E2%88%85 >
+                          => ['…',       '∘',      '∅',      '∓']);
+                proceed
+            }
+            when / <xx-htmlcode> / {
+                =comment these are the three two-byte codes found in Raku documentation
+                %C2%AB \u00AB «
+                %C2%BB \u00BB »
+                %C2%B2 \u00B2 ²
+
+                $new .= trans(<%C2%AB %C2%BB %C2%B2 >
+                           => ['«',   '»',   '²']);
+                proceed
+            }
+            default {
+                # so target has delimited chars
+                $new .=  trans(< %20  %24  %26  %28  %29  %2A  %2B  %2F  %3A %3C  %3E  %3F  %40  %5E   %A6  %BB  %C2  %E2  > =>
+                                [' ', '$', '&', '(', ')', '*', '+', '/', ':', '<', '>', '?', '@', '^', '¦', '»', 'Â', 'â']);
+            }
         }
         return () if $new eq any(%targets{$file}.list);
         return ($target, $new)
@@ -85,7 +100,8 @@ sub ($pr, %processed) {
             # failures with non 404 ok as well.
             %errors<remote>{$fn}.push(%( :$url, :$resp, :$link));
         }
-        say "\b" x $head.chars ~ $rev ~ "Collected responses on { @remote-links.elems } links in { now - $start } secs";
+        my $elap = (now - $start ).Int;
+        say "\b" x $head.chars ~ $rev ~ "Collected responses on { @remote-links.elems } links in { $elap div 60 } mins { $elap % 60 } secs";
     }
     # all data collected
     for %links.kv -> $fn, %spec {

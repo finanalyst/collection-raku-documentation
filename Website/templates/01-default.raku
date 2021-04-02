@@ -82,7 +82,7 @@ use ProcessedPod;
                 ~ "</pre></div>\n"
     },
     'format-x' => sub ( %prm, %tml ) {
-        '<a name="' ~ (%prm<target> // '') ~ '"></a>'
+        '<a name="' ~ (%prm<target> // '') ~ '" class="index-entry"></a>'
                 ~ ( ( %prm<text>.defined and %prm<text> ne '' ) ?? '<span class="glossary-entry">' ~ %prm<text> ~ '</span>' !! '')
     },
     'heading' => sub ( %prm, %tml ) {

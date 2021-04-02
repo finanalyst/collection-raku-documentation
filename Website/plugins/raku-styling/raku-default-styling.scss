@@ -18,7 +18,7 @@
         margin-bottom: 1em;
     }
     h1, h2, h3, h4, h5, h6 {
-        scroll-margin-top: 6.5rem;
+        scroll-margin-top: 9rem;
         a {
             color: black;
         }
@@ -276,6 +276,9 @@ nav {
     0 3px 0 #bbb,
     0 6px 1px rgba(0,0,0,.1),
     0 0 5px rgba(0,0,0,.1)
+}
+.index-entry {
+  scroll-margin-top: 9rem;
 }
 #_TOC {
     border-collapse: collapse;

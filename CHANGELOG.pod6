@@ -82,4 +82,8 @@ hash match the requirements. (TODO, test the signatures of the callables to see 
 =item reworked minimum templates to handle pod content and page content.
 =item got link-error-test to sort files, and added links to files where there are problems.
 
+=head1 2021-o4-02 v0.8.6
+=item improvements to link-error-test
+=item glossary/index items are placed below floating page header
+
 =end pod

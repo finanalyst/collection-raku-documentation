@@ -15,6 +15,7 @@
 [2021-03-11 v0.8.3](#2021-03-11-v083)  
 [2021-03-30 v0.8.4](#2021-03-30-v084)  
 [2021-04-01 v0.8.5](#2021-04-01-v085)  
+[2021-o4-02 v0.8.6](#2021-o4-02-v086)  
 
 ----
 # 2021-01-22 Spin off Collection into its own Module
@@ -111,8 +112,6 @@
 *  remove TOC and Index tabs from header.
 
 # 2021-04-01 v0.8.5
-
-
 *  improved link-error-test to detect %E2%xx$xx strings. These are three byte utf8. Only four used in Raku documentation
 
 *  improved Search page so that returning to page keeps the search state
@@ -131,9 +130,16 @@
 
 *  got link-error-test to sort files, and added links to files where there are problems.
 
+# 2021-o4-02 v0.8.6
+
+
+*  improvements to link-error-test
+
+*  glossary/index items are placed below floating page header
+
 
 
 
 
 ----
-Rendered from CHANGELOG at 2021-04-01T20:55:17Z
+Rendered from CHANGELOG at 2021-04-02T12:27:48Z
