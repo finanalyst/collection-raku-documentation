@@ -1,5 +1,5 @@
 
-sub ( $pp ) {
+sub ( $pp, %options ) {
     # need to move fonts in directory to asset file
     my $dir = 'fonts';
     my @move-to-dest;
