@@ -19,6 +19,6 @@ my $faded-camelia-svg = 'Camelia-faded.svg'.IO.slurp;
                 ~ "</div>\n"
     },
     'cameliashadow' => sub (%prm, %tml ) {
-        '<img src="assets/images/camelia-404.png" class="' ~ ( %prm<class> // 'camelia') ~ '">'
+        '<img src="/assets/images/camelia-404.png" class="' ~ ( %prm<class> // 'camelia') ~ '">'
     },
 )

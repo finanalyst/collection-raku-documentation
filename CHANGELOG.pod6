@@ -86,4 +86,7 @@ hash match the requirements. (TODO, test the signatures of the callables to see 
 =item improvements to link-error-test
 =item glossary/index items are placed below floating page header
 
+=head1 2021-04-04 v0.9.0
+=item change to match new Collection version, enforce observance of no-status in plugins
+
 =end pod

@@ -1,5 +1,5 @@
 use PrettyDump;
-sub (%processed, @plugins-used, $processedpod --> Pair ) {
+sub (%processed, @plugins-used, $processedpod, %options --> Pair ) {
     #%.links{$entry}<target location>
     my @report = 'Link report', ;
     for %processed.kv -> $fn, $podf {

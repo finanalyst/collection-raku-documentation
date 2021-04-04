@@ -1,5 +1,5 @@
 use v6.d;
-sub (%processed, @plugins-used, $processedpod --> Pair ) {
+sub (%processed, @plugins-used, $processedpod, %options --> Pair ) {
     my %config = $processedpod.get-data('image');
     my $man = %config<manager>;
     for $processedpod.plugin-datakeys -> $plg {

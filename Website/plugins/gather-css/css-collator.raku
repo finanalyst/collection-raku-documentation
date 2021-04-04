@@ -1,4 +1,4 @@
-sub ($pp) {
+sub ($pp, %options) {
     my $css = '';
     my @links;
     my @adds;

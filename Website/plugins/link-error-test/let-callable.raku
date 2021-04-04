@@ -2,7 +2,7 @@
 use LibCurl::HTTP;
 use PrettyDump;
 
-sub ($pr, %processed) {
+sub ($pr, %processed, %options) {
     my regex htmlcode {
         \% <[0..9 A..F]> ** 2
     };
@@ -80,7 +80,7 @@ sub ($pr, %processed) {
         my $tail = $num ~ ' links  ';
         my $rev = "\b" x $tail.chars;
         my $head = 'Waiting for internet responses on ';
-        print  $head ~ $tail;
+        print  $head ~ $tail unless %options<no-status>;
         my $http = LibCurl::HTTP.new;
         my $start = now;
         for @remote-links -> ($fn, $url, $link) {
@@ -92,7 +92,7 @@ sub ($pr, %processed) {
                 $resp = $http.error;
             }
             $tail = --$num ~ ' links  ';
-            print $rev ~ $tail;
+            print $rev ~ $tail unless %options<no-status>;
             $rev = "\b" x $tail.chars;
             next if ?(+$resp);
             # any numerical response code indicates http link is live
@@ -101,7 +101,8 @@ sub ($pr, %processed) {
             %errors<remote>{$fn}.push(%( :$url, :$resp, :$link));
         }
         my $elap = (now - $start ).Int;
-        say "\b" x $head.chars ~ $rev ~ "Collected responses on { @remote-links.elems } links in { $elap div 60 } mins { $elap % 60 } secs";
+        say "\b" x $head.chars ~ $rev ~ "Collected responses on { @remote-links.elems } links in { $elap div 60 } mins { $elap % 60 } secs"
+                unless %options<no-status>;
     }
     # all data collected
     for %links.kv -> $fn, %spec {

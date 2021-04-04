@@ -1,6 +1,6 @@
 use v6.d;
 
-sub ( $pr , %processed ) {
+sub ( $pr , %processed, %options ) {
     my $listf = $pr.get-data('listfiles');
     # gets the object that can be added to
     # must not containerise to hash as this would break link with Pr object

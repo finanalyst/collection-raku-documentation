@@ -16,6 +16,7 @@
 [2021-03-30 v0.8.4](#2021-03-30-v084)  
 [2021-04-01 v0.8.5](#2021-04-01-v085)  
 [2021-o4-02 v0.8.6](#2021-o4-02-v086)  
+[2021-04-04 v0.9.0](#2021-04-04-v090)  
 
 ----
 # 2021-01-22 Spin off Collection into its own Module
@@ -131,15 +132,18 @@
 *  got link-error-test to sort files, and added links to files where there are problems.
 
 # 2021-o4-02 v0.8.6
-
-
 *  improvements to link-error-test
 
 *  glossary/index items are placed below floating page header
+
+# 2021-04-04 v0.9.0
+
+
+*  change to match new Collection version, enforce observance of no-status in plugins
 
 
 
 
 
 ----
-Rendered from CHANGELOG at 2021-04-02T12:27:48Z
+Rendered from CHANGELOG at 2021-04-04T13:42:33Z

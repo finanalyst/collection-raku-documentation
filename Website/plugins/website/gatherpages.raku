@@ -1,4 +1,4 @@
-sub ($pr, %processed) {
+sub ($pr, %processed, %options) {
     my $ws = $pr.get-data('website');
     # TOC by sorted file, then by header, sub-header, etc, in order of header appearance
     $ws<ws-toc> =

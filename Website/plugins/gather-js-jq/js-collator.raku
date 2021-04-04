@@ -1,4 +1,4 @@
-sub ( $pp ) {
+sub ( $pp, %options ) {
     my Bool $loadjq-lib = False;
     my @js;
     my @js-bottom;
