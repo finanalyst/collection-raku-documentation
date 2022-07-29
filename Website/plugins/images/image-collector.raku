@@ -1,5 +1,5 @@
 use v6.d;
-sub (%processed, @plugins-used, $processedpod, %options --> Pair ) {
+sub (%processed, @plugins-used, $processedpod, %options --> Array ) {
     my %config = $processedpod.get-data('image');
     my $man = %config<manager>;
     for $processedpod.plugin-datakeys -> $plg {
@@ -11,5 +11,4 @@ sub (%processed, @plugins-used, $processedpod, %options --> Pair ) {
             $man.asset-is-used($_, 'image', :by("plugin: $plg"));
         }
     }
-    '' => ''
 }

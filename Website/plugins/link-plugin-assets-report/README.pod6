@@ -1,6 +1,0 @@
-=begin pod
-=TITLE Test Link Report plugin for Collection
-
-More to do. Currently just lists links, templates used, and ...
-
-=end pod

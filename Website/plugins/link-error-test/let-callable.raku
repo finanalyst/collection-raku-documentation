@@ -18,12 +18,13 @@ sub ($pr, %processed, %options) {
     my %targets;
     my %config = EVALFILE 'config.raku';
     sub failed-targets($file, Str $target) {
+        my $old = $target.trim;
         # straight check
-        return () if $target eq any(%targets{$file}.list);
-        return ($target,) unless $target ~~ / <htmlcode> /;
+        return () if $old eq any(%targets{$file}.list);
+        return ($old,) unless $old ~~ / <htmlcode> /;
         # first check for xhtml
-        my $new = $target;
-        given $target {
+        my $new = $old;
+        given $old {
             when / <xxx-htmlcode> / {
                 =comment these are the four three-byte codes found in Raku documentation
                 %E2%80%A6 \u2026 …
@@ -47,12 +48,12 @@ sub ($pr, %processed, %options) {
             }
             default {
                 # so target has delimited chars
-                $new .=  trans(< %20  %24  %26  %28  %29  %2A  %2B  %2F  %3A %3C  %3E  %3F  %40  %5E   %A6  %BB  %C2  %E2  > =>
-                                [' ', '$', '&', '(', ')', '*', '+', '/', ':', '<', '>', '?', '@', '^', '¦', '»', 'Â', 'â']);
+                $new .=  trans(< %20  %24  %26  %28  %29  %2A  %2B  %2F  %3A %3C  %3E  %3F  %40  %5E  %7C   %A6  %BB   > =>
+                                [' ', '$', '&', '(', ')', '*', '+', '/', ':', '<', '>', '?', '@', '^', '|', '¦', '»']);
             }
         }
         return () if $new eq any(%targets{$file}.list);
-        return ($target, $new)
+        return ($old, $new)
     }
     my SetHash $files .= new;
     my SetHash $missing .= new;

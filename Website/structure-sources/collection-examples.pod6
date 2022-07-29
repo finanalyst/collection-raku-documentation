@@ -205,4 +205,33 @@ renders as
 Programs that support Raku development
 =end filterlines
 
+
+=head1 LeafletMap
+
+The leafletmap plugin inserts a map in place of the Pod Block.
+
+The basis of the plugin is the L<Leaflet JS library|https://leafletjs.com> to which the
+L<Leaflet-providers|https://github.com/leaflet-extras/leaflet-providers> and
+L<Extra markers|https://github.com/coryasilva/Leaflet.ExtraMarkers> plugins have been added.
+
+The free map types from providers can be viewed L<here|http://leaflet-extras.github.io/leaflet-providers/preview/index.html>.
+
+Extra-markers can work with Font-Awesome, which has already been added to this page through another
+plugin.
+
+There are very many C<Leaflet> plugins, so this Collection plugin should be considered minimal.
+
+To illustrate the plugin, here is a map with the twe Fish & Chip shops in Cardiff according to the
+2021 Fry Magazine's best in the UK list, with the map centred on Cardiff Castle. The on-browser
+height of the map is set at 200px. The Esri.WorldImagery provider is selected to illustrate the
+use of the providers plugin.
+
+=begin LeafletMap :lat(51.482654) :long(-3.181823) :zoom(13) :height<200px> :provider<Esri.WorldImagery>
+=for marker :lat(51.529269) :long(-3.188109) :icon<fa-coffee> :headlevel(0)
+Fintans Fish & Chip Co, Llanishen
+
+=for marker :lat(51.502576) :long(-3.190222) :icon<fa-coffee> :headlevel(0)
+Yan’s Fish Bar
+
+=end LeafletMap
 =end pod

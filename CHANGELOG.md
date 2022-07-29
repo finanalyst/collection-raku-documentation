@@ -1,7 +1,7 @@
 # Changelog
+>For the Collection-Raku-Documentation module
 
-----
-----
+
 ## Table of Contents
 [2021-01-22 Spin off Collection into its own Module](#2021-01-22-spin-off-collection-into-its-own-module)  
 [2021-01-25 Change name to reflect Collection hierarchy](#2021-01-25-change-name-to-reflect-collection-hierarchy)  
@@ -17,6 +17,7 @@
 [2021-04-01 v0.8.5](#2021-04-01-v085)  
 [2021-o4-02 v0.8.6](#2021-o4-02-v086)  
 [2021-04-04 v0.9.0](#2021-04-04-v090)  
+[2022-07-29 v0.9.1](#2022-07-29-v091)  
 
 ----
 # 2021-01-22 Spin off Collection into its own Module
@@ -137,13 +138,22 @@
 *  glossary/index items are placed below floating page header
 
 # 2021-04-04 v0.9.0
-
-
 *  change to match new Collection version, enforce observance of no-status in plugins
+
+*  remove dependency on Cro, change README to show how to install Cro::HTTP and enable the Cro App plugin
+
+*  add a leaflet map plugin
+
+# 2022-07-29 v0.9.1
+
+
+*  change to match Collection 0.8.2
+
+*  Cro App plugin re-enabled, but there is a try require test for Cro::HTTP, so it will exit with a note to install Cro::HTTP if the Distribution is not installed.
 
 
 
 
 
 ----
-Rendered from CHANGELOG at 2021-04-04T13:42:33Z
+Rendered from CHANGELOG at 2022-07-29T22:05:19Z

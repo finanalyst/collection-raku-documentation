@@ -1,7 +1,0 @@
-=begin pod
-=TITLE Default Raku Styling plugin for Collection
-=DESCRIPTION provides the Raku default styling
-
-Also provides the highlighter styling, but perhaps this needs to be broken out.
-
-=end pod

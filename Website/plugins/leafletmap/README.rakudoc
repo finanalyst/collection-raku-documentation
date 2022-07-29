@@ -1,0 +1,57 @@
+=begin pod
+=TITLE leaflet is plugin for Collection
+
+The plugin is for the render milestone.
+
+It adds the Leaflet JS library and the ExtraMarkers plugin to the page.
+
+=head1 Custom blocks
+
+=head2 Map
+
+This specifies the map to be placed where the Block is.
+
+There is a wide variety of configuration parameters, together with map providers.
+
+All configuration parameters are provided in the plugin configuration file.
+
+To be useful the minimum configuration requires
+=item a map centre in longitude and lattitude (the plugin default is Cardiff Castle in Wales)
+=item a map zoom number (the scale of the map, with larger numbers giving more magnification)
+
+=head1 Providers
+
+Maps are based on tiles that contain the geographic base data, and the tiles are rendered using software
+of providers.
+
+Most providers offer free accounts for personal or charitable use. A variety of providers and the options they
+offer are given in the configuration file.
+
+The providers.raku file also provides a web site for each provider. A developer will need to look at the website
+to understand the options, restrictions and uses of the API.
+
+Google maps is not supported. Google maps has its own API and tiling system. An API key can be obtained from Google, but
+at the time of writing, an Google map account has (had?) to be linked to a credit card account.
+
+Providers typically require an API key, which is obtained by registration.
+
+OpenStreetMap tiles are the basis for many providers and does not require an API key. But there are strict limits
+on the number of tiles that may be requested.
+
+=head1 Markers
+
+The Extramarker plugin for Leaflet is used.
+
+Information about the markers (Longitude, Lattitude, icon) is contained either in a the C<markers> key in the configuration
+file, in which case C<markers> points to a Hash, or in another configuration file pointed to by the string in the C<markers> key.
+
+=head1 Templates
+
+The templates are:
+=defn markers
+Takes a hash of markers and creates a JSON file for use by map
+
+=defn map
+Takes the configuration data for a map, and the JSON file and creates the html needed for Leaflet.
+
+=end pod

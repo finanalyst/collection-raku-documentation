@@ -7,22 +7,24 @@ sub ( $pp, %options ) {
         next if $plug eq 'js-collator' ;
         my $data = $pp.get-data($plug);
         next unless $data ~~ Associative;
-        if $data<js-script>:exists and $data<js-script> ~~ Str:D {
-            @js.push( ($data<js-script>, $plug ) )
-        }
-        elsif $data<js-link>:exists and $data<js-link> ~~ Str:D {
-            @js.push( ($data<js-link>, '' ) )
-        }
-        elsif $data<js-bottom>:exists and $data<js-bottom> ~~ Str:D {
-            @js-bottom.push(( $data<js-bottom>, $plug ));
-        }
-        elsif $data<jquery>:exists and $data<jquery> ~~ Str:D {
-            @js.push(( $data<jquery>, $plug ));
-            $loadjq-lib = True
-        }
-        elsif $data<jquery-link>:exists and $data<jquery-link> ~~ Str:D {
-            @js.push( ($data<jquery-link>, '' ) );
-            $loadjq-lib = True
+        for $data.keys {
+            when $_ ~~ 'js-script' and $data{$_} ~~ Str:D {
+                @js.push( ($data{$_}, $plug ) )
+            }
+            when $_ ~~ 'js-link' and $data{$_} ~~ Str:D {
+                @js.push( ($data{$_}, '' ) )
+            }
+            when $_ ~~ 'js-bottom' and $data{$_} ~~ Str:D {
+                @js-bottom.push(( $data{$_}, $plug ));
+            }
+            when $_ ~~ 'jquery' and $data{$_} ~~ Str:D {
+                @js.push(( $data{$_}, $plug ));
+                $loadjq-lib = True
+            }
+            when $_ ~~ 'jquery-link' and $data{$_} ~~ Str:D {
+                @js.push( ($data{$_}, '' ) );
+                $loadjq-lib = True
+            }
         }
     }
     my $template = "\%( \n "; # empty list emitted if not jq/js
@@ -40,10 +42,11 @@ sub ( $pp, %options ) {
             $template ~= "}\n"
         }
         $template ~= ( $elem ?? '~ ' !! '' )
-                ~ '\'<script src="'
-                ~ ( $plug ?? '/assets/scripts/' !! '' )
+                ~ '\'<script '
+                ~ ( $plug ?? 'src="/assets/scripts/' !! '' )
                 ~ $file
-                ~ "\"\>\</script>'\n";
+                ~ ( $plug ?? '"' !! '' )
+                ~ ">\</script>'\n";
         ++$elem;
         @move-dest.push( ("assets/scripts/$file" , $plug, $file ) )
             if $plug

@@ -29,11 +29,11 @@ sub ($pp, %options) {
     }
     else { $template ~= ' "" ' } # Template is describing a subroutine that emits a string, which must be started by css
     for @adds {
-        $template ~= "\n" ~ '~ "\n" ~ ' ~ "'<link rel=\"stylesheet\" href=\"/assets/css/{ $_[1] }\">'";
+        $template ~= "\n" ~ '~ "\n" ~ ' ~ "'<link rel=\"stylesheet\" href=\"/assets/css/{ $_[1] }\"/>'";
         @move-dest.push( ('assets/css/' ~ $_[1], $_[0], $_[1], ) )
     }
     for @links {
-        $template ~= "\n" ~ '~ "\n" ~ ' ~ "'<link rel=\"stylesheet\" href=\"$_\" >'";
+        $template ~= "\n" ~ '~ "\n" ~ ' ~ "'<link rel=\"stylesheet\" $_ />'";
     }
     $template ~= "\n" ~ '~ "\n" },)';
     "css-templates.raku".IO.spurt: $template;

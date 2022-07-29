@@ -3,6 +3,9 @@ use Cro::HTTP::Server;
 use Cro::HTTP::Log::File;
 
 sub ( $destination, $landing, $ext, %config, %options ) {
+    if (try require Cro::HTTP::Router) === Nil {
+        exit note "Cro::HTTP needs to be installed"
+    }
     my $app = route {
         get -> *@path {
             static "$destination", @path,:indexes( "$landing\.$ext", );

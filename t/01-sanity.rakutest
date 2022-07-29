@@ -1,0 +1,6 @@
+use Test;
+plan 1;
+
+use-ok 'Collection::RakuDocumentation';
+
+done-testing;

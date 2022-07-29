@@ -276,9 +276,9 @@ use ProcessedPod;
                 ~ '<meta charset="UTF-8" />' ~ "\n"
                 ~ %tml<favicon>({},{})
                 ~ (%prm<metadata> // '')
+                ~ %tml<css>({},{})
                 ~ %tml<jq-lib>({},{})
                 ~ %tml<js>({},{})
-                ~ %tml<css>({},{})
                 ~ "\</head>\n"
     },
     'header' => sub ( %prm,%tml) {
@@ -298,13 +298,14 @@ use ProcessedPod;
                 ~ "</div></header>\n"
     },
     'footer' => sub ( %prm, %tml ) {
-        '<footer><div>Rendered from <span class="path">'
-                ~ (( %prm<path>.defined && %prm<path> ne '') ?? %tml<escaped>(%prm<path>) !! 'No path')
-                ~ '</span></div>'
-                ~ '<!-- filename = ' ~ %prm<name> ~ '-->'
-                ~ '<div>at <span class="time">'
-                ~ (( %prm<renderedtime>.defined && %prm<path> ne '') ?? %tml<escaped>(%prm<renderedtime>) !! 'a moment before time began!?')
-                ~ '</span></div>'
-                ~ '</footer>'
+        "\n"
+        ~ '<footer><div>Rendered from <span class="path">'
+        ~ (( %prm<path>.defined && %prm<path> ne '') ?? %tml<escaped>(%prm<path>) !! 'No path')
+        ~ '</span></div>'
+        ~ '<!-- filename = ' ~ %prm<name> ~ '-->'
+        ~ '<div>at <span class="time">'
+        ~ (( %prm<renderedtime>.defined && %prm<path> ne '') ?? %tml<escaped>(%prm<renderedtime>) !! 'a moment before time began!?')
+        ~ '</span></div>'
+        ~ "</footer>\n"
     },
-)
+);

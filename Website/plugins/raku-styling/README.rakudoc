@@ -1,0 +1,9 @@
+=begin pod
+=TITLE Default Raku Styling plugin for Collection
+=DESCRIPTION provides the Raku default styling
+
+Also provides the highlighter styling, but perhaps this needs to be broken out.
+
+There are images in the css that need to be added to the assets folder using a render plugin.
+
+=end pod
