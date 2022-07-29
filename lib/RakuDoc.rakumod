@@ -5,22 +5,26 @@ use Collection;
 unit module Collection::RakuDoc;
 
 constant CONFIG = %?RESOURCES<config.raku>;
-constant WEBSITE = %?RESOURCES<website.rar>;
+constant WEBSITE = %?RESOURCES<website.zip>;
 constant ASSETS = %?RESOURCES<assets.zip>;
 
-multi sub MAIN('Init', Bool :$force-install = False, *%c ) is export {
+multi sub MAIN('Init', *%c ) is export {
     say "Initialising a Raku Documentation collection in ｢~/{ $*CWD.relative($*HOME) }｣";
-    exit note "The directory ｢~/{$*CWD.relative($*HOME)}｣ is not empty. Aborting.\n To over-ride this test use --force-install."
-        if (+ $*CWD.dir and ! $force-install);
+
+    exit note qq:to/NOTE/ if + $*CWD.dir;
+        The directory ｢~/{$*CWD.relative($*HOME)}｣ is not empty. Aborting.
+        NOTE
+
     'config.raku'.IO.spurt: CONFIG.slurp;
-    my $proc = Proc::Async.new( 'unzip', 'x', ~WEBSITE);
+    my $proc = Proc::Async.new( 'unzip', ~WEBSITE);
     my $proc-rv;
     $proc.stdout.tap( -> $d { } );
     $proc.stderr.tap( -> $v { $proc-rv = $v } );
     await $proc.start;
     exit note "unzip error when unpacking Website files. Error is:" ~ $proc-rv
         if $proc-rv;
-    $proc = Proc::Async.new( 'unzip', 'x', ~ASSETS);
+    $proc-rv = Nil;
+    $proc = Proc::Async.new( 'unzip', ~ASSETS);
     $proc.stdout.tap( -> $d { } );
     $proc.stderr.tap( -> $v { $proc-rv = $v } );
     await $proc.start;
@@ -29,7 +33,7 @@ multi sub MAIN('Init', Bool :$force-install = False, *%c ) is export {
     say q:to/USE/;
         Raku Documentation Collection has now been initialised.
         The configuration file "config.raku" in this directory must be edited.
-        The simplest method is to comment ou the ":source-obtain()" and ":source-refresh()" keys
+        The simplest method is to comment out the ":source-obtain()" and ":source-refresh()" keys
         by prefixing the lines containing the keys with #, and then
         removing the # from the lines below.
         If there is a local version of the Raku Documentation documents,

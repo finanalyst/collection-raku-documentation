@@ -107,4 +107,8 @@ a note to install Cro::HTTP if the Distribution is not installed.
 =item replace unrar with unzip
 =item clearup --force-install logic
 
+=head1 2022-07-29 v0.10.4
+=item more unzip stuff
+=item remove --force-install stuff
+
 =end pod
