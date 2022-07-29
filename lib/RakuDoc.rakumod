@@ -11,14 +11,14 @@ constant ASSETS = %?RESOURCES<assets.zip>;
 multi sub MAIN('Init', Bool :$force-install = False, *%c ) is export {
     say "Initialising a Raku Documentation collection in ｢~/{ $*CWD.relative($*HOME) }｣";
     exit note "The directory ｢~/{$*CWD.relative($*HOME)}｣ is not empty. Aborting.\n To over-ride this test use --force-install."
-        if + $*CWD.dir and ! $force-install;
+        if (+ $*CWD.dir and ! $force-install);
     'config.raku'.IO.spurt: CONFIG.slurp;
-    my $proc = Proc::Async.new( 'unrar', 'x', ~WEBSITE);
+    my $proc = Proc::Async.new( 'unzip', 'x', ~WEBSITE);
     my $proc-rv;
     $proc.stdout.tap( -> $d { } );
     $proc.stderr.tap( -> $v { $proc-rv = $v } );
     await $proc.start;
-    exit note "unrar error when unpacking Website files. Error is:" ~ $proc-rv
+    exit note "unzip error when unpacking Website files. Error is:" ~ $proc-rv
         if $proc-rv;
     $proc = Proc::Async.new( 'unzip', 'x', ~ASSETS);
     $proc.stdout.tap( -> $d { } );
