@@ -17,7 +17,9 @@
 [2021-04-01 v0.8.5](#2021-04-01-v085)  
 [2021-o4-02 v0.8.6](#2021-o4-02-v086)  
 [2021-04-04 v0.9.0](#2021-04-04-v090)  
-[2022-07-29 v0.9.1](#2022-07-29-v091)  
+[2022-07-29 v0.10.0](#2022-07-29-v0100)  
+[2022-07-29 v0.10.1](#2022-07-29-v0101)  
+[2022-07-29 v0.10.2](#2022-07-29-v0102)  
 
 ----
 # 2021-01-22 Spin off Collection into its own Module
@@ -144,16 +146,22 @@
 
 *  add a leaflet map plugin
 
-# 2022-07-29 v0.9.1
-
-
+# 2022-07-29 v0.10.0
 *  change to match Collection 0.8.2
 
 *  Cro App plugin re-enabled, but there is a try require test for Cro::HTTP, so it will exit with a note to install Cro::HTTP if the Distribution is not installed.
+
+# 2022-07-29 v0.10.1
+*  bump v
+
+# 2022-07-29 v0.10.2
+
+
+*  remove extraneous my $proc-rv
 
 
 
 
 
 ----
-Rendered from CHANGELOG at 2022-07-29T22:05:19Z
+Rendered from CHANGELOG at 2022-07-29T22:15:57Z

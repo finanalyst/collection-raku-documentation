@@ -92,9 +92,15 @@ hash match the requirements. (TODO, test the signatures of the callables to see 
 the Cro App plugin
 =item add a leaflet map plugin
 
-=head1 2022-07-29 v0.9.1
+=head1 2022-07-29 v0.10.0
 =item change to match Collection 0.8.2
 =item Cro App plugin re-enabled, but there is a try require test for Cro::HTTP, so it will exit with
 a note to install Cro::HTTP if the Distribution is not installed.
+
+=head1 2022-07-29 v0.10.1
+=item bump v
+
+=head1 2022-07-29 v0.10.2
+=item remove extraneous my $proc-rv
 
 =end pod

@@ -21,7 +21,6 @@ multi sub MAIN('Init', Bool :$force-install = False, *%c ) is export {
     exit note "unrar error when unpacking Website files. Error is:" ~ $proc-rv
         if $proc-rv;
     $proc = Proc::Async.new( 'unzip', 'x', ~ASSETS);
-    my $proc-rv;
     $proc.stdout.tap( -> $d { } );
     $proc.stderr.tap( -> $v { $proc-rv = $v } );
     await $proc.start;
