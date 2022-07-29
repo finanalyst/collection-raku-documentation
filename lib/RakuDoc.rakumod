@@ -1,17 +1,23 @@
 use v6.d;
 use RakuConfig;
 use Collection;
+use File::Directory::Tree;
 
 unit module Collection::RakuDoc;
 
 constant CONFIG = %?RESOURCES<config.raku>;
-constant WEBSITE = %?RESOURCES<website.rar>;
+constant WEBSITE = %?RESOURCES<website.zip>;
 constant ASSETS = %?RESOURCES<assets.zip>;
 
 multi sub MAIN('Init', Bool :$force-install = False, *%c ) is export {
+    empty-directory $*CWD if $force-install;
     say "Initialising a Raku Documentation collection in ｢~/{ $*CWD.relative($*HOME) }｣";
-    exit note "The directory ｢~/{$*CWD.relative($*HOME)}｣ is not empty. Aborting.\n To over-ride this test use --force-install."
-        if (+ $*CWD.dir and ! $force-install);
+
+    exit note qq:to/NOTE/ if + $*CWD.dir;
+        The directory ｢~/{$*CWD.relative($*HOME)}｣ is not empty. Aborting.
+        To over-ride this test use --force-install which EMPTIES the current directory
+        NOTE
+
     'config.raku'.IO.spurt: CONFIG.slurp;
     my $proc = Proc::Async.new( 'unzip', 'x', ~WEBSITE);
     my $proc-rv;
