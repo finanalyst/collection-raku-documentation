@@ -78,7 +78,8 @@ sub ($pr, %processed, %options) {
     # External tests
     unless %config<no-remote>:exists and %config<no-remote> {
         my $num = @remote-links.elems;
-        my $tail = $num ~ ' links  ';
+        my $starting = $num;
+        my $tail = $num ~ " / $starting links  ";
         my $rev = "\b" x $tail.chars;
         my $head = 'Waiting for internet responses on ';
         print  $head ~ $tail unless %options<no-status>;
@@ -92,7 +93,7 @@ sub ($pr, %processed, %options) {
             if $! {
                 $resp = $http.error;
             }
-            $tail = --$num ~ ' links  ';
+            $tail = --$num ~ " / $starting links  ";
             print $rev ~ $tail unless %options<no-status>;
             $rev = "\b" x $tail.chars;
             next if ?(+$resp);
@@ -102,7 +103,7 @@ sub ($pr, %processed, %options) {
             %errors<remote>{$fn}.push(%( :$url, :$resp, :$link));
         }
         my $elap = (now - $start ).Int;
-        say "\b" x $head.chars ~ $rev ~ "Collected responses on { @remote-links.elems } links in { $elap div 60 } mins { $elap % 60 } secs"
+        say "\b" x $head.chars ~ $rev ~ "Collected responses on $starting links in { $elap div 60 } mins { $elap % 60 } secs"
                 unless %options<no-status>;
     }
     # all data collected

@@ -1,7 +1,7 @@
 {
   "name": "Collection-Raku-Documentation",
   "description": "Use Cro and Collection to supply Raku documentation. Different search system. Global and local TOCs and Glossaries. Documents local installation.",
-  "version": "0.10.4",
+  "version": "0.10.5",
   "perl": "6.d",
   "authors": [
     "Richard Hainsworth"
@@ -16,8 +16,7 @@
   "test-depends": [],
   "provides": {
     "Collection::RakuDoc": "lib/RakuDoc.rakumod",
-    "Raku-Doc": "bin/Raku-Doc",
-    "RakuDoc": "lib/RakuDoc.rakumod"
+    "Raku-Doc": "bin/Raku-Doc"
   },
   "resources": [
     "config.raku",

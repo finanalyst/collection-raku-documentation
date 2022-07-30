@@ -20,6 +20,9 @@
 [2022-07-29 v0.10.0](#2022-07-29-v0100)  
 [2022-07-29 v0.10.1](#2022-07-29-v0101)  
 [2022-07-29 v0.10.2](#2022-07-29-v0102)  
+[2022-07-29 v0.10.3](#2022-07-29-v0103)  
+[2022-07-29 v0.10.4](#2022-07-29-v0104)  
+[2022-07-29 v0.10.5](#2022-07-29-v0105)  
 
 ----
 # 2021-01-22 Spin off Collection into its own Module
@@ -155,13 +158,28 @@
 *  bump v
 
 # 2022-07-29 v0.10.2
-
-
 *  remove extraneous my $proc-rv
+
+# 2022-07-29 v0.10.3
+*  replace unrar with unzip
+
+*  clearup --force-install logic
+
+# 2022-07-29 v0.10.4
+*  more unzip stuff
+
+*  remove --force-install stuff
+
+# 2022-07-29 v0.10.5
+
+
+*  improve let plugin
+
+*  fix META6.json
 
 
 
 
 
 ----
-Rendered from CHANGELOG at 2022-07-29T22:15:57Z
+Rendered from CHANGELOG at 2022-07-30T10:00:33Z

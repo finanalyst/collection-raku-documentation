@@ -1,6 +1,6 @@
 use Test;
 plan 1;
 
-use-ok 'Collection::RakuDocumentation';
+use-ok 'Collection::RakuDoc';
 
 done-testing;

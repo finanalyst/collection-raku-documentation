@@ -111,4 +111,8 @@ a note to install Cro::HTTP if the Distribution is not installed.
 =item more unzip stuff
 =item remove --force-install stuff
 
+=head1 2022-07-29 v0.10.5
+=item improve let plugin
+=item fix META6.json
+
 =end pod
