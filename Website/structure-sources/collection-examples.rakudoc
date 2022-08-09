@@ -1,0 +1,308 @@
+=begin pod :no-glossary :no-footnotes
+
+=TITLE New Pod Blocks
+
+These are the cool possibilities using the C<Collection> and C<Raku::Pod::Render> distributions.
+
+(The repeated headings in the Table of Contents are deliberate, as will become clear in this text.)
+
+=head1 Assigning new classes to standard HTML templates.
+
+For example, C< <hr> >.
+
+=begin code
+=for HR :class<yellowish-dots>
+
+=for HR :class<bluish-dots>
+
+=for HR :class<greenish-dots>
+
+=end code
+
+renders as
+
+=for HR :class<yellowish-dots>
+
+=for HR :class<bluish-dots>
+
+=for HR :class<greenish-dots>
+
+=head1 Plugins to keep customisation together
+
+C<Raku::Pod::Render> introduces the idea of 'plugins' to keep block names and the templates
+associated with them together. C<Collection> takes the concept further by having
+plugins that can run Raku programs at each stage of the Collection process, after the
+I<Mode> has been configured.
+
+Plugins keep the CSS, templates and new custom block names in the same sub-directory.
+
+This mechanism also means that I<Mode> specific output, such as I<scripts> and I<CSS> for
+I<HTML> output can be managed by I<Mode> plugins. The I<Website> mode for C<Collection-Raku-Documentation>
+contains plugins to gather I<CSS>, I<jQuery scripts>, I<js libraries>, and I<Images> from other
+plugins, and collate them so that they are served with each page.
+
+Since the entire page is in a template, it is also possible to create separate page templates,
+with different CSS assets.
+
+The following are Custom user-facing Pod::Blocks that come with C<Collection-Raku-Documentation>
+
+=head1 New Format Codes
+
+Here is an example where the format code F has been leveraged to generate B<FontAwesome> icons.
+The plugin here utilises v4.7. The API for v5 / 6 is different, so another plugin may be needed.
+
+Since Raku treats all Unicode characters the same, Chinese/Arabic/Cyrillic glyphs can now be
+specified to repeat or alias the predefined codes of C<B C I K T U E Z X N L P V >.
+
+=begin code
+Some FontAwesome icons
+
+F<fa-ambulance> Example of ambulance
+
+F<fa-automobile> Example of automobile (alias)
+
+F<fa-bicycle> Example of bicycle
+
+F<fa-bus> Example of bus
+
+F<fa-truck> Example of truck
+
+F<fa-wheelchair> Example of wheelchair
+
+F<fa-wheelchair-alt> Example of wheelchair-alt
+=end code
+
+Generates
+Some FontAwesome icons
+
+F<fa-ambulance> Example of ambulance
+
+F<fa-automobile> Example of automobile (alias)
+
+F<fa-bicycle> Example of bicycle
+
+F<fa-bus> Example of bus
+
+F<fa-truck> Example of truck
+
+F<fa-wheelchair> Example of wheelchair
+
+F<fa-wheelchair-alt> Example of wheelchair-alt
+
+FontAwesome has some other options.
+=begin code
+
+Train normal size F<fa-train> Triple size train F<fa-train|fa-3x>
+
+An animated spinner F<fa-refresh|fa-spin fa-3x fa-fw>
+=end code
+Generates
+
+Train normal size F<fa-train> Triple size train F<fa-train|fa-3x>
+
+An animated spinner F<fa-refresh|fa-spin fa-3x fa-fw>
+
+Notice how these examples leverage off the idea of meta data together with a Format Code. This
+is not standard Rakudoc (aka POD6), as this metadata is only specified for C< X<> > and C< L<> >.
+C<Raku::Pod::Render>
+allows for metadata to be added to any I<non-standard> letter used as a Format Code, and
+any Unicode thingy that Raku treats as a "character" to be made into a Format Code.
+
+=head1 Compilation blocks
+
+When many Rakudoc files are included in a collection, there is a need to collect data from each. So
+for example, the Raku Documentation files all have metadata associated with the first C<pod> definition.
+We need to collect files according to the metadata. The keys C<kind>, C<subkind>, and C<category>
+are allocated to all Raku Documents.
+
+=begin code
+=for ListFiles :select<kind=Programs>
+Programs that support Raku development
+
+=end code
+
+renders as
+=for ListFiles :select<kind=Programs>
+Programs that support Raku development
+
+=begin code
+=for ListFiles :select<kind=Programs> :headlevel(0)
+Programs that support Raku development, title is not included in the TOC.
+
+=end code
+
+=for ListFiles :select<kind=Programs> :headlevel(0)
+Programs that support Raku development, title is not included in the TOC.
+
+Other examples of ListFiles can be seen in the L<TOC|toc> and L<Itemised index|glossary> pages.
+
+=head1 Images
+
+Content files today, especially for the Web, rely on images.
+
+=begin code
+=for Image :src<images/octopus_build.gif> :class<justify-center>
+New searching functionality is being developed
+
+=end code
+
+Generates an image with the text in the Table of Contents. The TOC entry
+can be eliminated with a C<:headlevel(0)>.
+
+=for Image :src<images/octopus_build.gif> :class<justify-center>
+New searching functionality is being developed
+
+=head1 JQuery Plugins
+
+All websites need JQuery plugins or JS scripts. C<Collection> creates the infrastructure for these
+plugins to be written and added to a site.
+
+For example, the C<filterlines> plugin uses a small JQuery script, adds some html around existing
+Rakudoc content and handles everything else. (Try typing 'R' then 'e' in the search box).
+
+=begin code
+=begin filterlines
+=for ListFiles :select<kind=Programs>
+Programs that support Raku development
+=end filterlines
+=end code
+
+renders as
+
+=begin filterlines
+=for ListFiles :select<kind=Programs>
+Programs that support Raku development
+=end filterlines
+
+=head1 LeafletMap
+
+The leafletmap plugin inserts a map in place of the C<=LeafletMap> Pod::Block using the fabulous
+L<Leaflet JS library|https://leafletjs.com>. The map MUST have a fixed height, so this is specified
+in the config file. However, height and width should be set by CSS, but it is not clear what the best
+way is to signal that a CSS value is available from CSS in the config file.
+
+By default, the map will point at Cardiff Castle in Cardiff, Wales with a 200px height and 16 unit magnification,
+using OpenStreetMap as the tile provider. So
+=begin code
+=Leafletmap
+=end code
+
+produces:
+
+=Leafletmap
+
+The simplest customisation is to centre the map by specifying the lattitude
+and longitude, and to change the starting zoom level (smaller numbers are larger views).
+It is also possible to change the height of the map. Each map on a page must
+have its own id. Additionally, when developing a page, not setting a width is tiresome.
+Note another very underutilised feature of Rakudoc, the ability to spread meta-data accross
+lines. The first virtual column must start in a C<=> and there must be at least one
+horizontal whitespace character. Thus
+
+=begin code
+=for Leafletmap
+=  :lat(55.948595) :long(-3.199913)
+=  :zoom(13) :height<300px>
+=  :id<new-map>
+=  :headlevel(2)
+=  :width<50vw>
+Edinburgh Castle
+=end code
+
+will produce
+=for Leafletmap
+=  :lat(55.948595) :long(-3.199913)
+=  :zoom(13) :height<300px>
+=  :id<new-map>
+=  :headlevel(2)
+=  :width<50vw>
+Edinburgh Castle
+
+Maps are generated from tiles and the information can be rendered in many ways. There
+are multiple tile providers,
+collected in a github resource L<leaflet-extras|https://github.com/leaflet-extras/leaflet-providers>.
+"Leaflet-providers provides tile layers from different providers, including OpenStreetMap, Stamen, Esri and OpenWeatherMap.
+The full listing of free to use layers can be previewed." (from README of leaflet-providers)
+
+Some providers have map types that do not need registration, most types need registration.
+L<Here are all|http://leaflet-extras.github.io/leaflet-providers/preview/index.html> the providers
+and variants.
+
+For example, is a map with the Esri.WorldImagery provider[.variant] string.
+=begin code
+=for LeafletMap :provider<Esri.WorldImagery> :id<third-map> :width<50vw>
+=end code
+=for LeafletMap :provider<Esri.WorldImagery> :id<third-map> :width<50vw>
+
+Registration offers more variety and more complex maps, but goes beyond the generic Collection plugin.
+
+However, the extra customisation is possible by changing the config
+file and the template for the C<=Leafletmap> block.
+
+For example, suppose you have registered with
+Thunderforest and obtained an api-key, eg. xxxx. Then in C<config.raku> uncomment 'api-key' and
+insert your key in place of ????. The template already allows for an apikey field, but some
+providers require other variable names, or two variables. More information can be found in leaflet-extras.
+
+Another common need is to put markers on a map. This can be done using C<=LeafMarker> blocks. The
+map-id of the map the markers are to be associated with has to be supplied if there are more than
+one maps on a page, otherwise the default map id is used.
+
+C<:popup<text>> associated the I<text> with the marker but the user needs to click in it to see.
+
+C<:title<text>> allows for the I<text> to be visible with a mouseover.
+
+C<:fa-icon> will work if the C<FontAwesome> plugin has been configured for rendering
+(see above for detail on extra commands).
+
+C<:headlevel(0)> is set so that the Table of Contents is not affected.
+
+=begin code
+=for LeafletMap :id<map-four> :height<600px> :zoom(12) :width<50vw>
+
+=for LeafMarker
+=    :map-id<map-four> :name<mk1>
+=    :lat(51.48160) :long(-3.18070)
+=    :headlevel(0)
+=    :title<Cardiff Castle>
+
+=for LeafMarker
+=    :map-id<map-four>
+=    :lat(51.529269) :long(-3.188109)
+=    :fa-icon<fa-cutlery fa-spin fa-3x fa-fw>
+=    :headlevel(0)
+=    :title<Fintans Fish & Chip Co>
+
+=for LeafMarker
+=    :map-id<map-four>
+=    :lat(51.502576) :long(-3.190222)
+=    :fa-icon<fa-cutlery>
+=    :headlevel(0)
+=    :popup<Yan’s Fish Bar>
+
+=end code
+Thus for two chippies judged the best in Cardiff at the time of writing:
+
+=for LeafletMap :id<map-four> :height<600px> :zoom(12) :width<50vw>
+
+=for LeafMarker
+=    :map-id<map-four>
+=    :lat(51.48160) :long(-3.18070)
+=    :headlevel(0)
+=    :title<Cardiff Castle>
+
+=for LeafMarker
+=    :map-id<map-four>
+=    :lat(51.529269) :long(-3.188109)
+=    :fa-icon<fa-cutlery fa-spin fa-3x fa-fw>
+=    :headlevel(0)
+=    :title<Fintans Fish & Chip Co, Llanishen>
+
+=for LeafMarker
+=    :map-id<map-four>
+=    :lat(51.502576) :long(-3.190222)
+=    :fa-icon<fa-cutlery>
+=    :headlevel(0)
+=    :popup<Yan’s Fish Bar>
+
+=end pod

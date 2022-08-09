@@ -115,4 +115,14 @@ a note to install Cro::HTTP if the Distribution is not installed.
 =item improve let plugin
 =item fix META6.json
 
+=head1 2022-07-31 v0.10.6
+=item add *.rakudoc to Website plugin tests
+
+=head1 2022-08-09 v0.10.7
+=item revert to github Ecosystem as fez not accepting the Module
+=item LeafletMap plugin working
+=item ordering added to gather-js to ensure scripts can be loaded in correct order
+=item updated Collection examples page
+=item moved trial/ directory to Collection-Plugins
+
 =end pod

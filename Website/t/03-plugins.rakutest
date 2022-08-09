@@ -20,7 +20,7 @@ for @available.sort -> $p {
         my $orig = $*CWD;
         chdir "%config<plugins>/$p";
         lives-ok { %p-conf = get-config(:no-cache) }, "$p has config file";
-        ok "README.pod6".IO.f, "$p has README file";
+        ok ("README.pod6".IO.f or "README.rakudoc".IO.f), "$p has README file";
         next diag('no further testing with config keys for plugin') unless +%p-conf.keys;
         my &callable;
         my @untested;

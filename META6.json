@@ -6,7 +6,7 @@
   "authors": [
     "Richard Hainsworth"
   ],
-  "auth": "zef:finanalyst",
+  "auth": "github:finanalyst",
   "depends": [
     "RakuConfig",
     "Collection",

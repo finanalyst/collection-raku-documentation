@@ -1,5 +1,5 @@
 use Test;
-use Test-Templates;
+use RenderPod::Test-Templates;
 use RakuConfig;
 
 my %config;

@@ -1,15 +1,34 @@
 =begin pod
 =TITLE Documentation on gather-js-jq plugin for Collection
 
-=DESCRIPTION Looks for C<script>/C<script-link> & C<jquery>/<jquery-link> key in other plugins. Provides
-such script(s) as a local file(s) to be served, or a link (eg. a CDN source).
+=DESCRIPTION Looks for C<script>/C<script-link> & C<jquery>/<jquery-link> key in other plugins.
+Creates template entries that are referenced in the generic source-wrap template.
 
 =head1 Usage
 
-Other C<render> plugins can provide custom javascript (aka ECMA) or C<JQuery> files to be served with an html page.
+Other C<render> plugins will provide custom javascript (aka ECMA) or C<JQuery> files to be served with an html page.
 This plugin takes those files/links and deals with them so that they can be served with the HTML in the
-content files. This requires modification of the templates, and for local files copying to the correct
+content files. This requires modification of the templates, and js files in the plugin directory
+will need to be copied to the correct
 output directory.
+
+In addition, the order in which JS / ECMA libraries are loaded may be important, eg., leaflet-providers.js must
+load after the leaflet library. This is enabled by supplying an ordering parameter.
+The default ordering is 0. So
+any ordering a number greater than 0 will go after all 0-order files.
+
+For example, within the C<config.raku> of the C<LeafletMap> plugin, we have
+=begin code
+
+    :js-link(q:to/JS/),
+        src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+        integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+        crossorigin=""
+        JS
+    :js-script(['leaflet-providers.js',1]),
+=end code
+
+The Array has the name of a local (see below) js file that has an ordering parameter of 1.
 
 =head2 Local javascript files
 

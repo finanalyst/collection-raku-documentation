@@ -1,2 +1,2 @@
 
-<LeafletMap Leafletmap leafletmap Marker marker>
+<LeafletMap Leafletmap leafletmap LeafMarker leafmarker>

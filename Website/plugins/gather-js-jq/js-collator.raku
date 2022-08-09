@@ -9,20 +9,48 @@ sub ( $pp, %options ) {
         next unless $data ~~ Associative;
         for $data.keys {
             when $_ ~~ 'js-script' and $data{$_} ~~ Str:D {
-                @js.push( ($data{$_}, $plug ) )
+                @js.push( ($data{$_}, $plug, 0 ) )
             }
             when $_ ~~ 'js-link' and $data{$_} ~~ Str:D {
-                @js.push( ($data{$_}, '' ) )
+                @js.push( ($data{$_}, '', 0 ) )
             }
             when $_ ~~ 'js-bottom' and $data{$_} ~~ Str:D {
-                @js-bottom.push(( $data{$_}, $plug ));
+                @js-bottom.push(( $data{$_}, $plug, 0 ));
             }
             when $_ ~~ 'jquery' and $data{$_} ~~ Str:D {
-                @js.push(( $data{$_}, $plug ));
+                @js.push(( $data{$_}, $plug, 0 ));
                 $loadjq-lib = True
             }
             when $_ ~~ 'jquery-link' and $data{$_} ~~ Str:D {
-                @js.push( ($data{$_}, '' ) );
+                @js.push( ($data{$_}, '', 0 ) );
+                $loadjq-lib = True
+            }
+            # handle higher order parameters.
+            when $_ ~~ 'js-script' and $data{$_} ~~ Positional {
+                ( note "ignoring invalid config data ｢{ $data{$_}[0] }｣ or ｢{ $data{$_}[1] }｣" ) and next
+                    unless ($data{$_}[0] ~~ Str:D and $data{$_}[1] ~~ Int:D);
+                @js.push( ($data{$_}[0], $plug, $data{$_}[1] ) )
+            }
+            when $_ ~~ 'js-link' and $data{$_} ~~ Positional {
+                ( note "ignoring invalid config data ｢{ $data{$_}[0] }｣ or ｢{ $data{$_}[1] }｣" ) and next
+                unless ($data{$_}[0] ~~ Str:D and $data{$_}[1] ~~ Int:D);
+                @js.push( ($data{$_}[0], '', $data{$_}[1] ) )
+            }
+            when $_ ~~ 'js-bottom' and $data{$_} ~~ Positional {
+                ( note "ignoring invalid config data ｢{ $data{$_}[0] }｣ or ｢{ $data{$_}[1] }｣" ) and next
+                unless ($data{$_}[0] ~~ Str:D and $data{$_}[1] ~~ Int:D);
+                @js-bottom.push(( $data{$_}[0], $plug, $data{$_}[1] ));
+            }
+            when $_ ~~ 'jquery' and $data{$_} ~~ Positional {
+                ( note "ignoring invalid config data ｢{ $data{$_}[0] }｣ or ｢{ $data{$_}[1] }｣" ) and next
+                unless ($data{$_}[0] ~~ Str:D and $data{$_}[1] ~~ Int:D);
+                @js.push(( $data{$_}[0], $plug, $data{$_}[1] ));
+                $loadjq-lib = True
+            }
+            when $_ ~~ 'jquery-link' and $data{$_} ~~ Positional {
+                ( note "ignoring invalid config data ｢{ $data{$_}[0] }｣ or ｢{ $data{$_}[1] }｣" ) and next
+                unless ($data{$_}[0] ~~ Str:D and $data{$_}[1] ~~ Int:D);
+                @js.push( ($data{$_}[0], '', $data{$_}[1] ) );
                 $loadjq-lib = True
             }
         }
@@ -33,13 +61,13 @@ sub ( $pp, %options ) {
         if $loadjq-lib;
     my @move-dest;
     my $elem;
-    for @js -> ($file, $plug ){
+    for @js.sort({.[2]}) -> ($file, $plug, $order ){
         FIRST {
             $template ~= 'js => sub (%prm, %tml) {' ;
             $elem = 0;
         }
         LAST {
-            $template ~= "}\n"
+            $template ~= "},\n"
         }
         $template ~= ( $elem ?? '~ ' !! '' )
                 ~ '\'<script '
@@ -51,17 +79,17 @@ sub ( $pp, %options ) {
         @move-dest.push( ("assets/scripts/$file" , $plug, $file ) )
             if $plug
     }
-    for @js-bottom -> ($file, $plug ){
+    for @js-bottom.sort({.[2]}) -> ($file, $plug ){
         FIRST {
             $template ~= 'js-bottom => sub (%prm, %tml) {' ;
             $elem = 0;
         }
         LAST {
-            $template ~= "}\n"
+            $template ~= "},\n"
         }
         $template ~= ( $elem ?? '~ ' !! '' ) ~ '\'<script src="/assets/scripts/' ~ $file ~ "\"\>\</script>'\n";
         ++$elem;
-        @move-dest.push( ("assets/scripts/$file" , $plug, $file ) )
+        @move-dest.push( ("assets/scripts/$file", $plug, $file ) )
     }
     $template ~= ")\n";
     "js-templates.raku".IO.spurt($template);
