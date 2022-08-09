@@ -293,7 +293,7 @@ use ProcessedPod;
                 ~ '<a href="/search.html"><div class="menu-item">Search Site</div></a>'
                 ~ '<a href="/types.html"><div class="menu-item">Types</div></a>'
                 ~ '<a href="/programs.html"><div class="menu-item">Programs</div></a>'
-                ~ '<a href="https://modules.raku.org/"><div class="menu-item">Modules</div></a>'
+                ~ '<a href="https://raku.land/"><div class="menu-item">Modules</div></a>'
                 ~ '<a href="https://docs.raku.org/"><div class="menu-item">Official site</div></a>'
                 ~ "</div></header>\n"
     },
