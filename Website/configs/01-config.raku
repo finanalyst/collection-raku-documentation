@@ -4,6 +4,7 @@
     :!full-render, # force rendering of all output files
     :!no-report, # do not make a report - default is False, but set True
     :!no-completion, # we want the Cro app to start
+    :no-preserve-state, # we do not want to archive intermediate data
     :mode-sources<structure-sources>, # content for the website structure
     :mode-cache<structure-cache>, # cache for the above
     :mode-ignore(), # no files to ignore
