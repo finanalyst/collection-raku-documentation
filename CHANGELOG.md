@@ -23,6 +23,9 @@
 [2022-07-29 v0.10.3](#2022-07-29-v0103)  
 [2022-07-29 v0.10.4](#2022-07-29-v0104)  
 [2022-07-29 v0.10.5](#2022-07-29-v0105)  
+[2022-07-31 v0.10.6](#2022-07-31-v0106)  
+[2022-08-09 v0.10.7](#2022-08-09-v0107)  
+[2022-08-09 v0.11.0](#2022-08-09-v0110)  
 
 ----
 # 2021-01-22 Spin off Collection into its own Module
@@ -171,15 +174,32 @@
 *  remove --force-install stuff
 
 # 2022-07-29 v0.10.5
-
-
 *  improve let plugin
 
 *  fix META6.json
+
+# 2022-07-31 v0.10.6
+*  add *.rakudoc to Website plugin tests
+
+# 2022-08-09 v0.10.7
+*  revert to github Ecosystem as fez not accepting the Module
+
+*  LeafletMap plugin working
+
+*  ordering added to gather-js to ensure scripts can be loaded in correct order
+
+*  updated Collection examples page
+
+*  moved trial/ directory to Collection-Plugins
+
+# 2022-08-09 v0.11.0
+
+
+*  remove all old structure source files from website.zip
 
 
 
 
 
 ----
-Rendered from CHANGELOG at 2022-07-30T10:00:33Z
+Rendered from CHANGELOG at 2022-08-09T22:16:06Z
