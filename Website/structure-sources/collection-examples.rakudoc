@@ -305,4 +305,41 @@ Thus for two chippies judged the best in Cardiff at the time of writing:
 =    :headlevel(0)
 =    :popup<Yan’s Fish Bar>
 
+=head1 Graphviz
+
+This block introduces a directed graph in the dot language. It is rendered into HTML as an svg using the
+dot program. Since a graph data is require, only the delimited form of the block (starting with =begin/=end)
+will be used.
+
+The following diagraph comes from the C<dot> documentation. The following Rakudoc
+=begin code
+=begin Graphviz
+    digraph G {
+        main -> parse -> execute;
+        main -> init;
+        main -> cleanup;
+        execute -> make_string;
+        execute -> printf
+        init -> make_string;
+        main -> printf;
+        execute -> compare;
+    }
+=end Graphviz
+=end code
+
+produces
+
+=begin Graphviz
+    digraph G {
+        main -> parse -> execute;
+        main -> init;
+        main -> cleanup;
+        execute -> make_string;
+        execute -> printf
+        init -> make_string;
+        main -> printf;
+        execute -> compare;
+    }
+=end Graphviz
+
 =end pod

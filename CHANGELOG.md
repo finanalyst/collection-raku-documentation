@@ -1,4 +1,3 @@
-![github-tests-passing-badge](https://github.com/finanalyst/collection-raku-documentation/actions/workflows/test.yaml/badge.svg)
 # Changelog
 >For the Collection-Raku-Documentation module
 
@@ -27,6 +26,8 @@
 [2022-07-31 v0.10.6](#2022-07-31-v0106)  
 [2022-08-09 v0.10.7](#2022-08-09-v0107)  
 [2022-08-09 v0.11.0](#2022-08-09-v0110)  
+[2022-08-11 v0.11.1](#2022-08-11-v0111)  
+[2022-08-11 v0.11.2](#2022-08-11-v0112)  
 
 ----
 # 2021-01-22 Spin off Collection into its own Module
@@ -196,15 +197,17 @@
 # 2022-08-09 v0.11.0
 *  remove all old structure source files from website.zip
 
-head1 2022-08-11 v0.11.1
-
-
-
+# 2022-08-11 v0.11.1
 *  add 'Refresh' instruction to Raku-Doc
+
+# 2022-08-11 v0.11.2
+
+
+*  new GraphViz plugin
 
 
 
 
 
 ----
-Rendered from CHANGELOG at 2022-08-11T00:14:47Z
+Rendered from CHANGELOG at 2022-08-11T22:48:59Z
