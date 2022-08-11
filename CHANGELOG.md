@@ -1,3 +1,4 @@
+![github-tests-passing-badge](https://github.com/finanalyst/collection-raku-documentation/actions/workflows/test.yaml/badge.svg)
 # Changelog
 >For the Collection-Raku-Documentation module
 
@@ -193,13 +194,17 @@
 *  moved trial/ directory to Collection-Plugins
 
 # 2022-08-09 v0.11.0
-
-
 *  remove all old structure source files from website.zip
+
+head1 2022-08-11 v0.11.1
+
+
+
+*  add 'Refresh' instruction to Raku-Doc
 
 
 
 
 
 ----
-Rendered from CHANGELOG at 2022-08-09T22:16:06Z
+Rendered from CHANGELOG at 2022-08-11T00:14:47Z

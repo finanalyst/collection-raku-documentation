@@ -128,4 +128,7 @@ a note to install Cro::HTTP if the Distribution is not installed.
 =head1 2022-08-09 v0.11.0
 =item remove all old structure source files from website.zip
 
+head1 2022-08-11 v0.11.1
+=item add 'Refresh' instruction to Raku-Doc
+
 =end pod

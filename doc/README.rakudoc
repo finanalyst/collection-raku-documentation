@@ -55,6 +55,12 @@ progress status bar for the longer stages.
 
 This sets up the Collection directory, and installs the dependencies.
 
+If the Website mode has been corrupted, or a new version is available, then
+
+    Raku-Doc Refresh
+
+will prompt you for which resource to refresh. If one is chosen, the others will be left unchanged.
+
 It does not clone a copy of the C<Raku/doc> repository because an existing version may be available on the system.
 
 Consequently, the user needs to clone the Raku docs repository using something like
@@ -87,7 +93,7 @@ calling C<collect>.
 
 =head2 In the future (not now)
 
-If C<Raku-Doc> is called with a string other than 'Init' or 'Website', then the string is interpreted as another B<Mode>,
+If C<Raku-Doc> is called with a string other than 'Init', 'Refresh' or 'Website', then the string is interpreted as another B<Mode>,
 with its own sub-directory and L<Configuration> for the collection. For example,
 
     Raku-Doc Book

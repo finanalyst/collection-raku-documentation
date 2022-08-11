@@ -54,6 +54,13 @@ Raku-Doc Init
 ```
 This sets up the Collection directory, and installs the dependencies.
 
+If the Website mode has been corrupted, or a new version is available, then
+
+```
+Raku-Doc Refresh
+```
+will prompt you for which resource to refresh. If one is chosen, the others will be left unchanged.
+
 It does not clone a copy of the `Raku/doc` repository because an existing version may be available on the system.
 
 Consequently, the user needs to clone the Raku docs repository using something like `git clone https://github.com/Raku/doc.git raku-docs`. Then the path used can be put into the config.raku file in the `sources-refresh` key. Once the raku-docs are ready, the INIT stage is complete.
@@ -75,7 +82,7 @@ The Raku Documentation source files are regularly updated. The **Website** mode 
 **Collection-Raku-Documentation** is set up with the default `mode` called **Website**. `Raku-Doc` just calls `collect` and passes on to `collect` all of its arguments, with the exception of the string **Init**, which `Raku-Doc` traps so that processing can stop before calling `collect`.
 
 ## In the future (not now)
-If `Raku-Doc` is called with a string other than 'Init' or 'Website', then the string is interpreted as another **Mode**, with its own sub-directory and [Configuration](Configuration.md) for the collection. For example,
+If `Raku-Doc` is called with a string other than 'Init', 'Refresh' or 'Website', then the string is interpreted as another **Mode**, with its own sub-directory and [Configuration](Configuration.md) for the collection. For example,
 
 ```
 Raku-Doc Book
@@ -111,4 +118,4 @@ Collection is still being actively developed.
 
 
 ----
-Rendered from README at 2022-07-29T22:05:31Z
+Rendered from README at 2022-08-11T00:14:33Z
