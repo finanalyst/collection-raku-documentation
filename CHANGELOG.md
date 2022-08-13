@@ -28,6 +28,8 @@
 [2022-08-09 v0.11.0](#2022-08-09-v0110)  
 [2022-08-11 v0.11.1](#2022-08-11-v0111)  
 [2022-08-11 v0.11.2](#2022-08-11-v0112)  
+[2022-08-13 v0.11.3](#2022-08-13-v0113)  
+[2022-08-13 v0.11.4](#2022-08-13-v0114)  
 
 ----
 # 2021-01-22 Spin off Collection into its own Module
@@ -201,13 +203,19 @@
 *  add 'Refresh' instruction to Raku-Doc
 
 # 2022-08-11 v0.11.2
-
-
 *  new GraphViz plugin
+
+# 2022-08-13 v0.11.3
+*  remove Raku-Doc from provides
+
+# 2022-08-13 v0.11.4
+
+
+*  remove unnecessary code line
 
 
 
 
 
 ----
-Rendered from CHANGELOG at 2022-08-11T22:48:59Z
+Rendered from CHANGELOG at 2022-08-13T20:20:14Z

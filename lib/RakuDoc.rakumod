@@ -26,7 +26,6 @@ multi sub MAIN('Refresh', *%c ) is export {
         when any(<W E w e>) {
             rmtree 'Website';
             $proc = Proc::Async.new('unzip', ~WEBSITE);
-            $proc-rv;
             $proc.stdout.tap(-> $d {});
             $proc.stderr.tap(-> $v { $proc-rv = $v });
             await $proc.start;

@@ -134,4 +134,10 @@ a note to install Cro::HTTP if the Distribution is not installed.
 =head1 2022-08-11 v0.11.2
 =item new GraphViz plugin
 
+=head1 2022-08-13 v0.11.3
+=item remove Raku-Doc from provides
+
+=head1 2022-08-13 v0.11.4
+=item remove unnecessary code line
+
 =end pod
