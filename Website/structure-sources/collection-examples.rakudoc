@@ -46,6 +46,26 @@ with different CSS assets.
 
 The following are Custom user-facing Pod::Blocks that come with C<Collection-Raku-Documentation>
 
+=head1 Adding new templates for existing Pod::Blocks
+
+Suppose you want a different template to act on an existing block, like Para,
+which is coded as HTML C<<p>>. For example,
+=begin code
+I like this sonnet:
+=for para :template<quotation> :author<William Shakespeare> :citation<Sonnet 116>
+Let me not to the marriage of true minds\n
+Admit impediments; love is not love\n
+Which alters when it alteration finds,\n
+Or bends with the remover to remove.
+=end code
+
+I like this sonnet:
+=for para :template<quotation> :author<William Shakespeare> :citation<Sonnet 116>
+Let me not to the marriage of true minds\n
+Admit impediments; love is not love\n
+Which alters when it alteration finds,\n
+Or bends with the remover to remove.
+
 =head1 New Format Codes
 
 Here is an example where the format code F has been leveraged to generate B<FontAwesome> icons.
@@ -313,7 +333,7 @@ will be used.
 
 The following diagraph comes from the C<dot> documentation. The following Rakudoc
 =begin code
-=begin Graphviz
+=begin Graphviz :headlevel(0)
     digraph G {
         main -> parse -> execute;
         main -> init;
@@ -329,7 +349,7 @@ The following diagraph comes from the C<dot> documentation. The following Rakudo
 
 produces
 
-=begin Graphviz
+=begin Graphviz :headlevel(0)
     digraph G {
         main -> parse -> execute;
         main -> init;

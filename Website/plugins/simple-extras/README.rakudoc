@@ -50,4 +50,13 @@ Or
 
 =end code
 =end item
+
+=begin item
+B<quote>
+Is a template for a paragraph, so that the quoted contents are indented, and optional items are included:
+=item2 author : the authour of the quoation
+=item2 citation: the place where the quotation can be found
+
+=end item
+
 =end pod
