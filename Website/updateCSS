@@ -1,7 +1,0 @@
-#!/bin/bash
-cd /home/richard/development/raku-collection-raku-documentation/Website/plugins
-sass "website/website-div-styling.scss":"website/website-div-styling.css"
-sass "raku-styling/raku-default-styling.scss":"raku-styling/raku-default-styling.css"
-sass "listfiles/listf-styling.scss":"listfiles/listf-styling.css"
-sass "images/image-styling.scss":"images/image-styling.css"
-sass "link-error-test/let-styling.scss":"link-error-test/let-styling.css"

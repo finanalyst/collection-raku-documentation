@@ -363,14 +363,15 @@ produces
 =end Graphviz
 
 =head1 Latex
+
 This plugin block sends the Latex markup to the CodeCogs online equation editor. For example,
 
 =begin code
-=Latex
+=for Latex :headlevel(0)
 1+sin^2(x)
 =end code
 
-=Latex
+=for Latex :headlevel(0)
 1+sin^2(x)
 
 =end pod
