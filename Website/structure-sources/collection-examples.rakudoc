@@ -368,10 +368,24 @@ This plugin block sends the Latex markup to the CodeCogs online equation editor.
 
 =begin code
 =for Latex :headlevel(0)
-1+sin^2(x)
+\begin{align*}
+\sum_{i=1}^{k+1} i^{3}
+&= \biggl(\sum_{i=1}^{n} i^{3}\biggr) +  i^3\\
+&= \frac{k^{2}(k+1)^{2}}{4} + (k+1)^3 \\
+&= \frac{k^{2}(k+1)^{2} + 4(k+1)^3}{4}\\
+&= \frac{(k+1)^{2}(k^{2} + 4k + 4)}{4}\\
+&= \frac{(k+1)^{2}(k+2)^{2}}{4}
+\end{align*}
 =end code
 
 =for Latex :headlevel(0)
-1+sin^2(x)
+\begin{align*}
+\sum_{i=1}^{k+1} i^{3}
+&= \biggl(\sum_{i=1}^{n} i^{3}\biggr) +  i^3\\
+&= \frac{k^{2}(k+1)^{2}}{4} + (k+1)^3 \\
+&= \frac{k^{2}(k+1)^{2} + 4(k+1)^3}{4}\\
+&= \frac{(k+1)^{2}(k^{2} + 4k + 4)}{4}\\
+&= \frac{(k+1)^{2}(k+2)^{2}}{4}
+\end{align*}
 
 =end pod
