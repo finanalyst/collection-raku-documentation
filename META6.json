@@ -1,12 +1,12 @@
 {
   "name": "Collection-Raku-Documentation",
   "description": "Use Cro and Collection to supply Raku documentation. Different search system. Global and local TOCs and Glossaries.",
-  "version": "0.11.6",
+  "version": "0.12.0",
   "perl": "6.d",
   "authors": [
     "Richard Hainsworth"
   ],
-  "auth": "github:finanalyst",
+  "auth": "zef:finanalyst",
   "depends": [
     "RakuConfig",
     "Collection",
@@ -18,8 +18,6 @@
     "Collection::RakuDoc": "lib/RakuDoc.rakumod"
   },
   "resources": [
-    "config.raku",
-    "assets.zip",
     "website.zip"
   ],
   "support": {
@@ -29,5 +27,8 @@
   },
   "license": "Artistic-2.0",
   "source-url": "git://github.com/finanalyst/collection-raku-documentation.git",
+  "bin": [
+    "bin/Raku-Doc"
+  ],
   "source-type": "git"
 }

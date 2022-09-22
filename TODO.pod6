@@ -1,9 +1,7 @@
 =begin pod
-=item Caching processed, storage of data - ARCHIVE, but failed.
 =item styling of visited / unvisited links
 =item report of links, to see if they generate 404 or other errors - done
 =item graphviz of hierarchy diagrams
-=item templates accumulating - DONE
 =item spelling test of text in content files
 
 =end pod

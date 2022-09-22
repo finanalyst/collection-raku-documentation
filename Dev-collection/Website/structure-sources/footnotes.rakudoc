@@ -1,0 +1,8 @@
+=begin pod :no-toc :no-glossary :no-footnotes :no-meta
+
+=TITLE Footnotes Raku Documentation
+
+=for Website :make<footnotes>
+Footnotes by filename for the Website
+
+=end pod
