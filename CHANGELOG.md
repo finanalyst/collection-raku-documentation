@@ -30,6 +30,7 @@
 [2022-08-11 v0.11.2](#2022-08-11-v0112)  
 [2022-08-13 v0.11.3](#2022-08-13-v0113)  
 [2022-08-13 v0.11.4](#2022-08-13-v0114)  
+[2022-09-21 v0.12.0](#2022-09-21-v0120)  
 
 ----
 # 2021-01-22 Spin off Collection into its own Module
@@ -209,13 +210,22 @@
 *  remove Raku-Doc from provides
 
 # 2022-08-13 v0.11.4
-
-
 *  remove unnecessary code line
+
+# 2022-09-21 v0.12.0
+
+
+*  refactor to use new plugin management tools
+
+*  include raku docs clone into local_raku_docs by default
+
+*  rewrite Raku-Doc to use Collection::refresh
+
+*  moved all Collection files, eg. Website mode, to new repo. Only website.zip here
 
 
 
 
 
 ----
-Rendered from CHANGELOG at 2022-08-13T20:20:14Z
+Rendered from CHANGELOG at 2022-09-22T09:37:19Z
