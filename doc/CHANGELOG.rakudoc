@@ -145,5 +145,6 @@ a note to install Cro::HTTP if the Distribution is not installed.
 =item include raku docs clone into local_raku_docs by default
 =item rewrite Raku-Doc to use Collection::refresh
 =item moved all Collection files, eg. Website mode, to new repo. Only website.zip here
+=item Website mode downloaded from repository, then unzipped
 
 =end pod

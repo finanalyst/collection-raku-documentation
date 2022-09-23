@@ -17,9 +17,7 @@
   "provides": {
     "Collection::RakuDoc": "lib/RakuDoc.rakumod"
   },
-  "resources": [
-    "website.zip"
-  ],
+  "resources": [],
   "support": {
     "bugtracker": "https://github.com/finanalyst/collection-raku-documentation/issues",
     "email": "richard@hainsworth.wales",

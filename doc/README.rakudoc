@@ -40,15 +40,18 @@ progress status bar for the longer stages.
     cd raku-collection
     Raku-Doc Init
 
-This sets up the Collection directory, and installs the Collection plugins.
+This sets up a Collection directory by downloading the Website mode from
+github, then installs the Collection plugins.
 
-A clone of the C<Raku/doc> repository is created as B<local_raku_docs>.
+By default the C<Raku/doc> repository (containing all the Raku documentation files)
+will be created in the next step as B<local_raku_docs>.
 
-Consequently, if the user wants to clone the Raku docs repository elsewhere
-or has an existing clone, then the non-default path needs to be put into the
-config.raku file in the C<sources-obtain and -refresh> keys.
+If a user wants to clone the Raku docs repository elsewhere
+or has an existing clone of the Raku repository, then the non-default path needs to be put into the
+config.raku file in the C<sources-obtain> and C<sources-refresh> keys. See the documentation
+for the C<Collection> distribution for more information.
 
-At the next invocation of B<Raku-Doc>, the documentation source will be cloned
+At the next invocation of B<Raku-Doc>, the documentation source will be cloned, cached,
 and rendered.
 
 For example, to render the full Raku Docs, the following would work, where C<raku-local> is a local directory.
@@ -68,13 +71,23 @@ which then updates the cache for any sources that have changed,
 and then re-render all the html files that are affected.
 These stages are automatically called by running Raku-Doc with the config defaults given.
 
+The Website mode files and plugins are being actively developed, so newer versions may be
+available. New versions of the plugins are automatically called on each invocation of
+Raku-Doc. To get new versions of the Website mode files (sources and additional plugins), use
+
+    Raku-Doc Update
+
 C<Raku-Doc> can be called with other options, which are described in the C<Collection>
 documentation.
 
-B<Collection-Raku-Documentation> is set up with the
-default C<mode> called B<Website>. C<Raku-Doc> just calls C<collect> and passes on to C<collect> all of
-its arguments, with the exception of the string B<Init>, which C<Raku-Doc> traps so that processing can stop before
-calling C<collect>.
+B<Collection-Raku-Documentation> is set up with the default C<mode> called B<Website>.
+
+=head1 Raku-Doc as a wrapper for Collection::collect
+
+With the exception of 'Init' and 'Update', C<Raku-Doc> can be called with all the options
+listed for C<Collection::collect>.
+
+More information about these options is given in the Documentation for C<Collection>.
 
 =head2 In the future (not now)
 

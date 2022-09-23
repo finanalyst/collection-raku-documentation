@@ -8,16 +8,39 @@ unit module Collection::RakuDoc;
 
 constant COLLECTION = %?RESOURCES<raku-collection.zip>;
 
+multi sub MAIN('Update') is export {
+    say "Updating the Raku Documentation collection in ｢~/{ $*CWD.relative($*HOME) }｣";
+    'raku-collection.zip'.IO.unlink if 'raku-collection.zip'.IO ~~ :e & :f;
+    my $rv = run(<
+        wget -q
+        https://raw.githubusercontent.com/finanalyst/raku-documentation-site-dev/master/raku-collection.zip
+    >);
+    (exit note 'Could not download Website Collection files') if $rv.exitcode;
+    my $unzip = run( 'unzip', '-ou' , 'raku-collection.zip', :err );
+    my $unzip-err = $unzip.err.slurp(:close);
+    (exit note("unzip error when unpacking Raku collection files. Error is:" ~ $unzip-err))
+        if $unzip-err;
+    'raku-collection.zip'.IO.unlink;
+    refresh;
+}
+
 multi sub MAIN('Init') is export {
     say "Initialising a Raku Documentation collection in ｢~/{ $*CWD.relative($*HOME) }｣";
     exit note qq:to/NOTE/ if + $*CWD.dir;
         The directory ｢~/{$*CWD.relative($*HOME)}｣ is not empty. Aborting. Try ｢Raku-Doc Refresh｣ instead.
         NOTE
 
-    my $unzip = run( 'unzip', ~COLLECTION, :err );
+    'raku-collection.zip'.IO.unlink if 'raku-collection.zip'.IO ~~ :e & :f;
+    my $rv = run(<
+        wget -q
+        https://raw.githubusercontent.com/finanalyst/raku-documentation-site-dev/master/raku-collection.zip
+    >);
+    (exit note 'Could not download Website Collection files') if $rv.exitcode;
+    my $unzip = run( 'unzip', 'raku-collection.zip', :err );
     my $unzip-err = $unzip.err.slurp(:close);
-    exit note "unzip error when unpacking Raku collection files. Error is:" ~ $unzip-err
+    (exit note("unzip error when unpacking Raku collection files. Error is:" ~ $unzip-err))
         if $unzip-err;
+    'raku-collection.zip'.IO.unlink;
     refresh;
     say q:to/USE/;
         Raku Documentation Collection has now been initialised.
