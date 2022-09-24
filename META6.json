@@ -10,6 +10,7 @@
   "depends": [
     "RakuConfig",
     "Collection",
+    "Collection::RefreshPlugins",
     "LibCurl::Easy"
   ],
   "build-depends": [],
