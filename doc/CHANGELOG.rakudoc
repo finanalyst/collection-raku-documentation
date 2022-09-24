@@ -147,4 +147,7 @@ a note to install Cro::HTTP if the Distribution is not installed.
 =item moved all Collection files, eg. Website mode, to new repo. Only website.zip here
 =item Website mode downloaded from repository, then unzipped
 
+=head1 2022-09-24 v0.12.1
+=item fix Meta6 problem
+
 =end pod

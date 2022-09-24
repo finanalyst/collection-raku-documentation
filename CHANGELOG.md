@@ -31,6 +31,7 @@
 [2022-08-13 v0.11.3](#2022-08-13-v0113)  
 [2022-08-13 v0.11.4](#2022-08-13-v0114)  
 [2022-09-21 v0.12.0](#2022-09-21-v0120)  
+[2022-09-24 v0.12.1](#2022-09-24-v0121)  
 
 ----
 # 2021-01-22 Spin off Collection into its own Module
@@ -213,8 +214,6 @@
 *  remove unnecessary code line
 
 # 2022-09-21 v0.12.0
-
-
 *  refactor to use new plugin management tools
 
 *  include raku docs clone into local_raku_docs by default
@@ -223,9 +222,16 @@
 
 *  moved all Collection files, eg. Website mode, to new repo. Only website.zip here
 
+*  Website mode downloaded from repository, then unzipped
+
+# 2022-09-24 v0.12.1
+
+
+*  fix Meta6 problem
+
 
 
 
 
 ----
-Rendered from CHANGELOG at 2022-09-22T09:37:19Z
+Rendered from CHANGELOG at 2022-09-24T13:33:32Z
