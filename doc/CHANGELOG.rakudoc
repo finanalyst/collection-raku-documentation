@@ -150,4 +150,7 @@ a note to install Cro::HTTP if the Distribution is not installed.
 =head1 2022-09-24 v0.12.1
 =item fix Meta6 problem
 
+=head1 2022-11-13 v0.12.2
+=item pass options from RakuDoc to refresh
+
 =end pod

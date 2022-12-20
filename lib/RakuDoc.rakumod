@@ -42,10 +42,11 @@ multi sub MAIN('Init') is export {
         if $unzip-err;
     'raku-collection.zip'.IO.unlink;
     refresh;
-    say q:to/USE/;
+    my %config = get-config;
+    say qq:to/USE/;
         Raku Documentation Collection has now been initialised.
         The default configuration file "config.raku" for the Collection
-        will clone the Raku Documentation repository into '_local_raku_docs'
+        will clone the Raku Documentation repository into ｢{ %config<source-obtain> }｣
         in this directory. The cloning will only take place on the next use of
         Raku-Doc.
 
@@ -65,7 +66,7 @@ multi sub MAIN('Init') is export {
 multi sub MAIN(|c) {
     exit note 'No config file is present. Please run ｢Raku-Doc \'Init\'｣ first'
         unless 'config.raku'.IO.f;
-    refresh;
+    refresh(|c);
     collect(|c)
 }
 
