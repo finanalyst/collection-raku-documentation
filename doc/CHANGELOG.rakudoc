@@ -153,4 +153,9 @@ a note to install Cro::HTTP if the Distribution is not installed.
 =head1 2022-11-13 v0.12.2
 =item pass options from RakuDoc to refresh
 
+=head1 2023-01-14 v0.12.3
+=item add information about OgdenWebb mode
+=item refactor Init and Refresh a bit
+=item explicitly allow for another mode
+
 =end pod

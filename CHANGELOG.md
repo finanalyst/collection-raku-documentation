@@ -32,6 +32,8 @@
 [2022-08-13 v0.11.4](#2022-08-13-v0114)  
 [2022-09-21 v0.12.0](#2022-09-21-v0120)  
 [2022-09-24 v0.12.1](#2022-09-24-v0121)  
+[2022-11-13 v0.12.2](#2022-11-13-v0122)  
+[2023-01-14 v0.12.3](#2023-01-14-v0123)  
 
 ----
 # 2021-01-22 Spin off Collection into its own Module
@@ -225,13 +227,23 @@
 *  Website mode downloaded from repository, then unzipped
 
 # 2022-09-24 v0.12.1
-
-
 *  fix Meta6 problem
+
+# 2022-11-13 v0.12.2
+*  pass options from RakuDoc to refresh
+
+# 2023-01-14 v0.12.3
+
+
+*  add information about OgdenWebb mode
+
+*  refactor Init and Refresh a bit
+
+*  explicitly allow for another mode
 
 
 
 
 
 ----
-Rendered from CHANGELOG at 2022-09-24T13:33:32Z
+Rendered from CHANGELOG at 2023-01-14T10:59:40Z

@@ -1,7 +1,6 @@
-![github-tests-passing-badge](https://github.com/finanalyst/collection-raku-documentation/actions/workflows/test.yaml/badge.svg)
 # Collection-based Raku Documentation
 >
-> **Description** Collects the Raku Documentation's content sources existing in github repo, creates a static html collection for serving using Cro.
+> **Description** Distribution to set up Raku Documentation website.
 
 > **Author** Richard Hainsworth, aka finanalyst
 
@@ -10,79 +9,100 @@
 ## Table of Contents
 [Installation](#installation)  
 [Raku-Doc](#raku-doc)  
+[Raku-Doc as a wrapper for Collection::collect](#raku-doc-as-a-wrapper-for-collectioncollect)  
+[More contemporary web site.](#more-contemporary-web-site)  
 [In the future (not now)](#in-the-future-not-now)  
 [Enabling Cro App](#enabling-cro-app)  
+[Highlighting](#highlighting)  
 [Problems](#problems)  
 [Copyright and License](#copyright-and-license)  
 
 ----
-This Module provides a local website of the Raku documentation that can be made available via a browser at localhost:3000 . The Module uses Collection and Raku::Pod::Render to link all the Rakudoc (aka Pod6) files together.
+This Module creates a local website of the Raku documentation. It pulls together information held in several other distributions. The main content of this distribution is the `Raku-Doc` utility. It is intended to be as simple as possible. But the documentation system is large. The following contain other requirements.
 
-The website is intended to be served locally with a Cro app. Since making Cro a dependency can cause problems in a testing environment, the META6.json does not have Cro as a dependency. If Cro::HTTP is not installed, the completion plugin will exit with a note.
+*  The documentation files are held in a github repository that is maintained and updated by the Raku community. `Raku-Doc` needs to have a local clone of the repository. It can be used to refresh the documents automatically.
 
-The Website also demonstrates some of the custom blocks possible using Raku::Pod::Render.
+*  `Raku-Doc` uses Collection and Raku::Pod::Render to link all the Rakudoc (aka Pod6) files together. So `Collection` needs to be installed, which will install `Raku::Pod::Render`. By installing `Raku-Pod-Render` a user can then use `Pod::To::HTML2` to render individual `.rakudoc / .pod6` files into HTML, or `Pod::To::MarkDown2` to render them into `.md` files.
+
+*  `Collection` requires over a dozen plugins, which are automatically refreshed from a github repository by `Raku-Doc`.
+
+*  The Raku documentation system can currently be visualised in two ways:
+
+	*  using the original web design started by Moritz Lenz (using the mode Website) - currently the default.
+
+	*  using a new design by OgdenWebb (using the mode OgdenWebb).
+
+*  The website is intended to be served locally with a Cro app. Since making Cro a dependency can cause problems in a testing environment, the META6.json does not have Cro as a dependency. If Cro::HTTP is not installed, the completion plugin will exit with a note.
+
+*  A website contains templates and structure documents, which describe the website into which the Raku documentation fit. This content is also held in a separate repository. This is intended to keep the development of plugins separate from the structure documents and templates, and separate from the Raku documentation content.
 
 # Installation
 ```
 zef install Collection-Raku-Documentation
 ```
-This installs the `Collection` (and other) dependencies and the `Raku-Docs` executable. These in turn install the the other main distributions and `Raku::Pod::Render`. By default `Raku::Pod::Render` does not install the highlighter automatically because `node.js` and `npm` are required.
+This installs the `Collection` (and other) dependencies and the `Raku-Doc` executable. These in turn install the the other main distributions and `Raku::Pod::Render`. By default `Raku::Pod::Render` does not install the highlighter automatically because `node.js` and `npm` are required.
 
-The default highlighter at present is a Node based toolstack called **atom-perl-highlighter**. In order to install it automatically, `Raku::Pod::Render` requires an uptodate version of npm. The builder is known not to work with `node.js` > ****v13.0> and `npm` > **v14.15**.
+See [Highlighting](Highlighting.md) for installation of highlighter.
 
-For someone who has not installed `node` or `npm` before, or for whom they are only needed for the highlighter, the installation is ... confusing. It would seem at the time of writing that the easiest method is:
-
-```
-# Using Ubuntu
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-sudo apt-get install -y nodejs
-```
-Then, **after the default installation of Raku::Pod::Render**, highlighting can be enabled by running the following in a terminal:
-
-```
-raku-render-install-highlighter
-```
 # Raku-Doc
-On a Linux based distributions, `Raku-Doc` depends on `git` and `unrar`, which typically are installed by default, to get and unpack other files.
+On a Linux based distributions, `Raku-Doc` depends on `git` and `unzip`, which typically are installed by default, to get and unpack other files.
 
 Under Linux, in a terminal, the following will lead to the installation of a local copy of Raku docs and start a Cro app that will make the HTML documentation available in a browser at `localhost:30000`, and produce a progress status bar for the longer stages.
 
 ```
-mkdir ~/raku-local
-cd raku-local
+mkdir ~/raku-collection
+cd raku-collection
 Raku-Doc Init
 ```
-This sets up the Collection directory, and installs the dependencies.
+This sets up a Collection directory by downloading the Website mode from github, then installs the Collection plugins.
 
-If the Website mode has been corrupted, or a new version is available, then
+By default the `Raku/doc` repository (containing all the Raku documentation files) will be created in the next step as **local_raku_docs**.
 
-```
-Raku-Doc Refresh
-```
-will prompt you for which resource to refresh. If one is chosen, the others will be left unchanged.
+If a user wants to clone the Raku docs repository elsewhere or has an existing clone of the Raku repository, then the non-default path needs to be put into the config.raku file in the `sources-obtain` and `sources-refresh` keys. See the documentation for the `Collection` distribution for more information.
 
-It does not clone a copy of the `Raku/doc` repository because an existing version may be available on the system.
-
-Consequently, the user needs to clone the Raku docs repository using something like `git clone https://github.com/Raku/doc.git raku-docs`. Then the path used can be put into the config.raku file in the `sources-refresh` key. Once the raku-docs are ready, the INIT stage is complete.
+At the next invocation of **Raku-Doc**, the documentation source will be cloned, cached, and rendered.
 
 For example, to render the full Raku Docs, the following would work, where `raku-local` is a local directory.
 
 ```
-- raku-local
-    - raku-docs # this is generated by the git clone command
-    - Website # this is generated by runnng 'Raku-Doc Init' in raku-local
+- raku-collection
+    - local_raku_docs # this is generated by the git clone command
+    - Website # this is generated by runnng 'Raku-Doc Init' in raku-collection
     config.raku # as Website
 ```
 After the `Init` stage, calling `Raku-Doc` without any other options implies the mode **Website** with default options.
 
 The Raku Documentation source files are regularly updated. The **Website** mode is configured to pull the latest versions of the source files into the Collection whenever `Raku-Doc` is run, which then updates the cache for any sources that have changed, and then re-render all the html files that are affected. These stages are automatically called by running Raku-Doc with the config defaults given.
 
+The Website mode files and plugins are being actively developed, so newer versions may be available. New versions of the plugins are automatically called on each invocation of Raku-Doc. To get new versions of the Website mode files (sources and additional plugins), use
+
+```
+Raku-Doc Update
+```
 `Raku-Doc` can be called with other options, which are described in the `Collection` documentation.
 
-**Collection-Raku-Documentation** is set up with the default `mode` called **Website**. `Raku-Doc` just calls `collect` and passes on to `collect` all of its arguments, with the exception of the string **Init**, which `Raku-Doc` traps so that processing can stop before calling `collect`.
+**Collection-Raku-Documentation** is set up with the default `mode` called **Website**.
 
+The more contemporary web design by Ogden Webb is in a mode call **OgdenWebb**. It is generated thus:
+
+```
+Raku-Doc OgdenWebb
+```
+It can be made the default by changing the `mode` key in the top-level `config.raku` file.
+
+# Raku-Doc as a wrapper for Collection::collect
+With the exception of 'Init' and 'Update', `Raku-Doc` can be called with all the options listed for `Collection::collect`.
+
+More information about these options is given in the Documentation for `Collection`.
+
+## More contemporary web site.
+A more contemporary web design by Ogden Webb is now included. It is generated by running
+
+```
+Raku-Doc OgdenWebb
+```
 ## In the future (not now)
-If `Raku-Doc` is called with a string other than 'Init', 'Refresh' or 'Website', then the string is interpreted as another **Mode**, with its own sub-directory and [Configuration](Configuration.md) for the collection. For example,
+If `Raku-Doc` is called with a string other than 'Init' or 'Website', then the string is interpreted as another **Mode**, with its own sub-directory and [Configuration](Configuration.md) for the collection. For example,
 
 ```
 Raku-Doc Book
@@ -101,6 +121,21 @@ zef install Cro::HTTP
 ```
 Running `Raku-Doc` without options will now serve the documentation files locally on port 3000. So point your browser at `localhost:3000`
 
+# Highlighting
+The default highlighter at present is a Node based toolstack called **atom-perl-highlighter**. In order to install it automatically, `Raku::Pod::Render` requires an uptodate version of npm. The builder is known not to work with `node.js` > ****v13.0> and `npm` > **v14.15**.
+
+For someone who has not installed `node` or `npm` before, or for whom they are only needed for the highlighter, the installation is ... confusing. It would seem at the time of writing that the easiest method is:
+
+```
+# Using Ubuntu
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+Then, **after the default installation of Raku::Pod::Render**, highlighting can be enabled by running the following in a terminal:
+
+```
+raku-render-install-highlighter
+```
 # Problems
 Collection is still being actively developed.
 
@@ -118,4 +153,4 @@ Collection is still being actively developed.
 
 
 ----
-Rendered from README at 2022-08-11T00:14:33Z
+Rendered from README at 2023-01-14T10:19:05Z
